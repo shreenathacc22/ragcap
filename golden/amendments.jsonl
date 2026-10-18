@@ -1,0 +1,1 @@
+{"id": "doc-008", "facts": ["3"], "reason": "Frozen fact 'replication factor 3' is a literal phrase; a correct answer 'replication factor ... is 3' failed the string match (scorer false negative found in baseline run 2026-10-18). Amended to the value only.", "amended_on": "2026-10-18"}
