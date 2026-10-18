@@ -1,0 +1,18 @@
+"""One place for settings. Local Ollama by default; set LLM_BASE_URL/LLM_API_KEY to use another OpenAI-compatible endpoint."""
+import os
+from pathlib import Path
+from dotenv import load_dotenv
+
+ROOT = Path(__file__).resolve().parent.parent
+load_dotenv(ROOT / ".env")
+
+PG_DSN = (f"host={os.getenv('PGHOST','localhost')} port={os.getenv('PGPORT','5433')} "
+          f"dbname={os.getenv('PGDATABASE','ragcap')} user={os.getenv('PGUSER','ragcap')} "
+          f"password={os.getenv('PGPASSWORD','')}")
+
+LLM_BASE_URL = os.getenv("LLM_BASE_URL", "http://localhost:11434/v1")
+LLM_API_KEY = os.getenv("LLM_API_KEY", "ollama")
+LLM_MODEL = os.getenv("LLM_MODEL", "llama3.2:3b")
+EMBED_MODEL = os.getenv("EMBED_MODEL", "nomic-embed-text")
+EMBED_DIM = 768
+TOP_K = 6
