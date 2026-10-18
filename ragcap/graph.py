@@ -86,15 +86,37 @@ def has_tables() -> bool:
 
 
 # ---------- nodes ----------
+GENERAL_RE = re.compile(r"^\s*(hi|hello|hey|thanks?|thank you|good (morning|afternoon|evening)|bye|ok(ay)?)\b|"
+                        r"\b(who are you|what can you (do|help)|what do you do|help me with|your name)\b", re.I)
+
+
+def table_schemas(conn) -> str:
+    """One line per uploaded table: name and columns, so the router knows what the database holds."""
+    lines = []
+    for (t,) in conn.execute("SELECT table_name FROM uploaded_tables ORDER BY 1").fetchall():
+        cols = [r[0] for r in conn.execute("SELECT column_name FROM information_schema.columns WHERE table_name=%s ORDER BY ordinal_position", (t,))]
+        lines.append(f"  {t}({', '.join(cols)})")
+    return "\n".join(lines)
+
+
 @timed("router")
 def router(s: State):
-    tables = has_tables()
+    conn = connect()
+    schemas = table_schemas(conn)
+    tables = bool(schemas)
     hist = "\n".join(f"{m['role']}: {m['content']}" for m in s.get("history", [])[-6:])
     sys = ("You route user messages. Reply as JSON: {\"route\": ..., \"standalone\": ...}.\n"
            "route is one of:\n"
-           "- documents: asks for information that would be written in uploaded documents (runbooks, policies, procedures, thresholds, ports, steps).\n"
-           + ("- database: asks for exact numbers, counts, filters, totals or lists from an uploaded spreadsheet/table (brokers, rows, disk percentages).\n" if tables else "")
-           + "- general: only a greeting, thanks, or a question about the assistant itself. NEVER for factual questions.\n"
+           "- documents: asks what a runbook, policy or procedure says: thresholds, limits, defaults, ports, owners, hostnames, naming rules, "
+           "settings, steps, orders of steps. Words like 'should', 'recommended', 'default', 'policy', 'procedure', 'threshold', 'which team' mean documents.\n"
+           + (f"- database: asks to count, sum, average, rank, filter or list rows of these uploaded tables:\n{schemas}\n"
+              "  Use database ONLY when the answer is a value computed from those rows (e.g. 'which brokers are above 85% disk', 'how many brokers', "
+              "'total capacity', 'average'). A rule or threshold written in a runbook is NOT in the tables.\n" if tables else "")
+           + "- general: ONLY a greeting, thanks, or a question about the assistant itself. Any question about Kafka, brokers, topics, "
+           "settings or procedures is NEVER general.\n"
+           "Examples: 'How long must audit logs be kept?' -> documents. 'Who approves a schema change?' -> documents. "
+           + ("'List the brokers in rack-a.' -> database. 'How many racks are there?' -> database. " if tables else "")
+           + "'Thanks!' -> general.\n"
            "standalone: the user's message rewritten as a self-contained question using the chat history.")
     out, ti, to = chat([{"role": "system", "content": sys},
                         {"role": "user", "content": f"Chat history:\n{hist or '(none)'}\n\nMessage: {s['question']}"}],
@@ -103,6 +125,8 @@ def router(s: State):
     route = j.get("route", "documents")
     if route not in {"documents", "database", "general"} or (route == "database" and not tables):
         route = "documents"
+    if route == "general" and not GENERAL_RE.search(s["question"]):
+        route = "documents"   # guard: a factual-looking question is never answered without looking it up
     return {"route": route, "standalone": j.get("standalone") or s["question"], "rewrites": 0, "sql_attempts": 0}, 1, ti, to
 
 
@@ -188,6 +212,10 @@ def sql_agent(s: State):
             msg += f"\n\nYour previous query:\n{q}\nfailed with: {err}\nFix it."
         out, a, b = chat([
             {"role": "system", "content": "Write ONE PostgreSQL SELECT statement answering the question using only the tables shown. "
+             "Add a WHERE filter ONLY if the question itself names that value or condition. "
+             "Each table row is one entity, so never GROUP BY the id column. "
+             "Use ORDER BY ... LIMIT 1 ONLY for a single extreme ('the most', 'the highest', 'the lowest'); for 'which are above/below X' return ALL matching rows with no LIMIT. "
+             "For totals and averages use SUM/AVG. "
              "Reply JSON: {\"sql\": \"...\"}."},
             {"role": "user", "content": msg}], json_mode=True, max_tokens=200)
         calls, ti, to = calls + 1, ti + a, to + b
@@ -205,7 +233,8 @@ def generate_sql(s: State):
     if s.get("sql_error"):
         return {"answer": f"I could not compute that from the tables ({s['sql_error']})."}, 0, 0, 0
     out, ti, to = chat([
-        {"role": "system", "content": "Answer in plain language from the query result. State that it was computed from the table. Be concise."},
+        {"role": "system", "content": "Answer in plain language from the query result. State that it was computed from the table. Be concise. "
+         "Copy every number exactly as it appears in Rows: do not round, convert, abbreviate or add units that are not in the column name."},
         {"role": "user", "content": f"Question: {s['standalone']}\nSQL: {s['sql']}\nColumns: {s['columns']}\nRows: {s['rows']}"}], max_tokens=200)
     return {"answer": out.strip()}, 1, ti, to
 

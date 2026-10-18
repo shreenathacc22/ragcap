@@ -25,7 +25,14 @@ def flow_of(o):
 
 
 def main(limit=None):
-    cases = [json.loads(l) for l in Path("golden/golden.jsonl").read_text().splitlines()][:limit]
+    cases = [json.loads(l) for l in Path("golden/golden.jsonl").read_text().splitlines()]
+    amend = {a["id"]: a for a in (json.loads(l) for l in Path("golden/amendments.jsonl").read_text().splitlines() if l.strip())} \
+        if Path("golden/amendments.jsonl").exists() else {}
+    for c in cases:
+        if c["id"] in amend:
+            c["facts"] = amend[c["id"]]["facts"]
+            print(f"amended {c['id']}: {amend[c['id']]['reason'][:70]}...")
+    cases = cases[:limit]
     rows = []
     for c in cases:
         o = ask(c["question"])
