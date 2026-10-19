@@ -1,4 +1,6 @@
 #!/bin/bash
+# Re-exec under caffeinate so the Mac cannot idle-sleep mid-series (sleep drops Docker and Ollama connections).
+if [ -z "$CAFFEINATED" ]; then CAFFEINATED=1 exec caffeinate -i "$0" "$@"; fi
 # Usage: ./run_series.sh <label> <model>  -- 3x held-out, 2x original (run 3 already exists for original)
 cd "$(dirname "$0")"
 export LLM_MODEL="${2:-llama3.2:3b}"

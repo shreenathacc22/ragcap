@@ -22,7 +22,7 @@ def load():
     conn = connect()
     docs = [dict(id=r[0], name=r[1], version=r[2], superseded=r[3], effective_date=r[4]) for r in conn.execute(
         "SELECT id,name,version,superseded,effective_date FROM documents ORDER BY name,version")]
-    chunks = [dict(doc_id=r[0], chunk_no=r[1], text=r[2], meta=r[3], embedding=list(r[4])) for r in conn.execute(
+    chunks = [dict(doc_id=r[0], chunk_no=r[1], text=r[2], meta=r[3], embedding=r[4].to_list()) for r in conn.execute(
         "SELECT doc_id,chunk_no,text,meta,embedding FROM chunks")]
     return docs, chunks
 
