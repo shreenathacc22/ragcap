@@ -1,0 +1,1250 @@
+{
+ "metrics": {
+  "cases": 25,
+  "errors": 0,
+  "router_accuracy": 0.96,
+  "answer_correct": 0.8,
+  "retrieval_hit_rate_doc": 1.0,
+  "answer_correct_by_type": {
+   "version_current": "12/16",
+   "sql": "4/5",
+   "general": "2/2",
+   "unanswerable": "2/2"
+  }
+ },
+ "rows": [
+  {
+   "id": "h-doc-01",
+   "type": "version_current",
+   "expected_route": "documents",
+   "route": "documents",
+   "flow": "document+rewrite",
+   "route_ok": true,
+   "answer": "The TLS certificate validity period is 90 days.",
+   "total_ms": 15750,
+   "calls": 15,
+   "tin": 3856,
+   "tout": 149,
+   "trace": [
+    {
+     "node": "router",
+     "ms": 2192,
+     "llm_calls": 1,
+     "tokens_in": 364,
+     "tokens_out": 22
+    },
+    {
+     "node": "retrieve",
+     "ms": 155,
+     "llm_calls": 0,
+     "tokens_in": 0,
+     "tokens_out": 0
+    },
+    {
+     "node": "grade",
+     "ms": 3847,
+     "llm_calls": 6,
+     "tokens_in": 1597,
+     "tokens_out": 36
+    },
+    {
+     "node": "rewrite",
+     "ms": 4130,
+     "llm_calls": 1,
+     "tokens_in": 57,
+     "tokens_out": 44
+    },
+    {
+     "node": "retrieve",
+     "ms": 492,
+     "llm_calls": 0,
+     "tokens_in": 0,
+     "tokens_out": 0
+    },
+    {
+     "node": "grade",
+     "ms": 3773,
+     "llm_calls": 6,
+     "tokens_in": 1579,
+     "tokens_out": 36
+    },
+    {
+     "node": "generate",
+     "ms": 1149,
+     "llm_calls": 1,
+     "tokens_in": 259,
+     "tokens_out": 11
+    }
+   ],
+   "retrieval_hit": true,
+   "answer_ok": true
+  },
+  {
+   "id": "h-doc-02",
+   "type": "version_current",
+   "expected_route": "documents",
+   "route": "documents",
+   "flow": "document",
+   "route_ok": true,
+   "answer": "The min.insync.replicas value that goes with production topics is 2.",
+   "total_ms": 7953,
+   "calls": 8,
+   "tin": 2225,
+   "tout": 78,
+   "trace": [
+    {
+     "node": "router",
+     "ms": 2610,
+     "llm_calls": 1,
+     "tokens_in": 367,
+     "tokens_out": 25
+    },
+    {
+     "node": "retrieve",
+     "ms": 102,
+     "llm_calls": 0,
+     "tokens_in": 0,
+     "tokens_out": 0
+    },
+    {
+     "node": "grade",
+     "ms": 3734,
+     "llm_calls": 6,
+     "tokens_in": 1604,
+     "tokens_out": 36
+    },
+    {
+     "node": "generate",
+     "ms": 1503,
+     "llm_calls": 1,
+     "tokens_in": 254,
+     "tokens_out": 17
+    }
+   ],
+   "retrieval_hit": true,
+   "answer_ok": true
+  },
+  {
+   "id": "h-doc-03",
+   "type": "version_current",
+   "expected_route": "documents",
+   "route": "documents",
+   "flow": "document",
+   "route_ok": true,
+   "answer": "According to passage [1] (topic_naming), topic names must use lowercase with dots as separators, and hyphens are not permitted.",
+   "total_ms": 24918,
+   "calls": 8,
+   "tin": 2960,
+   "tout": 93,
+   "trace": [
+    {
+     "node": "router",
+     "ms": 2853,
+     "llm_calls": 1,
+     "tokens_in": 369,
+     "tokens_out": 27
+    },
+    {
+     "node": "retrieve",
+     "ms": 92,
+     "llm_calls": 0,
+     "tokens_in": 0,
+     "tokens_out": 0
+    },
+    {
+     "node": "grade",
+     "ms": 4122,
+     "llm_calls": 6,
+     "tokens_in": 1603,
+     "tokens_out": 36
+    },
+    {
+     "node": "generate",
+     "ms": 17847,
+     "llm_calls": 1,
+     "tokens_in": 988,
+     "tokens_out": 30
+    }
+   ],
+   "retrieval_hit": true,
+   "answer_ok": true
+  },
+  {
+   "id": "h-doc-04",
+   "type": "version_current",
+   "expected_route": "documents",
+   "route": "documents",
+   "flow": "document+rewrite",
+   "route_ok": true,
+   "answer": "The message retention period for standard topics in Kafka is 72 hours (3 days).",
+   "total_ms": 16053,
+   "calls": 15,
+   "tin": 3834,
+   "tout": 167,
+   "trace": [
+    {
+     "node": "router",
+     "ms": 2230,
+     "llm_calls": 1,
+     "tokens_in": 364,
+     "tokens_out": 22
+    },
+    {
+     "node": "retrieve",
+     "ms": 122,
+     "llm_calls": 0,
+     "tokens_in": 0,
+     "tokens_out": 0
+    },
+    {
+     "node": "grade",
+     "ms": 3630,
+     "llm_calls": 6,
+     "tokens_in": 1594,
+     "tokens_out": 36
+    },
+    {
+     "node": "rewrite",
+     "ms": 4695,
+     "llm_calls": 1,
+     "tokens_in": 57,
+     "tokens_out": 55
+    },
+    {
+     "node": "retrieve",
+     "ms": 78,
+     "llm_calls": 0,
+     "tokens_in": 0,
+     "tokens_out": 0
+    },
+    {
+     "node": "grade",
+     "ms": 3695,
+     "llm_calls": 6,
+     "tokens_in": 1576,
+     "tokens_out": 36
+    },
+    {
+     "node": "generate",
+     "ms": 1597,
+     "llm_calls": 1,
+     "tokens_in": 243,
+     "tokens_out": 18
+    }
+   ],
+   "retrieval_hit": true,
+   "answer_ok": false
+  },
+  {
+   "id": "h-doc-05",
+   "type": "version_current",
+   "expected_route": "documents",
+   "route": "documents",
+   "flow": "document+rewrite",
+   "route_ok": true,
+   "answer": "That information is not in the knowledge base.",
+   "total_ms": 12098,
+   "calls": 14,
+   "tin": 3640,
+   "tout": 112,
+   "trace": [
+    {
+     "node": "router",
+     "ms": 2655,
+     "llm_calls": 1,
+     "tokens_in": 368,
+     "tokens_out": 26
+    },
+    {
+     "node": "retrieve",
+     "ms": 169,
+     "llm_calls": 0,
+     "tokens_in": 0,
+     "tokens_out": 0
+    },
+    {
+     "node": "grade",
+     "ms": 3817,
+     "llm_calls": 6,
+     "tokens_in": 1617,
+     "tokens_out": 36
+    },
+    {
+     "node": "rewrite",
+     "ms": 1427,
+     "llm_calls": 1,
+     "tokens_in": 61,
+     "tokens_out": 14
+    },
+    {
+     "node": "retrieve",
+     "ms": 125,
+     "llm_calls": 0,
+     "tokens_in": 0,
+     "tokens_out": 0
+    },
+    {
+     "node": "grade",
+     "ms": 3900,
+     "llm_calls": 6,
+     "tokens_in": 1594,
+     "tokens_out": 36
+    },
+    {
+     "node": "generate",
+     "ms": 0,
+     "llm_calls": 0,
+     "tokens_in": 0,
+     "tokens_out": 0
+    }
+   ],
+   "retrieval_hit": true,
+   "answer_ok": false
+  },
+  {
+   "id": "h-doc-06",
+   "type": "version_current",
+   "expected_route": "documents",
+   "route": "documents",
+   "flow": "document+rewrite",
+   "route_ok": true,
+   "answer": "The expected total downtime for a broker restart is 4 minutes.",
+   "total_ms": 17403,
+   "calls": 15,
+   "tin": 3866,
+   "tout": 185,
+   "trace": [
+    {
+     "node": "router",
+     "ms": 2962,
+     "llm_calls": 1,
+     "tokens_in": 366,
+     "tokens_out": 24
+    },
+    {
+     "node": "retrieve",
+     "ms": 107,
+     "llm_calls": 0,
+     "tokens_in": 0,
+     "tokens_out": 0
+    },
+    {
+     "node": "grade",
+     "ms": 3661,
+     "llm_calls": 6,
+     "tokens_in": 1609,
+     "tokens_out": 36
+    },
+    {
+     "node": "rewrite",
+     "ms": 5987,
+     "llm_calls": 1,
+     "tokens_in": 59,
+     "tokens_out": 75
+    },
+    {
+     "node": "retrieve",
+     "ms": 76,
+     "llm_calls": 0,
+     "tokens_in": 0,
+     "tokens_out": 0
+    },
+    {
+     "node": "grade",
+     "ms": 3417,
+     "llm_calls": 6,
+     "tokens_in": 1573,
+     "tokens_out": 36
+    },
+    {
+     "node": "generate",
+     "ms": 1188,
+     "llm_calls": 1,
+     "tokens_in": 259,
+     "tokens_out": 14
+    }
+   ],
+   "retrieval_hit": true,
+   "answer_ok": true
+  },
+  {
+   "id": "h-doc-07",
+   "type": "version_current",
+   "expected_route": "documents",
+   "route": "documents",
+   "flow": "document",
+   "route_ok": true,
+   "answer": "The secondary contact for a SEV-1 Kafka incident is the Infrastructure duty manager.",
+   "total_ms": 7819,
+   "calls": 8,
+   "tin": 2261,
+   "tout": 81,
+   "trace": [
+    {
+     "node": "router",
+     "ms": 2509,
+     "llm_calls": 1,
+     "tokens_in": 369,
+     "tokens_out": 27
+    },
+    {
+     "node": "retrieve",
+     "ms": 102,
+     "llm_calls": 0,
+     "tokens_in": 0,
+     "tokens_out": 0
+    },
+    {
+     "node": "grade",
+     "ms": 3509,
+     "llm_calls": 6,
+     "tokens_in": 1629,
+     "tokens_out": 36
+    },
+    {
+     "node": "generate",
+     "ms": 1695,
+     "llm_calls": 1,
+     "tokens_in": 263,
+     "tokens_out": 18
+    }
+   ],
+   "retrieval_hit": true,
+   "answer_ok": true
+  },
+  {
+   "id": "h-doc-08",
+   "type": "version_current",
+   "expected_route": "documents",
+   "route": "documents",
+   "flow": "document+rewrite",
+   "route_ok": true,
+   "answer": "That information is not in the knowledge base.",
+   "total_ms": 14609,
+   "calls": 14,
+   "tin": 3648,
+   "tout": 156,
+   "trace": [
+    {
+     "node": "router",
+     "ms": 2922,
+     "llm_calls": 1,
+     "tokens_in": 369,
+     "tokens_out": 27
+    },
+    {
+     "node": "retrieve",
+     "ms": 99,
+     "llm_calls": 0,
+     "tokens_in": 0,
+     "tokens_out": 0
+    },
+    {
+     "node": "grade",
+     "ms": 3436,
+     "llm_calls": 6,
+     "tokens_in": 1624,
+     "tokens_out": 36
+    },
+    {
+     "node": "rewrite",
+     "ms": 4608,
+     "llm_calls": 1,
+     "tokens_in": 62,
+     "tokens_out": 57
+    },
+    {
+     "node": "retrieve",
+     "ms": 121,
+     "llm_calls": 0,
+     "tokens_in": 0,
+     "tokens_out": 0
+    },
+    {
+     "node": "grade",
+     "ms": 3417,
+     "llm_calls": 6,
+     "tokens_in": 1593,
+     "tokens_out": 36
+    },
+    {
+     "node": "generate",
+     "ms": 0,
+     "llm_calls": 0,
+     "tokens_in": 0,
+     "tokens_out": 0
+    }
+   ],
+   "retrieval_hit": true,
+   "answer_ok": false
+  },
+  {
+   "id": "h-doc-09",
+   "type": "version_current",
+   "expected_route": "documents",
+   "route": "documents",
+   "flow": "document",
+   "route_ok": true,
+   "answer": "The template to request for broker certificates is the `kafka-broker-v2` template.",
+   "total_ms": 7372,
+   "calls": 8,
+   "tin": 2216,
+   "tout": 78,
+   "trace": [
+    {
+     "node": "router",
+     "ms": 2097,
+     "llm_calls": 1,
+     "tokens_in": 364,
+     "tokens_out": 22
+    },
+    {
+     "node": "retrieve",
+     "ms": 148,
+     "llm_calls": 0,
+     "tokens_in": 0,
+     "tokens_out": 0
+    },
+    {
+     "node": "grade",
+     "ms": 3461,
+     "llm_calls": 6,
+     "tokens_in": 1590,
+     "tokens_out": 36
+    },
+    {
+     "node": "generate",
+     "ms": 1661,
+     "llm_calls": 1,
+     "tokens_in": 262,
+     "tokens_out": 20
+    }
+   ],
+   "retrieval_hit": true,
+   "answer_ok": true
+  },
+  {
+   "id": "h-doc-10",
+   "type": "version_current",
+   "expected_route": "documents",
+   "route": "documents",
+   "flow": "document",
+   "route_ok": true,
+   "answer": "No, you do not need a full-cluster window to rotate certificates. According to passage [1], rotation can be done \"one at a time\".",
+   "total_ms": 8524,
+   "calls": 8,
+   "tin": 2226,
+   "tout": 91,
+   "trace": [
+    {
+     "node": "router",
+     "ms": 2243,
+     "llm_calls": 1,
+     "tokens_in": 366,
+     "tokens_out": 24
+    },
+    {
+     "node": "retrieve",
+     "ms": 126,
+     "llm_calls": 0,
+     "tokens_in": 0,
+     "tokens_out": 0
+    },
+    {
+     "node": "grade",
+     "ms": 3462,
+     "llm_calls": 6,
+     "tokens_in": 1596,
+     "tokens_out": 36
+    },
+    {
+     "node": "generate",
+     "ms": 2690,
+     "llm_calls": 1,
+     "tokens_in": 264,
+     "tokens_out": 31
+    }
+   ],
+   "retrieval_hit": true,
+   "answer_ok": true
+  },
+  {
+   "id": "h-doc-11",
+   "type": "version_current",
+   "expected_route": "documents",
+   "route": "documents",
+   "flow": "document+rewrite",
+   "route_ok": true,
+   "answer": "The disk warning threshold paging for Kafka is as follows:\n\n- Page when broker log-directory utilisation exceeds **75%**.\n- Warn at **60%**.",
+   "total_ms": 16152,
+   "calls": 15,
+   "tin": 4049,
+   "tout": 176,
+   "trace": [
+    {
+     "node": "router",
+     "ms": 2402,
+     "llm_calls": 1,
+     "tokens_in": 367,
+     "tokens_out": 25
+    },
+    {
+     "node": "retrieve",
+     "ms": 123,
+     "llm_calls": 0,
+     "tokens_in": 0,
+     "tokens_out": 0
+    },
+    {
+     "node": "grade",
+     "ms": 3439,
+     "llm_calls": 6,
+     "tokens_in": 1612,
+     "tokens_out": 36
+    },
+    {
+     "node": "rewrite",
+     "ms": 3661,
+     "llm_calls": 1,
+     "tokens_in": 60,
+     "tokens_out": 45
+    },
+    {
+     "node": "retrieve",
+     "ms": 85,
+     "llm_calls": 0,
+     "tokens_in": 0,
+     "tokens_out": 0
+    },
+    {
+     "node": "grade",
+     "ms": 3511,
+     "llm_calls": 6,
+     "tokens_in": 1570,
+     "tokens_out": 36
+    },
+    {
+     "node": "generate",
+     "ms": 2927,
+     "llm_calls": 1,
+     "tokens_in": 440,
+     "tokens_out": 34
+    }
+   ],
+   "retrieval_hit": true,
+   "answer_ok": true
+  },
+  {
+   "id": "h-doc-12",
+   "type": "version_current",
+   "expected_route": "documents",
+   "route": "documents",
+   "flow": "document",
+   "route_ok": true,
+   "answer": "According to passage [1], BROKER-EAST-02 uses port 9092 for plaintext traffic.",
+   "total_ms": 8351,
+   "calls": 8,
+   "tin": 2444,
+   "tout": 85,
+   "trace": [
+    {
+     "node": "router",
+     "ms": 2755,
+     "llm_calls": 1,
+     "tokens_in": 369,
+     "tokens_out": 27
+    },
+    {
+     "node": "retrieve",
+     "ms": 92,
+     "llm_calls": 0,
+     "tokens_in": 0,
+     "tokens_out": 0
+    },
+    {
+     "node": "grade",
+     "ms": 3537,
+     "llm_calls": 6,
+     "tokens_in": 1620,
+     "tokens_out": 36
+    },
+    {
+     "node": "generate",
+     "ms": 1963,
+     "llm_calls": 1,
+     "tokens_in": 455,
+     "tokens_out": 22
+    }
+   ],
+   "retrieval_hit": true,
+   "answer_ok": true
+  },
+  {
+   "id": "h-doc-13",
+   "type": "version_current",
+   "expected_route": "documents",
+   "route": "documents",
+   "flow": "document",
+   "route_ok": true,
+   "answer": "[1] states that new topics using the retired `evt.` prefix will be rejected by the topic-admission check.",
+   "total_ms": 8184,
+   "calls": 8,
+   "tin": 2233,
+   "tout": 86,
+   "trace": [
+    {
+     "node": "router",
+     "ms": 2393,
+     "llm_calls": 1,
+     "tokens_in": 367,
+     "tokens_out": 25
+    },
+    {
+     "node": "retrieve",
+     "ms": 97,
+     "llm_calls": 0,
+     "tokens_in": 0,
+     "tokens_out": 0
+    },
+    {
+     "node": "grade",
+     "ms": 3495,
+     "llm_calls": 6,
+     "tokens_in": 1611,
+     "tokens_out": 36
+    },
+    {
+     "node": "generate",
+     "ms": 2195,
+     "llm_calls": 1,
+     "tokens_in": 255,
+     "tokens_out": 25
+    }
+   ],
+   "retrieval_hit": true,
+   "answer_ok": true
+  },
+  {
+   "id": "h-doc-14",
+   "type": "version_current",
+   "expected_route": "documents",
+   "route": "documents",
+   "flow": "document",
+   "route_ok": true,
+   "answer": "It appears that the recommended course of action is to scale the consumer group by one instance and re-measure after 5 minutes. If the lag is still climbing, escalate before adding a second instance.",
+   "total_ms": 9907,
+   "calls": 8,
+   "tin": 2268,
+   "tout": 104,
+   "trace": [
+    {
+     "node": "router",
+     "ms": 2561,
+     "llm_calls": 1,
+     "tokens_in": 369,
+     "tokens_out": 27
+    },
+    {
+     "node": "retrieve",
+     "ms": 90,
+     "llm_calls": 0,
+     "tokens_in": 0,
+     "tokens_out": 0
+    },
+    {
+     "node": "grade",
+     "ms": 3674,
+     "llm_calls": 6,
+     "tokens_in": 1623,
+     "tokens_out": 36
+    },
+    {
+     "node": "generate",
+     "ms": 3579,
+     "llm_calls": 1,
+     "tokens_in": 276,
+     "tokens_out": 41
+    }
+   ],
+   "retrieval_hit": true,
+   "answer_ok": true
+  },
+  {
+   "id": "h-doc-15",
+   "type": "version_current",
+   "expected_route": "documents",
+   "route": "documents",
+   "flow": "document",
+   "route_ok": true,
+   "answer": "According to passage [1], the replication factor for a new standard production topic is 3. \n\nThe default retention is not explicitly stated in the passage, but it can be inferred that the default retention is not specified, as the passage only discusses replication settings.",
+   "total_ms": 11903,
+   "calls": 8,
+   "tin": 2241,
+   "tout": 117,
+   "trace": [
+    {
+     "node": "router",
+     "ms": 3047,
+     "llm_calls": 1,
+     "tokens_in": 370,
+     "tokens_out": 28
+    },
+    {
+     "node": "retrieve",
+     "ms": 486,
+     "llm_calls": 0,
+     "tokens_in": 0,
+     "tokens_out": 0
+    },
+    {
+     "node": "grade",
+     "ms": 3942,
+     "llm_calls": 6,
+     "tokens_in": 1614,
+     "tokens_out": 36
+    },
+    {
+     "node": "generate",
+     "ms": 4424,
+     "llm_calls": 1,
+     "tokens_in": 257,
+     "tokens_out": 53
+    }
+   ],
+   "retrieval_hit": true,
+   "answer_ok": false
+  },
+  {
+   "id": "h-doc-16",
+   "type": "version_current",
+   "expected_route": "documents",
+   "route": "documents",
+   "flow": "document",
+   "route_ok": true,
+   "answer": "The host that issues TLS certificates is `pki.internal.example.com`, and the port that BROKER-EAST-02 uses for TLS is 9093.",
+   "total_ms": 10330,
+   "calls": 8,
+   "tin": 2838,
+   "tout": 102,
+   "trace": [
+    {
+     "node": "router",
+     "ms": 3179,
+     "llm_calls": 1,
+     "tokens_in": 375,
+     "tokens_out": 33
+    },
+    {
+     "node": "retrieve",
+     "ms": 113,
+     "llm_calls": 0,
+     "tokens_in": 0,
+     "tokens_out": 0
+    },
+    {
+     "node": "grade",
+     "ms": 3565,
+     "llm_calls": 6,
+     "tokens_in": 1644,
+     "tokens_out": 36
+    },
+    {
+     "node": "generate",
+     "ms": 3469,
+     "llm_calls": 1,
+     "tokens_in": 819,
+     "tokens_out": 33
+    }
+   ],
+   "retrieval_hit": true,
+   "answer_ok": true
+  },
+  {
+   "id": "h-db-01",
+   "type": "sql",
+   "expected_route": "database",
+   "route": "documents",
+   "flow": "document",
+   "route_ok": false,
+   "answer": "The highest disk usage percentage is 75%, and the broker with this high disk usage is BROKER-EAST-02.",
+   "total_ms": 9007,
+   "calls": 8,
+   "tin": 2237,
+   "tout": 88,
+   "trace": [
+    {
+     "node": "router",
+     "ms": 2635,
+     "llm_calls": 1,
+     "tokens_in": 368,
+     "tokens_out": 26
+    },
+    {
+     "node": "retrieve",
+     "ms": 100,
+     "llm_calls": 0,
+     "tokens_in": 0,
+     "tokens_out": 0
+    },
+    {
+     "node": "grade",
+     "ms": 4036,
+     "llm_calls": 6,
+     "tokens_in": 1621,
+     "tokens_out": 36
+    },
+    {
+     "node": "generate",
+     "ms": 2233,
+     "llm_calls": 1,
+     "tokens_in": 248,
+     "tokens_out": 26
+    }
+   ],
+   "answer_ok": false,
+   "sql": null
+  },
+  {
+   "id": "h-db-02",
+   "type": "sql",
+   "expected_route": "database",
+   "route": "database",
+   "flow": "database",
+   "route_ok": true,
+   "answer": "There are 3 brokers that host more than 150 topics. This was computed from the broker_inventory table.",
+   "total_ms": 11728,
+   "calls": 3,
+   "tin": 748,
+   "tout": 63,
+   "trace": [
+    {
+     "node": "router",
+     "ms": 2276,
+     "llm_calls": 1,
+     "tokens_in": 365,
+     "tokens_out": 23
+    },
+    {
+     "node": "sql_agent",
+     "ms": 6578,
+     "llm_calls": 1,
+     "tokens_in": 272,
+     "tokens_out": 17
+    },
+    {
+     "node": "generate_sql",
+     "ms": 2859,
+     "llm_calls": 1,
+     "tokens_in": 111,
+     "tokens_out": 23
+    }
+   ],
+   "answer_ok": true,
+   "sql": "SELECT COUNT(*) FROM broker_inventory WHERE topics > 150"
+  },
+  {
+   "id": "h-db-03",
+   "type": "sql",
+   "expected_route": "database",
+   "route": "database",
+   "flow": "database",
+   "route_ok": true,
+   "answer": "Here are the brokers in rack-c:\n\n1. Broker 5: \n   - Broker ID: 5\n   - Rack: rack-c\n   - Disk Total GB: 4000\n   - Disk Used Pct: 91.8\n   - Topics: 210\n   - Status: critical\n\n2. Broker 6: \n   - Broker ID: 6\n   - Rack: rack-c\n   - Disk Total GB: 2000\n   - Disk Used Pct: 58.4\n   - Topics: 120\n   - Status: healthy",
+   "total_ms": 15559,
+   "calls": 3,
+   "tin": 804,
+   "tout": 163,
+   "trace": [
+    {
+     "node": "router",
+     "ms": 2029,
+     "llm_calls": 1,
+     "tokens_in": 362,
+     "tokens_out": 20
+    },
+    {
+     "node": "sql_agent",
+     "ms": 3582,
+     "llm_calls": 1,
+     "tokens_in": 269,
+     "tokens_out": 21
+    },
+    {
+     "node": "generate_sql",
+     "ms": 9943,
+     "llm_calls": 1,
+     "tokens_in": 173,
+     "tokens_out": 122
+    }
+   ],
+   "answer_ok": true,
+   "sql": "SELECT * FROM broker_inventory WHERE rack = 'rack-c' ORDER BY status"
+  },
+  {
+   "id": "h-db-04",
+   "type": "sql",
+   "expected_route": "database",
+   "route": "database",
+   "flow": "database",
+   "route_ok": true,
+   "answer": "The combined number of topics across all brokers is 880.",
+   "total_ms": 7469,
+   "calls": 3,
+   "tin": 751,
+   "tout": 51,
+   "trace": [
+    {
+     "node": "router",
+     "ms": 2692,
+     "llm_calls": 1,
+     "tokens_in": 366,
+     "tokens_out": 24
+    },
+    {
+     "node": "sql_agent",
+     "ms": 3130,
+     "llm_calls": 1,
+     "tokens_in": 273,
+     "tokens_out": 14
+    },
+    {
+     "node": "generate_sql",
+     "ms": 1644,
+     "llm_calls": 1,
+     "tokens_in": 112,
+     "tokens_out": 13
+    }
+   ],
+   "answer_ok": true,
+   "sql": "SELECT SUM(topics) FROM broker_inventory"
+  },
+  {
+   "id": "h-db-05",
+   "type": "sql",
+   "expected_route": "database",
+   "route": "database",
+   "flow": "database",
+   "route_ok": true,
+   "answer": "There are 2 brokers with at least 4000 GB of disk. This was computed from the broker_inventory table.",
+   "total_ms": 8472,
+   "calls": 3,
+   "tin": 760,
+   "tout": 71,
+   "trace": [
+    {
+     "node": "router",
+     "ms": 2407,
+     "llm_calls": 1,
+     "tokens_in": 368,
+     "tokens_out": 26
+    },
+    {
+     "node": "sql_agent",
+     "ms": 3468,
+     "llm_calls": 1,
+     "tokens_in": 275,
+     "tokens_out": 20
+    },
+    {
+     "node": "generate_sql",
+     "ms": 2593,
+     "llm_calls": 1,
+     "tokens_in": 117,
+     "tokens_out": 25
+    }
+   ],
+   "answer_ok": true,
+   "sql": "SELECT COUNT(*) FROM broker_inventory WHERE disk_total_gb >= 4000"
+  },
+  {
+   "id": "h-gen-01",
+   "type": "general",
+   "expected_route": "general",
+   "route": "general",
+   "flow": "general",
+   "route_ok": true,
+   "answer": "Good morning! I'm here to assist you. How can I help you today?",
+   "total_ms": 3010,
+   "calls": 2,
+   "tin": 426,
+   "tout": 34,
+   "trace": [
+    {
+     "node": "router",
+     "ms": 1483,
+     "llm_calls": 1,
+     "tokens_in": 358,
+     "tokens_out": 16
+    },
+    {
+     "node": "general",
+     "ms": 1523,
+     "llm_calls": 1,
+     "tokens_in": 68,
+     "tokens_out": 18
+    }
+   ],
+   "answer_ok": true
+  },
+  {
+   "id": "h-gen-02",
+   "type": "general",
+   "expected_route": "general",
+   "route": "general",
+   "flow": "general",
+   "route_ok": true,
+   "answer": "I'm a document and data assistant, here to help answer your questions and provide information.",
+   "total_ms": 3405,
+   "calls": 2,
+   "tin": 428,
+   "tout": 36,
+   "trace": [
+    {
+     "node": "router",
+     "ms": 1814,
+     "llm_calls": 1,
+     "tokens_in": 359,
+     "tokens_out": 17
+    },
+    {
+     "node": "general",
+     "ms": 1589,
+     "llm_calls": 1,
+     "tokens_in": 69,
+     "tokens_out": 19
+    }
+   ],
+   "answer_ok": true
+  },
+  {
+   "id": "h-una-01",
+   "type": "unanswerable",
+   "expected_route": "documents",
+   "route": "documents",
+   "flow": "document+rewrite",
+   "route_ok": true,
+   "answer": "That information is not in the knowledge base.",
+   "total_ms": 20581,
+   "calls": 14,
+   "tin": 3579,
+   "tout": 214,
+   "trace": [
+    {
+     "node": "router",
+     "ms": 2152,
+     "llm_calls": 1,
+     "tokens_in": 364,
+     "tokens_out": 22
+    },
+    {
+     "node": "retrieve",
+     "ms": 337,
+     "llm_calls": 0,
+     "tokens_in": 0,
+     "tokens_out": 0
+    },
+    {
+     "node": "grade",
+     "ms": 4566,
+     "llm_calls": 6,
+     "tokens_in": 1578,
+     "tokens_out": 36
+    },
+    {
+     "node": "rewrite",
+     "ms": 10004,
+     "llm_calls": 1,
+     "tokens_in": 57,
+     "tokens_out": 120
+    },
+    {
+     "node": "retrieve",
+     "ms": 114,
+     "llm_calls": 0,
+     "tokens_in": 0,
+     "tokens_out": 0
+    },
+    {
+     "node": "grade",
+     "ms": 3403,
+     "llm_calls": 6,
+     "tokens_in": 1580,
+     "tokens_out": 36
+    },
+    {
+     "node": "generate",
+     "ms": 0,
+     "llm_calls": 0,
+     "tokens_in": 0,
+     "tokens_out": 0
+    }
+   ],
+   "answer_ok": true
+  },
+  {
+   "id": "h-una-02",
+   "type": "unanswerable",
+   "expected_route": "documents",
+   "route": "documents",
+   "flow": "document+rewrite",
+   "route_ok": true,
+   "answer": "That information is not in the knowledge base.",
+   "total_ms": 12149,
+   "calls": 14,
+   "tin": 3575,
+   "tout": 124,
+   "trace": [
+    {
+     "node": "router",
+     "ms": 2062,
+     "llm_calls": 1,
+     "tokens_in": 363,
+     "tokens_out": 21
+    },
+    {
+     "node": "retrieve",
+     "ms": 103,
+     "llm_calls": 0,
+     "tokens_in": 0,
+     "tokens_out": 0
+    },
+    {
+     "node": "grade",
+     "ms": 3491,
+     "llm_calls": 6,
+     "tokens_in": 1584,
+     "tokens_out": 36
+    },
+    {
+     "node": "rewrite",
+     "ms": 2744,
+     "llm_calls": 1,
+     "tokens_in": 56,
+     "tokens_out": 31
+    },
+    {
+     "node": "retrieve",
+     "ms": 185,
+     "llm_calls": 0,
+     "tokens_in": 0,
+     "tokens_out": 0
+    },
+    {
+     "node": "grade",
+     "ms": 3558,
+     "llm_calls": 6,
+     "tokens_in": 1572,
+     "tokens_out": 36
+    },
+    {
+     "node": "generate",
+     "ms": 0,
+     "llm_calls": 0,
+     "tokens_in": 0,
+     "tokens_out": 0
+    }
+   ],
+   "answer_ok": true
+  }
+ ]
+}
