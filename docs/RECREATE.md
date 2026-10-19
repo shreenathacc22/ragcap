@@ -176,21 +176,21 @@ Where to see the evidence for each: `traces.jsonl` (one line per question: route
 
 | What | Value |
 |---|---|
-| `golden/golden.jsonl` sha1 | `68ec09bdfcf99d62999ccfbe708f6f8ac3eaa4d3` (27 cases; frozen in commit 6486837 before any code) |
-| `golden/golden_heldout.jsonl` sha1 | `02ddcfd613d4784f59bdf8ad20df971b8c9db899` (25 cases; frozen in 83ea0cd before its first run) |
-| `golden/amendments.jsonl` sha1 | `36a0e6e0d637a48ff43755fd579a1e7b9e80ecce` (one entry, doc-008, commit ec7c609) |
+| `golden/golden.jsonl` sha1 | `68ec09bdfcf99d62999ccfbe708f6f8ac3eaa4d3` (27 cases; frozen in commit db9af51 before any code) |
+| `golden/golden_heldout.jsonl` sha1 | `02ddcfd613d4784f59bdf8ad20df971b8c9db899` (25 cases; frozen in 9510b6a before its first run) |
+| `golden/amendments.jsonl` sha1 | `36a0e6e0d637a48ff43755fd579a1e7b9e80ecce` (one entry, doc-008, commit 45a0392) |
 | corpus: `cat data/docs_versioned/*.md` piped into `shasum` | `c2b025608d03...`; `broker_inventory.csv` `c837aedfa3bd...` |
 | database after 2.3 | `16 docs, 16 chunks, 8 superseded, 1 tables` |
 | `b1_check.py` | `PASS`; pair similarity 0.962 to 0.990; old first 1/8 |
 | `b1_eval.py` headline | OFF `99/192 (51.6%)`, ON `0/192 (0.0%)`; trap 2/12 to 12/12; control 20/20 both |
 | versions used | Python 3.12.13, langgraph 1.2.16, openai 3.35.1, psycopg 3.3.6, pgvector (python) 0.5.1, PostgreSQL 16.15, pgvector 0.8.7, Ollama 0.40.6 |
-| git | first commit 6486837 is the golden freeze, before any pipeline code; `git log --oneline` in `build/` shows the full order |
+| git | first commit db9af51 is the golden freeze, before any pipeline code; `git log --oneline` in `build/` shows the full order |
 
 `recreate.sh` checks the sha1s, the counts and the ablation headline and exits 1 on any mismatch.
 
 ## 5. How the evaluation was kept honest (so you can repeat the method, not just the numbers)
 
-1. The golden set was committed before the pipeline existed (6486837), and the held-out set before its first run (83ea0cd). Git order is the evidence.
+1. The golden set was committed before the pipeline existed (db9af51), and the held-out set before its first run (9510b6a). Git order is the evidence.
 2. A scorer bug (doc-008) was fixed through `amendments.jsonl` in its own commit, never by editing the frozen file.
 3. Golden questions were never pasted into prompts as examples; a first draft that did was replaced before any run (SOP step 9).
 4. Every prompt change was committed before it was measured, and measured on the full set, by failing case id, not only by percentage.
