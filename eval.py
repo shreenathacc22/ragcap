@@ -24,8 +24,8 @@ def flow_of(o):
     return o["route"]
 
 
-def main(limit=None):
-    cases = [json.loads(l) for l in Path("golden/golden.jsonl").read_text().splitlines()]
+def main(limit=None, golden="golden/golden.jsonl", tag="eval"):
+    cases = [json.loads(l) for l in Path(golden).read_text().splitlines()]
     amend = {a["id"]: a for a in (json.loads(l) for l in Path("golden/amendments.jsonl").read_text().splitlines() if l.strip())} \
         if Path("golden/amendments.jsonl").exists() else {}
     for c in cases:
@@ -71,7 +71,7 @@ def main(limit=None):
         tin, tout = st.mean(r["tin"] for r in rs), st.mean(r["tout"] for r in rs)
         table.append(f"| {f} | {len(rs)} | {st.mean(r['calls'] for r in rs):.1f} | {tin:.0f} / {tout:.0f} | "
                      f"{st.mean(r['total_ms'] for r in rs) / 1000:.1f} s | ${tin * P_IN + tout * P_OUT:.5f} |")
-    out = Path("results") / f"eval_{time.strftime('%Y%m%d_%H%M%S')}.json"
+    out = Path("results") / f"{tag}_{time.strftime('%Y%m%d_%H%M%S')}.json"
     out.write_text(json.dumps({"metrics": m, "rows": rows}, indent=1))
     md = "## Metrics\n\n" + "\n".join(f"- {k}: {v}" for k, v in m.items()) + "\n\n## Per-flow\n\n" + "\n".join(table) + "\n"
     out.with_suffix(".md").write_text(md)
@@ -79,4 +79,10 @@ def main(limit=None):
 
 
 if __name__ == "__main__":
-    main(int(sys.argv[1]) if len(sys.argv) > 1 else None)
+    import argparse
+    ap = argparse.ArgumentParser()
+    ap.add_argument("limit", nargs="?", type=int)
+    ap.add_argument("--golden", default="golden/golden.jsonl")
+    ap.add_argument("--tag", default="eval")
+    a = ap.parse_args()
+    main(a.limit, a.golden, a.tag)
