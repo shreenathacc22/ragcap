@@ -5,3 +5,5 @@ uploads/
 
 .venv-docling/
 results/*.log
+results/failed_series_*/
+traces.jsonl
