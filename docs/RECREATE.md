@@ -228,4 +228,4 @@ Live on GitHub Pages: https://shreenathacc22.github.io/ragcap/ (static: results,
 
 ## 8. Related documents
 
-`docs/SOP_ragcap_build.pdf` (every step with problem, change, verification and results), `docs/RUNBOOK_ragcap_operations.pdf` (start/stop, routine tasks, backup, troubleshooting, change control), `docs/build_pdfs.py` (regenerates all three PDFs from this folder; needs `pip install reportlab`). The analysis of the original design and the pre-build plan are working notes and are not published.
+`docs/SOP_ragcap_build.pdf` (every step with problem, change, verification and results), `docs/RUNBOOK_ragcap_operations.pdf` (start/stop, routine tasks, backup, troubleshooting, change control), `docs/build_pdfs.py` (regenerates all three PDFs from this folder; needs `pip install reportlab`), `docs/ragcap_deck.pptx` (the 15-slide deck; `docs/build_deck.js` rebuilds it with pptxgenjs). The analysis of the original design and the pre-build plan are working notes and are not published.
