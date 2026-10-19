@@ -33,19 +33,34 @@ class State(TypedDict, total=False):
 
 # ---------- helpers ----------
 def chat(messages, json_mode=False, max_tokens=400):
+    """One LLM call. Retries 3 times with backoff on connection errors so a transient Ollama blip does not kill a long run."""
+    from openai import APIConnectionError, APITimeoutError
     kw = {"response_format": {"type": "json_object"}} if json_mode else {}
-    r = client().chat.completions.create(model=LLM_MODEL, messages=messages, temperature=0,
-                                         max_tokens=max_tokens, **kw)
+    for attempt in range(3):
+        try:
+            r = client().chat.completions.create(model=LLM_MODEL, messages=messages, temperature=0,
+                                                 max_tokens=max_tokens, **kw)
+            break
+        except (APIConnectionError, APITimeoutError):
+            if attempt == 2:
+                raise
+            time.sleep(5 * (attempt + 1))
     u = r.usage
     return r.choices[0].message.content or "", (u.prompt_tokens if u else 0), (u.completion_tokens if u else 0)
 
 
 def parse_json(s: str) -> dict:
-    try:
-        return json.loads(s)
-    except Exception:
-        m = re.search(r"\{.*\}", s, re.S)
-        return json.loads(m.group(0)) if m else {}
+    """Never raises. A small model sometimes returns truncated or wrapped JSON; the caller falls back to defaults on {}."""
+    for cand in (s, (re.search(r"\{.*\}", s, re.S) or re.search(r"\{.*", s, re.S) or [None])[0]):
+        if not cand:
+            continue
+        for fix in (cand, cand + '"}', cand + '}'):
+            try:
+                out = json.loads(fix)
+                return out if isinstance(out, dict) else {}
+            except Exception:
+                pass
+    return {}
 
 
 def timed(name):
@@ -121,7 +136,7 @@ def router(s: State):
            "Never add words about runbooks, procedures, tables or the route.")
     out, ti, to = chat([{"role": "system", "content": sys},
                         {"role": "user", "content": f"Chat history:\n{hist or '(none)'}\n\nMessage: {s['question']}"}],
-                       json_mode=True, max_tokens=120)
+                       json_mode=True, max_tokens=200)
     j = parse_json(out)
     route = j.get("route", "documents")
     if route not in {"documents", "database", "general"} or (route == "database" and not tables):
@@ -165,7 +180,7 @@ def rewrite(s: State):
     out, ti, to = chat([
         {"role": "system", "content": "Rewrite the search query using synonyms and expanded terms to improve retrieval. "
          "Reply JSON: {\"query\": \"...\"}."},
-        {"role": "user", "content": s["standalone"]}], json_mode=True, max_tokens=60)
+        {"role": "user", "content": s["standalone"]}], json_mode=True, max_tokens=120)
     return {"standalone": parse_json(out).get("query") or s["standalone"], "rewrites": s.get("rewrites", 0) + 1}, 1, ti, to
 
 

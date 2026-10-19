@@ -35,7 +35,11 @@ def main(limit=None, golden="golden/golden.jsonl", tag="eval"):
     cases = cases[:limit]
     rows = []
     for c in cases:
-        o = ask(c["question"])
+        try:
+            o = ask(c["question"])
+        except Exception as e:  # noqa: BLE001 — one broken case must not kill a 20-minute run
+            o = {"answer": f"ERROR: {type(e).__name__}: {str(e)[:120]}", "route": "error", "rewrites": 0, "total_ms": 0,
+                 "trace": [{"node": "error", "ms": 0, "llm_calls": 0, "tokens_in": 0, "tokens_out": 0}], "chunks": []}
         ans = o["answer"]
         r = {"id": c["id"], "type": c["type"], "expected_route": c["route"], "route": o["route"], "flow": flow_of(o),
              "route_ok": o["route"] == c["route"], "answer": ans, "total_ms": o["total_ms"],
@@ -55,7 +59,8 @@ def main(limit=None, golden="golden/golden.jsonl", tag="eval"):
         print(f"{c['id']:8} route={'ok ' if r['route_ok'] else 'BAD'} answer={'ok ' if r['answer_ok'] else 'BAD'} {r['total_ms']}ms", flush=True)
 
     n = len(rows)
-    m = {"cases": n, "router_accuracy": sum(r["route_ok"] for r in rows) / n,
+    m = {"cases": n, "errors": sum(r["route"] == "error" for r in rows),
+         "router_accuracy": sum(r["route_ok"] for r in rows) / n,
          "answer_correct": sum(r["answer_ok"] for r in rows) / n}
     doc = [r for r in rows if "retrieval_hit" in r]
     m["retrieval_hit_rate_doc"] = sum(r["retrieval_hit"] for r in doc) / len(doc) if doc else None
