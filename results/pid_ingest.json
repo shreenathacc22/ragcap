@@ -1,0 +1,26 @@
+[
+ {
+  "file": "PID-001.png",
+  "doc": "PID-001",
+  "kind": "drawing",
+  "chunks": 2,
+  "vision_seconds": 110.0,
+  "description_chars": 1282
+ },
+ {
+  "file": "PID-002.png",
+  "doc": "PID-002",
+  "kind": "drawing",
+  "chunks": 1,
+  "vision_seconds": 88.7,
+  "description_chars": 1076
+ },
+ {
+  "file": "PID-003.png",
+  "doc": "PID-003",
+  "kind": "drawing",
+  "chunks": 1,
+  "vision_seconds": 83.8,
+  "description_chars": 968
+ }
+]

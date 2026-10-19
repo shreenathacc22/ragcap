@@ -1,0 +1,2286 @@
+{
+"generated": "2026-10-19",
+"model": "llama3.2:3b (vision: qwen2.5vl:3b)",
+"runs": [
+{
+"id": "doc-001",
+"set": "tuned set, filter ON",
+"type": "version_current",
+"question": "At what consumer lag should operations raise an alert?",
+"route": "documents",
+"nodes": [
+{
+"node": "router",
+"ms": 2379
+},
+{
+"node": "retrieve",
+"ms": 169
+},
+{
+"node": "grade",
+"ms": 14283
+},
+{
+"node": "generate",
+"ms": 5046
+}
+],
+"total_ms": 21885,
+"answer": "According to passage [1], operations should raise an alert when the Kafka consumer group lag exceeds 5,000 messages sustained for 5 minutes.",
+"sql": null,
+"ok": true,
+"retrieved_off": [
+"Kafka Consumer Lag Runbook v2",
+"Kafka Consumer Lag Runbook v1 OLD",
+"Kafka Disk Utilisation Alerting v1 OLD",
+"Kafka Disk Utilisation Alerting v2",
+"Kafka Incident Escalation Path v2",
+"Kafka Incident Escalation Path v1 OLD"
+],
+"retrieved_on": [
+"Kafka Consumer Lag Runbook v2",
+"Kafka Disk Utilisation Alerting v2",
+"Kafka Incident Escalation Path v2",
+"Kafka Retention Policy v2",
+"Kafka Broker Restart Procedure v2",
+"Kafka Replication Settings v2"
+]
+},
+{
+"id": "doc-002",
+"set": "tuned set, filter ON",
+"type": "version_current",
+"question": "How long do standard topics retain messages by default?",
+"route": "documents",
+"nodes": [
+{
+"node": "router",
+"ms": 2303
+},
+{
+"node": "retrieve",
+"ms": 69
+},
+{
+"node": "grade",
+"ms": 16229
+},
+{
+"node": "generate",
+"ms": 4433
+}
+],
+"total_ms": 23039,
+"answer": "Standard topics retain messages for 72 hours (3 days) by default.",
+"sql": null,
+"ok": true,
+"retrieved_off": [
+"Kafka Retention Policy v1 OLD",
+"Kafka Retention Policy v2",
+"Kafka Topic Naming Standard v2",
+"Kafka Topic Naming Standard v1 OLD",
+"Kafka Consumer Lag Runbook v2",
+"Kafka Consumer Lag Runbook v1 OLD"
+],
+"retrieved_on": [
+"Kafka Retention Policy v2",
+"Kafka Topic Naming Standard v2",
+"Kafka Consumer Lag Runbook v2",
+"Kafka Disk Utilisation Alerting v2",
+"Kafka Replication Settings v2",
+"Kafka Incident Escalation Path v2"
+]
+},
+{
+"id": "doc-003",
+"set": "tuned set, filter ON",
+"type": "version_current",
+"question": "In what order should a broker be drained and stopped during a patch?",
+"route": "documents",
+"nodes": [
+{
+"node": "router",
+"ms": 2637
+},
+{
+"node": "retrieve",
+"ms": 99
+},
+{
+"node": "grade",
+"ms": 7711
+},
+{
+"node": "generate",
+"ms": 6130
+}
+],
+"total_ms": 16581,
+"answer": "According to the passage [1], the order in which a broker should be drained and stopped during a patch is:\n\n1. Drain partition leadership away from the broker.\n2. Verify no partitions list this broker as leader.\n3. Stop the broker process.\n4. Apply the patch.\n5. Start the broker and wait for ISR to catch up.",
+"sql": null,
+"ok": true,
+"retrieved_off": [
+"Kafka Broker Restart Procedure v2",
+"Kafka Broker Restart Procedure v1 OLD",
+"Kafka Disk Utilisation Alerting v1 OLD",
+"Kafka Disk Utilisation Alerting v2",
+"Kafka TLS Certificate Rotation v2",
+"Kafka Consumer Lag Runbook v2"
+],
+"retrieved_on": [
+"Kafka Broker Restart Procedure v2",
+"Kafka Disk Utilisation Alerting v2",
+"Kafka TLS Certificate Rotation v2",
+"Kafka Consumer Lag Runbook v2",
+"Kafka Retention Policy v2",
+"Kafka Incident Escalation Path v2"
+]
+},
+{
+"id": "doc-004",
+"set": "tuned set, filter ON",
+"type": "version_current",
+"question": "Which host issues broker TLS certificates?",
+"route": "documents",
+"nodes": [
+{
+"node": "router",
+"ms": 1974
+},
+{
+"node": "retrieve",
+"ms": 68
+},
+{
+"node": "grade",
+"ms": 9519
+},
+{
+"node": "generate",
+"ms": 2248
+}
+],
+"total_ms": 13812,
+"answer": "[1] (Kafka TLS Certificate Rotation)\n\nThe host that issues broker TLS certificates is `pki.internal.example.com`.",
+"sql": null,
+"ok": true,
+"retrieved_off": [
+"Kafka TLS Certificate Rotation v2",
+"Kafka TLS Certificate Rotation v1 OLD",
+"Kafka Broker Restart Procedure v1 OLD",
+"Kafka Broker Restart Procedure v2",
+"Kafka Disk Utilisation Alerting v1 OLD",
+"Kafka Replication Settings v2"
+],
+"retrieved_on": [
+"Kafka TLS Certificate Rotation v2",
+"Kafka Broker Restart Procedure v2",
+"Kafka Replication Settings v2",
+"Kafka Disk Utilisation Alerting v2",
+"Kafka Incident Escalation Path v2",
+"Kafka Retention Policy v2"
+]
+},
+{
+"id": "doc-005",
+"set": "tuned set, filter ON",
+"type": "version_current",
+"question": "Which team owns escalation for a SEV-1 Kafka incident?",
+"route": "documents",
+"nodes": [
+{
+"node": "router",
+"ms": 2496
+},
+{
+"node": "retrieve",
+"ms": 81
+},
+{
+"node": "grade",
+"ms": 11532
+},
+{
+"node": "generate",
+"ms": 1720
+}
+],
+"total_ms": 15832,
+"answer": "The team that owns escalation for a SEV-1 Kafka incident is the Streaming Platform team.",
+"sql": null,
+"ok": true,
+"retrieved_off": [
+"Kafka Incident Escalation Path v2",
+"Kafka Incident Escalation Path v1 OLD",
+"Kafka Topic Naming Standard v1 OLD",
+"Kafka Retention Policy v1 OLD",
+"Kafka Topic Naming Standard v2",
+"Kafka Disk Utilisation Alerting v1 OLD"
+],
+"retrieved_on": [
+"Kafka Incident Escalation Path v2",
+"Kafka Topic Naming Standard v2",
+"Kafka Retention Policy v2",
+"Kafka Replication Settings v2",
+"Kafka Disk Utilisation Alerting v2",
+"Kafka Consumer Lag Runbook v2"
+]
+},
+{
+"id": "doc-006",
+"set": "tuned set, filter ON",
+"type": "version_current",
+"question": "What prefix should a new event topic use?",
+"route": "documents",
+"nodes": [
+{
+"node": "router",
+"ms": 2025
+},
+{
+"node": "retrieve",
+"ms": 67
+},
+{
+"node": "grade",
+"ms": 10386
+},
+{
+"node": "generate",
+"ms": 2286
+}
+],
+"total_ms": 14768,
+"answer": "The prefix for a new event topic should be `event.` followed by domain and entity, for example `event.orders.created`.",
+"sql": null,
+"ok": true,
+"retrieved_off": [
+"Kafka Topic Naming Standard v2",
+"Kafka Topic Naming Standard v1 OLD",
+"Kafka Retention Policy v1 OLD",
+"Kafka Retention Policy v2",
+"Kafka Disk Utilisation Alerting v2",
+"Kafka Incident Escalation Path v1 OLD"
+],
+"retrieved_on": [
+"Kafka Topic Naming Standard v2",
+"Kafka Retention Policy v2",
+"Kafka Disk Utilisation Alerting v2",
+"Kafka Incident Escalation Path v2",
+"Kafka Consumer Lag Runbook v2",
+"Kafka TLS Certificate Rotation v2"
+]
+},
+{
+"id": "doc-007",
+"set": "tuned set, filter ON",
+"type": "version_current",
+"question": "At what disk utilisation should a broker page?",
+"route": "documents",
+"nodes": [
+{
+"node": "router",
+"ms": 2148
+},
+{
+"node": "retrieve",
+"ms": 74
+},
+{
+"node": "grade",
+"ms": 9689
+},
+{
+"node": "generate",
+"ms": 1458
+}
+],
+"total_ms": 13373,
+"answer": "A broker page should be triggered when the disk utilisation exceeds 75%.",
+"sql": null,
+"ok": true,
+"retrieved_off": [
+"Kafka Disk Utilisation Alerting v2",
+"Kafka Disk Utilisation Alerting v1 OLD",
+"Kafka Broker Restart Procedure v1 OLD",
+"Kafka Broker Restart Procedure v2",
+"Kafka Retention Policy v2",
+"Kafka TLS Certificate Rotation v1 OLD"
+],
+"retrieved_on": [
+"Kafka Disk Utilisation Alerting v2",
+"Kafka Broker Restart Procedure v2",
+"Kafka Retention Policy v2",
+"Kafka TLS Certificate Rotation v2",
+"Kafka Replication Settings v2",
+"Kafka Consumer Lag Runbook v2"
+]
+},
+{
+"id": "doc-008",
+"set": "tuned set, filter ON",
+"type": "version_current",
+"question": "What replication factor should a new production topic use?",
+"route": "documents",
+"nodes": [
+{
+"node": "router",
+"ms": 2226
+},
+{
+"node": "retrieve",
+"ms": 70
+},
+{
+"node": "grade",
+"ms": 9744
+},
+{
+"node": "generate",
+"ms": 1272
+}
+],
+"total_ms": 13316,
+"answer": "[1] recommends a replication factor of 3 for production topics.",
+"sql": null,
+"ok": true,
+"retrieved_off": [
+"Kafka Replication Settings v2",
+"Kafka Replication Settings v1 OLD",
+"Kafka Topic Naming Standard v1 OLD",
+"Kafka Topic Naming Standard v2",
+"Kafka Retention Policy v1 OLD",
+"Kafka Retention Policy v2"
+],
+"retrieved_on": [
+"Kafka Replication Settings v2",
+"Kafka Topic Naming Standard v2",
+"Kafka Retention Policy v2",
+"Kafka Disk Utilisation Alerting v2",
+"Kafka Broker Restart Procedure v2",
+"Kafka TLS Certificate Rotation v2"
+]
+},
+{
+"id": "doc-009",
+"set": "tuned set, filter ON",
+"type": "exact_string",
+"question": "What port does BROKER-EAST-02 use for TLS traffic?",
+"route": "documents",
+"nodes": [
+{
+"node": "router",
+"ms": 2430
+},
+{
+"node": "retrieve",
+"ms": 69
+},
+{
+"node": "grade",
+"ms": 9035
+},
+{
+"node": "generate",
+"ms": 4386
+}
+],
+"total_ms": 15923,
+"answer": "The port used for TLS traffic by BROKER-EAST-02 is 9093.",
+"sql": null,
+"ok": true,
+"retrieved_off": [
+"Kafka TLS Certificate Rotation v2",
+"Kafka TLS Certificate Rotation v1 OLD",
+"Kafka Broker Restart Procedure v1 OLD",
+"Kafka Broker Restart Procedure v2",
+"Kafka Replication Settings v2",
+"Kafka Topic Naming Standard v1 OLD"
+],
+"retrieved_on": [
+"Kafka TLS Certificate Rotation v2",
+"Kafka Broker Restart Procedure v2",
+"Kafka Replication Settings v2",
+"Kafka Disk Utilisation Alerting v2",
+"Kafka Topic Naming Standard v2",
+"Kafka Incident Escalation Path v2"
+]
+},
+{
+"id": "doc-010",
+"set": "tuned set, filter ON",
+"type": "exact_string",
+"question": "What is the cluster ID of the production Kafka cluster?",
+"route": "documents",
+"nodes": [
+{
+"node": "router",
+"ms": 2311
+},
+{
+"node": "retrieve",
+"ms": 74
+},
+{
+"node": "grade",
+"ms": 13626
+},
+{
+"node": "generate",
+"ms": 11124
+}
+],
+"total_ms": 27138,
+"answer": "The cluster ID of the production Kafka cluster is `kfk-east-7731`.",
+"sql": null,
+"ok": true,
+"retrieved_off": [
+"Kafka Replication Settings v1 OLD",
+"Kafka Topic Naming Standard v1 OLD",
+"Kafka Replication Settings v2",
+"Kafka Disk Utilisation Alerting v1 OLD",
+"Kafka Topic Naming Standard v2",
+"Kafka Disk Utilisation Alerting v2"
+],
+"retrieved_on": [
+"Kafka Replication Settings v2",
+"Kafka Topic Naming Standard v2",
+"Kafka Disk Utilisation Alerting v2",
+"Kafka Broker Restart Procedure v2",
+"Kafka Incident Escalation Path v2",
+"Kafka Retention Policy v2"
+]
+},
+{
+"id": "doc-011",
+"set": "tuned set, filter ON",
+"type": "exact_string",
+"question": "Which PagerDuty service covers the Kafka on-call rota?",
+"route": "documents",
+"nodes": [
+{
+"node": "router",
+"ms": 2421
+},
+{
+"node": "retrieve",
+"ms": 102
+},
+{
+"node": "grade",
+"ms": 11109
+},
+{
+"node": "generate",
+"ms": 5023
+}
+],
+"total_ms": 18658,
+"answer": "It is not in the knowledge base. The passage does not mention which PagerDuty service covers the Kafka on-call rota.",
+"sql": null,
+"ok": false,
+"retrieved_off": [
+"Kafka Incident Escalation Path v1 OLD",
+"Kafka Incident Escalation Path v2",
+"Kafka Retention Policy v1 OLD",
+"Kafka Topic Naming Standard v1 OLD",
+"Kafka Replication Settings v1 OLD",
+"Kafka Retention Policy v2"
+],
+"retrieved_on": [
+"Kafka Incident Escalation Path v2",
+"Kafka Retention Policy v2",
+"Kafka Topic Naming Standard v2",
+"Kafka Disk Utilisation Alerting v2",
+"Kafka Replication Settings v2",
+"Kafka Broker Restart Procedure v2"
+]
+},
+{
+"id": "doc-012",
+"set": "tuned set, filter ON",
+"type": "exact_string",
+"question": "What is the metrics endpoint for BROKER-EAST-02?",
+"route": "documents",
+"nodes": [
+{
+"node": "router",
+"ms": 2908
+},
+{
+"node": "retrieve",
+"ms": 71
+},
+{
+"node": "grade",
+"ms": 13046
+},
+{
+"node": "generate",
+"ms": 14742
+}
+],
+"total_ms": 30770,
+"answer": "The metrics endpoint for BROKER-EAST-02 is `http://BROKER-EAST-02:7071/metrics`.",
+"sql": null,
+"ok": true,
+"retrieved_off": [
+"Kafka TLS Certificate Rotation v2",
+"Kafka Broker Restart Procedure v1 OLD",
+"Kafka Broker Restart Procedure v2",
+"Kafka TLS Certificate Rotation v1 OLD",
+"Kafka Disk Utilisation Alerting v1 OLD",
+"Kafka Disk Utilisation Alerting v2"
+],
+"retrieved_on": [
+"Kafka TLS Certificate Rotation v2",
+"Kafka Broker Restart Procedure v2",
+"Kafka Disk Utilisation Alerting v2",
+"Kafka Replication Settings v2",
+"Kafka Consumer Lag Runbook v2",
+"Kafka Topic Naming Standard v2"
+]
+},
+{
+"id": "doc-013",
+"set": "tuned set, filter ON",
+"type": "exact_string",
+"question": "What is the name of the production Kafka cluster?",
+"route": "documents",
+"nodes": [
+{
+"node": "router",
+"ms": 3313
+},
+{
+"node": "retrieve",
+"ms": 72
+},
+{
+"node": "grade",
+"ms": 11080
+},
+{
+"node": "generate",
+"ms": 11629
+}
+],
+"total_ms": 26098,
+"answer": "The name of the production Kafka cluster is `kafka-prod-east`.",
+"sql": null,
+"ok": true,
+"retrieved_off": [
+"Kafka Topic Naming Standard v1 OLD",
+"Kafka Replication Settings v1 OLD",
+"Kafka Replication Settings v2",
+"Kafka Topic Naming Standard v2",
+"Kafka Disk Utilisation Alerting v1 OLD",
+"Kafka Incident Escalation Path v1 OLD"
+],
+"retrieved_on": [
+"Kafka Replication Settings v2",
+"Kafka Topic Naming Standard v2",
+"Kafka Incident Escalation Path v2",
+"Kafka Disk Utilisation Alerting v2",
+"Kafka Broker Restart Procedure v2",
+"Kafka Retention Policy v2"
+]
+},
+{
+"id": "doc-014",
+"set": "tuned set, filter ON",
+"type": "exact_string",
+"question": "What port does BROKER-EAST-02 use for PLAINTEXT traffic?",
+"route": "documents",
+"nodes": [
+{
+"node": "router",
+"ms": 2722
+},
+{
+"node": "retrieve",
+"ms": 81
+},
+{
+"node": "grade",
+"ms": 9390
+},
+{
+"node": "generate",
+"ms": 1841
+}
+],
+"total_ms": 14038,
+"answer": "The port used by BROKER-EAST-02 for PLAINTEXT traffic is 9092.",
+"sql": null,
+"ok": true,
+"retrieved_off": [
+"Kafka TLS Certificate Rotation v2",
+"Kafka TLS Certificate Rotation v1 OLD",
+"Kafka Broker Restart Procedure v1 OLD",
+"Kafka Broker Restart Procedure v2",
+"Kafka Disk Utilisation Alerting v2",
+"Kafka Disk Utilisation Alerting v1 OLD"
+],
+"retrieved_on": [
+"Kafka TLS Certificate Rotation v2",
+"Kafka Broker Restart Procedure v2",
+"Kafka Disk Utilisation Alerting v2",
+"Kafka Incident Escalation Path v2",
+"Kafka Topic Naming Standard v2",
+"Kafka Replication Settings v2"
+]
+},
+{
+"id": "doc-015",
+"set": "tuned set, filter ON",
+"type": "multi_hop",
+"question": "A broker is paging on disk utilisation. At what percentage does it page, and how long are standard topics retained if I need to reduce retention to recover space?",
+"route": "documents",
+"nodes": [
+{
+"node": "router",
+"ms": 4456
+},
+{
+"node": "retrieve",
+"ms": 175
+},
+{
+"node": "grade",
+"ms": 9476
+},
+{
+"node": "generate",
+"ms": 6356
+}
+],
+"total_ms": 20466,
+"answer": "According to passage [1], a broker will page when its log-directory utilisation exceeds 75%. \n\nAs for how long standard topics are retained if you need to reduce retention to recover space, the passage does not provide a specific percentage or duration. It only mentions that reducing retention on the largest topic is an action to take when the broker's log-directory utilisation exceeds 75%.",
+"sql": null,
+"ok": false,
+"retrieved_off": [
+"Kafka Retention Policy v1 OLD",
+"Kafka Retention Policy v2",
+"Kafka Disk Utilisation Alerting v2",
+"Kafka Disk Utilisation Alerting v1 OLD",
+"Kafka Broker Restart Procedure v1 OLD",
+"Kafka Broker Restart Procedure v2"
+],
+"retrieved_on": [
+"Kafka Retention Policy v2",
+"Kafka Disk Utilisation Alerting v2",
+"Kafka Broker Restart Procedure v2",
+"Kafka Topic Naming Standard v2",
+"Kafka Replication Settings v2",
+"Kafka Consumer Lag Runbook v2"
+]
+},
+{
+"id": "doc-016",
+"set": "tuned set, filter ON",
+"type": "multi_hop",
+"question": "I am escalating a SEV-1 on BROKER-EAST-02. Which team do I page, and what port do I check for TLS health?",
+"route": "documents",
+"nodes": [
+{
+"node": "router",
+"ms": 4923
+},
+{
+"node": "retrieve",
+"ms": 159
+},
+{
+"node": "grade",
+"ms": 10228
+},
+{
+"node": "generate",
+"ms": 7900
+}
+],
+"total_ms": 23212,
+"answer": "According to passage [1], to escalate a SEV-1 on BROKER-EAST-02, you should page the **Streaming Platform team**.\n\nAdditionally, the passage states that the broker listens on port 9093 for TLS traffic, so you should check port 9093 for TLS health.",
+"sql": null,
+"ok": true,
+"retrieved_off": [
+"Kafka Incident Escalation Path v1 OLD",
+"Kafka TLS Certificate Rotation v1 OLD",
+"Kafka Incident Escalation Path v2",
+"Kafka TLS Certificate Rotation v2",
+"Kafka Broker Restart Procedure v1 OLD",
+"Kafka Broker Restart Procedure v2"
+],
+"retrieved_on": [
+"Kafka Incident Escalation Path v2",
+"Kafka TLS Certificate Rotation v2",
+"Kafka Broker Restart Procedure v2",
+"Kafka Disk Utilisation Alerting v2",
+"Kafka Replication Settings v2",
+"Kafka Retention Policy v2"
+]
+},
+{
+"id": "db-001",
+"set": "tuned set, filter ON",
+"type": "sql",
+"question": "Which brokers are above 85% disk usage?",
+"route": "database",
+"nodes": [
+{
+"node": "router",
+"ms": 2130
+},
+{
+"node": "sql_agent",
+"ms": 5253
+},
+{
+"node": "generate_sql",
+"ms": 4672
+}
+],
+"total_ms": 12059,
+"answer": "The brokers above 85% disk usage are:\n\n- Broker 3: 87.2% disk usage\n- Broker 5: 91.8% disk usage",
+"sql": "SELECT broker_id, rack, disk_total_gb, disk_used_pct, topics, status FROM broker_inventory WHERE disk_used_pct > 85",
+"ok": true,
+"retrieved_off": null,
+"retrieved_on": null
+},
+{
+"id": "db-002",
+"set": "tuned set, filter ON",
+"type": "sql",
+"question": "How many brokers are in rack-b?",
+"route": "database",
+"nodes": [
+{
+"node": "router",
+"ms": 2114
+},
+{
+"node": "sql_agent",
+"ms": 3821
+},
+{
+"node": "generate_sql",
+"ms": 2137
+}
+],
+"total_ms": 8075,
+"answer": "There are 2 brokers in rack-b. This was computed from the broker_inventory table.",
+"sql": "SELECT COUNT(*) FROM broker_inventory WHERE rack = 'rack-b'",
+"ok": true,
+"retrieved_off": null,
+"retrieved_on": null
+},
+{
+"id": "db-003",
+"set": "tuned set, filter ON",
+"type": "sql",
+"question": "What is the total disk capacity across all brokers in GB?",
+"route": "database",
+"nodes": [
+{
+"node": "router",
+"ms": 2396
+},
+{
+"node": "sql_agent",
+"ms": 3303
+},
+{
+"node": "generate_sql",
+"ms": 2989
+}
+],
+"total_ms": 8690,
+"answer": "The total disk capacity across all brokers is 16,000 GB.",
+"sql": "SELECT SUM(disk_total_gb) FROM broker_inventory",
+"ok": true,
+"retrieved_off": null,
+"retrieved_on": null
+},
+{
+"id": "db-004",
+"set": "tuned set, filter ON",
+"type": "sql",
+"question": "Which broker hosts the most topics, and how many?",
+"route": "database",
+"nodes": [
+{
+"node": "router",
+"ms": 2192
+},
+{
+"node": "sql_agent",
+"ms": 4099
+},
+{
+"node": "generate_sql",
+"ms": 2454
+}
+],
+"total_ms": 8748,
+"answer": "The broker that hosts the most topics is 'rack-a', and it hosts 2 topics.",
+"sql": "SELECT rack, COUNT(*) AS num_topics FROM broker_inventory GROUP BY rack ORDER BY num_topics DESC LIMIT 1",
+"ok": false,
+"retrieved_off": null,
+"retrieved_on": null
+},
+{
+"id": "db-005",
+"set": "tuned set, filter ON",
+"type": "sql",
+"question": "What is the average disk used percentage across brokers?",
+"route": "database",
+"nodes": [
+{
+"node": "router",
+"ms": 2536
+},
+{
+"node": "sql_agent",
+"ms": 3374
+},
+{
+"node": "generate_sql",
+"ms": 2657
+}
+],
+"total_ms": 8571,
+"answer": "The average disk used percentage across brokers is 69.37%. This was computed from the table 'broker_inventory'.",
+"sql": "SELECT AVG(disk_used_pct) FROM broker_inventory",
+"ok": true,
+"retrieved_off": null,
+"retrieved_on": null
+},
+{
+"id": "db-006",
+"set": "tuned set, filter ON",
+"type": "sql",
+"question": "How many brokers have status healthy?",
+"route": "database",
+"nodes": [
+{
+"node": "router",
+"ms": 1983
+},
+{
+"node": "sql_agent",
+"ms": 3688
+},
+{
+"node": "generate_sql",
+"ms": 2227
+}
+],
+"total_ms": 7902,
+"answer": "There are 4 brokers with a healthy status. This was computed from the broker_inventory table.",
+"sql": "SELECT COUNT(*) FROM broker_inventory WHERE status = 'healthy'",
+"ok": true,
+"retrieved_off": null,
+"retrieved_on": null
+},
+{
+"id": "gen-001",
+"set": "tuned set, filter ON",
+"type": "general",
+"question": "Hello!",
+"route": "general",
+"nodes": [
+{
+"node": "router",
+"ms": 1646
+},
+{
+"node": "general",
+"ms": 2113
+}
+],
+"total_ms": 3762,
+"answer": "Hello! I'm here to assist you with any documents or data you need. How can I help you today?",
+"sql": null,
+"ok": true,
+"retrieved_off": null,
+"retrieved_on": null
+},
+{
+"id": "gen-002",
+"set": "tuned set, filter ON",
+"type": "general",
+"question": "Thanks, that was helpful.",
+"route": "general",
+"nodes": [
+{
+"node": "router",
+"ms": 2183
+},
+{
+"node": "general",
+"ms": 1491
+}
+],
+"total_ms": 3676,
+"answer": "You're welcome. Is there anything else I can assist you with?",
+"sql": null,
+"ok": true,
+"retrieved_off": null,
+"retrieved_on": null
+},
+{
+"id": "gen-003",
+"set": "tuned set, filter ON",
+"type": "general",
+"question": "What can you help me with?",
+"route": "general",
+"nodes": [
+{
+"node": "router",
+"ms": 2156
+},
+{
+"node": "general",
+"ms": 3560
+}
+],
+"total_ms": 5719,
+"answer": "I can assist with document-related tasks, data organization, and information retrieval. I can help with tasks such as summarizing documents, extracting key points, and providing context to specific information.",
+"sql": null,
+"ok": true,
+"retrieved_off": null,
+"retrieved_on": null
+},
+{
+"id": "una-001",
+"set": "tuned set, filter ON",
+"type": "unanswerable",
+"question": "What is the largest message size our brokers accept?",
+"route": "documents",
+"nodes": [
+{
+"node": "router",
+"ms": 2362
+},
+{
+"node": "retrieve",
+"ms": 73
+},
+{
+"node": "grade",
+"ms": 11464
+},
+{
+"node": "rewrite",
+"ms": 3870
+},
+{
+"node": "retrieve",
+"ms": 69
+},
+{
+"node": "grade",
+"ms": 13981
+},
+{
+"node": "generate",
+"ms": 0
+}
+],
+"total_ms": 31826,
+"answer": "That information is not in the knowledge base.",
+"sql": null,
+"ok": true,
+"retrieved_off": null,
+"retrieved_on": null
+},
+{
+"id": "una-002",
+"set": "tuned set, filter ON",
+"type": "unanswerable",
+"question": "What is our company's stock ticker symbol?",
+"route": "documents",
+"nodes": [
+{
+"node": "router",
+"ms": 2379
+},
+{
+"node": "retrieve",
+"ms": 72
+},
+{
+"node": "grade",
+"ms": 16928
+},
+{
+"node": "rewrite",
+"ms": 1049
+},
+{
+"node": "retrieve",
+"ms": 92
+},
+{
+"node": "grade",
+"ms": 13673
+},
+{
+"node": "generate",
+"ms": 0
+}
+],
+"total_ms": 34206,
+"answer": "That information is not in the knowledge base.",
+"sql": null,
+"ok": true,
+"retrieved_off": null,
+"retrieved_on": null
+},
+{
+"id": "h-doc-01",
+"set": "held-out set",
+"type": "version_current",
+"question": "How long is a broker TLS certificate valid?",
+"route": "documents",
+"nodes": [
+{
+"node": "router",
+"ms": 2761
+},
+{
+"node": "retrieve",
+"ms": 162
+},
+{
+"node": "grade",
+"ms": 5476
+},
+{
+"node": "rewrite",
+"ms": 3684
+},
+{
+"node": "retrieve",
+"ms": 74
+},
+{
+"node": "grade",
+"ms": 3475
+},
+{
+"node": "generate",
+"ms": 1008
+}
+],
+"total_ms": 16650,
+"answer": "The TLS certificate validity period is 90 days.",
+"sql": null,
+"ok": true,
+"retrieved_off": [
+"Kafka TLS Certificate Rotation v1 OLD",
+"Kafka TLS Certificate Rotation v2",
+"Kafka Broker Restart Procedure v1 OLD",
+"Kafka Broker Restart Procedure v2",
+"Kafka Retention Policy v2",
+"Kafka Retention Policy v1 OLD"
+],
+"retrieved_on": [
+"Kafka TLS Certificate Rotation v2",
+"Kafka Broker Restart Procedure v2",
+"Kafka Retention Policy v2",
+"Kafka Disk Utilisation Alerting v2",
+"Kafka Replication Settings v2",
+"Kafka Consumer Lag Runbook v2"
+]
+},
+{
+"id": "h-doc-02",
+"set": "held-out set",
+"type": "version_current",
+"question": "Which min.insync.replicas value goes with production topics?",
+"route": "documents",
+"nodes": [
+{
+"node": "router",
+"ms": 2496
+},
+{
+"node": "retrieve",
+"ms": 72
+},
+{
+"node": "grade",
+"ms": 16723
+},
+{
+"node": "generate",
+"ms": 4571
+}
+],
+"total_ms": 23866,
+"answer": "The min.insync.replicas value that goes with production topics is 2.",
+"sql": null,
+"ok": true,
+"retrieved_off": [
+"Kafka Replication Settings v1 OLD",
+"Kafka Replication Settings v2",
+"Kafka Topic Naming Standard v1 OLD",
+"Kafka Topic Naming Standard v2",
+"Kafka Retention Policy v1 OLD",
+"Kafka Retention Policy v2"
+],
+"retrieved_on": [
+"Kafka Replication Settings v2",
+"Kafka Topic Naming Standard v2",
+"Kafka Retention Policy v2",
+"Kafka Consumer Lag Runbook v2",
+"Kafka Broker Restart Procedure v2",
+"Kafka TLS Certificate Rotation v2"
+]
+},
+{
+"id": "h-doc-03",
+"set": "held-out set",
+"type": "version_current",
+"question": "What casing must topic names use, and are hyphens allowed?",
+"route": "documents",
+"nodes": [
+{
+"node": "router",
+"ms": 3139
+},
+{
+"node": "retrieve",
+"ms": 85
+},
+{
+"node": "grade",
+"ms": 17498
+},
+{
+"node": "generate",
+"ms": 18013
+}
+],
+"total_ms": 38738,
+"answer": "According to passage [1], topic names must use lowercase with dots as separators, and hyphens are not permitted.",
+"sql": null,
+"ok": true,
+"retrieved_off": [
+"Kafka Topic Naming Standard v2",
+"Kafka Topic Naming Standard v1 OLD",
+"Kafka Retention Policy v1 OLD",
+"Kafka Retention Policy v2",
+"Kafka Disk Utilisation Alerting v2",
+"Kafka Disk Utilisation Alerting v1 OLD"
+],
+"retrieved_on": [
+"Kafka Topic Naming Standard v2",
+"Kafka Retention Policy v2",
+"Kafka Disk Utilisation Alerting v2",
+"Kafka Replication Settings v2",
+"Kafka TLS Certificate Rotation v2",
+"Kafka Incident Escalation Path v2"
+]
+},
+{
+"id": "h-doc-04",
+"set": "held-out set",
+"type": "version_current",
+"question": "How long do audit topics keep their messages?",
+"route": "documents",
+"nodes": [
+{
+"node": "router",
+"ms": 3077
+},
+{
+"node": "retrieve",
+"ms": 124
+},
+{
+"node": "grade",
+"ms": 17344
+},
+{
+"node": "rewrite",
+"ms": 3968
+},
+{
+"node": "retrieve",
+"ms": 65
+},
+{
+"node": "grade",
+"ms": 16308
+},
+{
+"node": "generate",
+"ms": 3782
+}
+],
+"total_ms": 44674,
+"answer": "The message retention period for audit topics is 90 days.",
+"sql": null,
+"ok": true,
+"retrieved_off": [
+"Kafka Retention Policy v1 OLD",
+"Kafka Retention Policy v2",
+"Kafka Consumer Lag Runbook v2",
+"Kafka Consumer Lag Runbook v1 OLD",
+"Kafka Disk Utilisation Alerting v1 OLD",
+"Kafka Disk Utilisation Alerting v2"
+],
+"retrieved_on": [
+"Kafka Retention Policy v2",
+"Kafka Consumer Lag Runbook v2",
+"Kafka Disk Utilisation Alerting v2",
+"Kafka Topic Naming Standard v2",
+"Kafka Broker Restart Procedure v2",
+"Kafka Incident Escalation Path v2"
+]
+},
+{
+"id": "h-doc-05",
+"set": "held-out set",
+"type": "version_current",
+"question": "How many minutes must consumer lag stay high before the alert fires?",
+"route": "documents",
+"nodes": [
+{
+"node": "router",
+"ms": 2403
+},
+{
+"node": "retrieve",
+"ms": 76
+},
+{
+"node": "grade",
+"ms": 16167
+},
+{
+"node": "rewrite",
+"ms": 2430
+},
+{
+"node": "retrieve",
+"ms": 68
+},
+{
+"node": "grade",
+"ms": 16522
+},
+{
+"node": "generate",
+"ms": 0
+}
+],
+"total_ms": 37671,
+"answer": "That information is not in the knowledge base.",
+"sql": null,
+"ok": false,
+"retrieved_off": [
+"Kafka Consumer Lag Runbook v2",
+"Kafka Consumer Lag Runbook v1 OLD",
+"Kafka Disk Utilisation Alerting v1 OLD",
+"Kafka Disk Utilisation Alerting v2",
+"Kafka Retention Policy v2",
+"Kafka Retention Policy v1 OLD"
+],
+"retrieved_on": [
+"Kafka Consumer Lag Runbook v2",
+"Kafka Disk Utilisation Alerting v2",
+"Kafka Retention Policy v2",
+"Kafka Incident Escalation Path v2",
+"Kafka Broker Restart Procedure v2",
+"Kafka Replication Settings v2"
+]
+},
+{
+"id": "h-doc-06",
+"set": "held-out set",
+"type": "version_current",
+"question": "How much downtime should I expect when restarting one broker?",
+"route": "documents",
+"nodes": [
+{
+"node": "router",
+"ms": 2293
+},
+{
+"node": "retrieve",
+"ms": 78
+},
+{
+"node": "grade",
+"ms": 17267
+},
+{
+"node": "rewrite",
+"ms": 5571
+},
+{
+"node": "retrieve",
+"ms": 108
+},
+{
+"node": "grade",
+"ms": 16044
+},
+{
+"node": "generate",
+"ms": 3982
+}
+],
+"total_ms": 45349,
+"answer": "The expected total downtime for a broker restart is 4 minutes.",
+"sql": null,
+"ok": true,
+"retrieved_off": [
+"Kafka Broker Restart Procedure v1 OLD",
+"Kafka Broker Restart Procedure v2",
+"Kafka TLS Certificate Rotation v1 OLD",
+"Kafka TLS Certificate Rotation v2",
+"Kafka Retention Policy v2",
+"Kafka Retention Policy v1 OLD"
+],
+"retrieved_on": [
+"Kafka Broker Restart Procedure v2",
+"Kafka TLS Certificate Rotation v2",
+"Kafka Retention Policy v2",
+"Kafka Consumer Lag Runbook v2",
+"Kafka Replication Settings v2",
+"Kafka Disk Utilisation Alerting v2"
+]
+},
+{
+"id": "h-doc-07",
+"set": "held-out set",
+"type": "version_current",
+"question": "Who is the secondary contact for a SEV-1 Kafka incident?",
+"route": "documents",
+"nodes": [
+{
+"node": "router",
+"ms": 2720
+},
+{
+"node": "retrieve",
+"ms": 76
+},
+{
+"node": "grade",
+"ms": 16294
+},
+{
+"node": "generate",
+"ms": 4332
+}
+],
+"total_ms": 23426,
+"answer": "The secondary contact for a SEV-1 Kafka incident is the Infrastructure duty manager.",
+"sql": null,
+"ok": true,
+"retrieved_off": [
+"Kafka Incident Escalation Path v1 OLD",
+"Kafka Incident Escalation Path v2",
+"Kafka Topic Naming Standard v1 OLD",
+"Kafka Topic Naming Standard v2",
+"Kafka Disk Utilisation Alerting v1 OLD",
+"Kafka Disk Utilisation Alerting v2"
+],
+"retrieved_on": [
+"Kafka Incident Escalation Path v2",
+"Kafka Topic Naming Standard v2",
+"Kafka Disk Utilisation Alerting v2",
+"Kafka Replication Settings v2",
+"Kafka Broker Restart Procedure v2",
+"Kafka Retention Policy v2"
+]
+},
+{
+"id": "h-doc-08",
+"set": "held-out set",
+"type": "version_current",
+"question": "After how long without mitigation must a SEV-1 be escalated?",
+"route": "documents",
+"nodes": [
+{
+"node": "router",
+"ms": 2877
+},
+{
+"node": "retrieve",
+"ms": 81
+},
+{
+"node": "grade",
+"ms": 17438
+},
+{
+"node": "rewrite",
+"ms": 4724
+},
+{
+"node": "retrieve",
+"ms": 70
+},
+{
+"node": "grade",
+"ms": 16763
+},
+{
+"node": "generate",
+"ms": 0
+}
+],
+"total_ms": 41958,
+"answer": "That information is not in the knowledge base.",
+"sql": null,
+"ok": false,
+"retrieved_off": [
+"Kafka Incident Escalation Path v1 OLD",
+"Kafka Incident Escalation Path v2",
+"Kafka Retention Policy v1 OLD",
+"Kafka Consumer Lag Runbook v2",
+"Kafka Retention Policy v2",
+"Kafka Consumer Lag Runbook v1 OLD"
+],
+"retrieved_on": [
+"Kafka Incident Escalation Path v2",
+"Kafka Consumer Lag Runbook v2",
+"Kafka Retention Policy v2",
+"Kafka Disk Utilisation Alerting v2",
+"Kafka Broker Restart Procedure v2",
+"Kafka Topic Naming Standard v2"
+]
+},
+{
+"id": "h-doc-09",
+"set": "held-out set",
+"type": "version_current",
+"question": "Which template do I request for broker certificates?",
+"route": "documents",
+"nodes": [
+{
+"node": "router",
+"ms": 2185
+},
+{
+"node": "retrieve",
+"ms": 64
+},
+{
+"node": "grade",
+"ms": 17076
+},
+{
+"node": "generate",
+"ms": 4683
+}
+],
+"total_ms": 24012,
+"answer": "The template to request for broker certificates is the `kafka-broker-v2` template.",
+"sql": null,
+"ok": true,
+"retrieved_off": [
+"Kafka TLS Certificate Rotation v2",
+"Kafka TLS Certificate Rotation v1 OLD",
+"Kafka Broker Restart Procedure v1 OLD",
+"Kafka Broker Restart Procedure v2",
+"Kafka Replication Settings v2",
+"Kafka Disk Utilisation Alerting v1 OLD"
+],
+"retrieved_on": [
+"Kafka TLS Certificate Rotation v2",
+"Kafka Broker Restart Procedure v2",
+"Kafka Replication Settings v2",
+"Kafka Disk Utilisation Alerting v2",
+"Kafka Topic Naming Standard v2",
+"Kafka Incident Escalation Path v2"
+]
+},
+{
+"id": "h-doc-10",
+"set": "held-out set",
+"type": "version_current",
+"question": "Do I need a full-cluster window to rotate certificates?",
+"route": "documents",
+"nodes": [
+{
+"node": "router",
+"ms": 2358
+},
+{
+"node": "retrieve",
+"ms": 72
+},
+{
+"node": "grade",
+"ms": 17044
+},
+{
+"node": "generate",
+"ms": 5659
+}
+],
+"total_ms": 25137,
+"answer": "No, you do not need a full-cluster window to rotate certificates. According to passage [1], rotation can be done \"one at a time\".",
+"sql": null,
+"ok": true,
+"retrieved_off": [
+"Kafka TLS Certificate Rotation v1 OLD",
+"Kafka TLS Certificate Rotation v2",
+"Kafka Broker Restart Procedure v1 OLD",
+"Kafka Broker Restart Procedure v2",
+"Kafka Disk Utilisation Alerting v1 OLD",
+"Kafka Incident Escalation Path v1 OLD"
+],
+"retrieved_on": [
+"Kafka TLS Certificate Rotation v2",
+"Kafka Broker Restart Procedure v2",
+"Kafka Incident Escalation Path v2",
+"Kafka Disk Utilisation Alerting v2",
+"Kafka Retention Policy v2",
+"Kafka Replication Settings v2"
+]
+},
+{
+"id": "h-doc-11",
+"set": "held-out set",
+"type": "version_current",
+"question": "At what disk percentage do we only warn instead of paging?",
+"route": "documents",
+"nodes": [
+{
+"node": "router",
+"ms": 2402
+},
+{
+"node": "retrieve",
+"ms": 80
+},
+{
+"node": "grade",
+"ms": 17027
+},
+{
+"node": "rewrite",
+"ms": 3885
+},
+{
+"node": "retrieve",
+"ms": 105
+},
+{
+"node": "grade",
+"ms": 16888
+},
+{
+"node": "generate",
+"ms": 5373
+}
+],
+"total_ms": 45766,
+"answer": "The disk warning threshold paging for Kafka is as follows:\n\n* Page when broker log-directory utilisation exceeds 75%.\n* Warn at 60%.",
+"sql": null,
+"ok": true,
+"retrieved_off": [
+"Kafka Disk Utilisation Alerting v2",
+"Kafka Disk Utilisation Alerting v1 OLD",
+"Kafka Consumer Lag Runbook v1 OLD",
+"Kafka Consumer Lag Runbook v2",
+"Kafka Retention Policy v2",
+"Kafka Incident Escalation Path v1 OLD"
+],
+"retrieved_on": [
+"Kafka Disk Utilisation Alerting v2",
+"Kafka Consumer Lag Runbook v2",
+"Kafka Retention Policy v2",
+"Kafka Incident Escalation Path v2",
+"Kafka Topic Naming Standard v2",
+"Kafka Broker Restart Procedure v2"
+]
+},
+{
+"id": "h-doc-12",
+"set": "held-out set",
+"type": "version_current",
+"question": "Which port does BROKER-EAST-02 use for plaintext traffic?",
+"route": "documents",
+"nodes": [
+{
+"node": "router",
+"ms": 2651
+},
+{
+"node": "retrieve",
+"ms": 72
+},
+{
+"node": "grade",
+"ms": 17493
+},
+{
+"node": "generate",
+"ms": 7974
+}
+],
+"total_ms": 28193,
+"answer": "According to passage [1], Broker `BROKER-EAST-02` listens on port 9092 for plaintext traffic.",
+"sql": null,
+"ok": true,
+"retrieved_off": [
+"Kafka TLS Certificate Rotation v2",
+"Kafka Broker Restart Procedure v2",
+"Kafka TLS Certificate Rotation v1 OLD",
+"Kafka Broker Restart Procedure v1 OLD",
+"Kafka Disk Utilisation Alerting v2",
+"Kafka Disk Utilisation Alerting v1 OLD"
+],
+"retrieved_on": [
+"Kafka TLS Certificate Rotation v2",
+"Kafka Broker Restart Procedure v2",
+"Kafka Disk Utilisation Alerting v2",
+"Kafka Topic Naming Standard v2",
+"Kafka Replication Settings v2",
+"Kafka Incident Escalation Path v2"
+]
+},
+{
+"id": "h-doc-13",
+"set": "held-out set",
+"type": "version_current",
+"question": "What rejects topics that still use the retired evt. prefix?",
+"route": "documents",
+"nodes": [
+{
+"node": "router",
+"ms": 2456
+},
+{
+"node": "retrieve",
+"ms": 74
+},
+{
+"node": "grade",
+"ms": 17285
+},
+{
+"node": "generate",
+"ms": 5065
+}
+],
+"total_ms": 24883,
+"answer": "[1] states that new topics using the retired `evt.` prefix will be rejected by the topic-admission check.",
+"sql": null,
+"ok": true,
+"retrieved_off": [
+"Kafka Topic Naming Standard v2",
+"Kafka Topic Naming Standard v1 OLD",
+"Kafka Retention Policy v1 OLD",
+"Kafka Retention Policy v2",
+"Kafka Disk Utilisation Alerting v2",
+"Kafka Disk Utilisation Alerting v1 OLD"
+],
+"retrieved_on": [
+"Kafka Topic Naming Standard v2",
+"Kafka Retention Policy v2",
+"Kafka Disk Utilisation Alerting v2",
+"Kafka Incident Escalation Path v2",
+"Kafka TLS Certificate Rotation v2",
+"Kafka Consumer Lag Runbook v2"
+]
+},
+{
+"id": "h-doc-14",
+"set": "held-out set",
+"type": "version_current",
+"question": "Consumer lag is still climbing after I scaled the group. What now?",
+"route": "documents",
+"nodes": [
+{
+"node": "router",
+"ms": 2831
+},
+{
+"node": "retrieve",
+"ms": 86
+},
+{
+"node": "grade",
+"ms": 17688
+},
+{
+"node": "generate",
+"ms": 6627
+}
+],
+"total_ms": 27236,
+"answer": "It appears that the recommended course of action is to scale the consumer group by one instance and re-measure after 5 minutes. If the lag is still climbing, escalate before adding a second instance.",
+"sql": null,
+"ok": true,
+"retrieved_off": [
+"Kafka Consumer Lag Runbook v2",
+"Kafka Consumer Lag Runbook v1 OLD",
+"Kafka Incident Escalation Path v2",
+"Kafka Disk Utilisation Alerting v1 OLD",
+"Kafka Incident Escalation Path v1 OLD",
+"Kafka Disk Utilisation Alerting v2"
+],
+"retrieved_on": [
+"Kafka Consumer Lag Runbook v2",
+"Kafka Incident Escalation Path v2",
+"Kafka Disk Utilisation Alerting v2",
+"Kafka Broker Restart Procedure v2",
+"Kafka Replication Settings v2",
+"Kafka Retention Policy v2"
+]
+},
+{
+"id": "h-doc-15",
+"set": "held-out set",
+"type": "version_current",
+"question": "What replication factor and what default retention apply to a new standard production topic?",
+"route": "documents",
+"nodes": [
+{
+"node": "router",
+"ms": 2745
+},
+{
+"node": "retrieve",
+"ms": 73
+},
+{
+"node": "grade",
+"ms": 16876
+},
+{
+"node": "rewrite",
+"ms": 1609
+},
+{
+"node": "retrieve",
+"ms": 76
+},
+{
+"node": "grade",
+"ms": 21424
+},
+{
+"node": "generate",
+"ms": 0
+}
+],
+"total_ms": 42810,
+"answer": "That information is not in the knowledge base.",
+"sql": null,
+"ok": false,
+"retrieved_off": [
+"Kafka Retention Policy v2",
+"Kafka Replication Settings v2",
+"Kafka Retention Policy v1 OLD",
+"Kafka Replication Settings v1 OLD",
+"Kafka Topic Naming Standard v1 OLD",
+"Kafka Topic Naming Standard v2"
+],
+"retrieved_on": [
+"Kafka Retention Policy v2",
+"Kafka Replication Settings v2",
+"Kafka Topic Naming Standard v2",
+"Kafka Disk Utilisation Alerting v2",
+"Kafka TLS Certificate Rotation v2",
+"Kafka Broker Restart Procedure v2"
+]
+},
+{
+"id": "h-doc-16",
+"set": "held-out set",
+"type": "version_current",
+"question": "Which host issues TLS certificates, and which port does BROKER-EAST-02 use for TLS?",
+"route": "documents",
+"nodes": [
+{
+"node": "router",
+"ms": 3180
+},
+{
+"node": "retrieve",
+"ms": 93
+},
+{
+"node": "grade",
+"ms": 38697
+},
+{
+"node": "generate",
+"ms": 18341
+}
+],
+"total_ms": 60337,
+"answer": "The host that issues TLS certificates is `pki.internal.example.com`, and the port that BROKER-EAST-02 uses for TLS is 9093.",
+"sql": null,
+"ok": true,
+"retrieved_off": [
+"Kafka TLS Certificate Rotation v2",
+"Kafka TLS Certificate Rotation v1 OLD",
+"Kafka Broker Restart Procedure v1 OLD",
+"Kafka Broker Restart Procedure v2",
+"Kafka Replication Settings v2",
+"Kafka Disk Utilisation Alerting v1 OLD"
+],
+"retrieved_on": [
+"Kafka TLS Certificate Rotation v2",
+"Kafka Broker Restart Procedure v2",
+"Kafka Replication Settings v2",
+"Kafka Disk Utilisation Alerting v2",
+"Kafka Incident Escalation Path v2",
+"Kafka Topic Naming Standard v2"
+]
+},
+{
+"id": "h-db-01",
+"set": "held-out set",
+"type": "sql",
+"question": "What is the highest disk usage percentage and which broker has it?",
+"route": "documents",
+"nodes": [
+{
+"node": "router",
+"ms": 2814
+},
+{
+"node": "retrieve",
+"ms": 102
+},
+{
+"node": "grade",
+"ms": 17595
+},
+{
+"node": "generate",
+"ms": 4797
+}
+],
+"total_ms": 25317,
+"answer": "The highest disk usage percentage is 75%, and the broker with this high usage is BROKER-EAST-02.",
+"sql": null,
+"ok": false,
+"retrieved_off": null,
+"retrieved_on": null
+},
+{
+"id": "h-db-02",
+"set": "held-out set",
+"type": "sql",
+"question": "How many brokers host more than 150 topics?",
+"route": "database",
+"nodes": [
+{
+"node": "router",
+"ms": 2172
+},
+{
+"node": "sql_agent",
+"ms": 3256
+},
+{
+"node": "generate_sql",
+"ms": 2671
+}
+],
+"total_ms": 8111,
+"answer": "There are 3 brokers that host more than 150 topics. This was computed from the broker_inventory table.",
+"sql": "SELECT COUNT(*) FROM broker_inventory WHERE topics > 150",
+"ok": true,
+"retrieved_off": null,
+"retrieved_on": null
+},
+{
+"id": "h-db-03",
+"set": "held-out set",
+"type": "sql",
+"question": "List the brokers in rack-c.",
+"route": "database",
+"nodes": [
+{
+"node": "router",
+"ms": 1934
+},
+{
+"node": "sql_agent",
+"ms": 3603
+},
+{
+"node": "generate_sql",
+"ms": 10746
+}
+],
+"total_ms": 16287,
+"answer": "Here are the brokers in rack-c:\n\n1. Broker 5: \n   - Broker ID: 5\n   - Rack: rack-c\n   - Disk Total GB: 4000\n   - Disk Used Pct: 91.8\n   - Topics: 210\n   - Status: critical\n\n2. Broker 6: \n   - Broker ID: 6\n   - Rack: rack-c\n   - Disk Total GB: 2000\n   - Disk Used Pct: 58.4\n   - Topics: 120\n   - Status: healthy",
+"sql": "SELECT * FROM broker_inventory WHERE rack = 'rack-c' ORDER BY status",
+"ok": true,
+"retrieved_off": null,
+"retrieved_on": null
+},
+{
+"id": "h-db-04",
+"set": "held-out set",
+"type": "sql",
+"question": "What is the combined number of topics across all brokers?",
+"route": "database",
+"nodes": [
+{
+"node": "router",
+"ms": 2185
+},
+{
+"node": "sql_agent",
+"ms": 2990
+},
+{
+"node": "generate_sql",
+"ms": 2159
+}
+],
+"total_ms": 7338,
+"answer": "The combined number of topics across all brokers is 880.",
+"sql": "SELECT SUM(topics) FROM broker_inventory",
+"ok": true,
+"retrieved_off": null,
+"retrieved_on": null
+},
+{
+"id": "h-db-05",
+"set": "held-out set",
+"type": "sql",
+"question": "How many brokers have at least 4000 GB of disk?",
+"route": "database",
+"nodes": [
+{
+"node": "router",
+"ms": 2457
+},
+{
+"node": "sql_agent",
+"ms": 3872
+},
+{
+"node": "generate_sql",
+"ms": 2848
+}
+],
+"total_ms": 9180,
+"answer": "There are 2 brokers with at least 4000 GB of disk. This was computed from the broker_inventory table.",
+"sql": "SELECT COUNT(*) FROM broker_inventory WHERE disk_total_gb >= 4000",
+"ok": true,
+"retrieved_off": null,
+"retrieved_on": null
+},
+{
+"id": "h-gen-01",
+"set": "held-out set",
+"type": "general",
+"question": "Good morning!",
+"route": "general",
+"nodes": [
+{
+"node": "router",
+"ms": 1797
+},
+{
+"node": "general",
+"ms": 1785
+}
+],
+"total_ms": 3585,
+"answer": "Good morning! I'm here to assist you. How can I help you today?",
+"sql": null,
+"ok": true,
+"retrieved_off": null,
+"retrieved_on": null
+},
+{
+"id": "h-gen-02",
+"set": "held-out set",
+"type": "general",
+"question": "Who are you?",
+"route": "general",
+"nodes": [
+{
+"node": "router",
+"ms": 1732
+},
+{
+"node": "general",
+"ms": 1834
+}
+],
+"total_ms": 3568,
+"answer": "I'm a document and data assistant, here to help answer your questions and provide information.",
+"sql": null,
+"ok": true,
+"retrieved_off": null,
+"retrieved_on": null
+},
+{
+"id": "h-una-01",
+"set": "held-out set",
+"type": "unanswerable",
+"question": "How many partitions should a new topic have?",
+"route": "documents",
+"nodes": [
+{
+"node": "router",
+"ms": 2353
+},
+{
+"node": "retrieve",
+"ms": 100
+},
+{
+"node": "grade",
+"ms": 17198
+},
+{
+"node": "rewrite",
+"ms": 10471
+},
+{
+"node": "retrieve",
+"ms": 99
+},
+{
+"node": "grade",
+"ms": 17346
+},
+{
+"node": "generate",
+"ms": 0
+}
+],
+"total_ms": 47573,
+"answer": "That information is not in the knowledge base.",
+"sql": null,
+"ok": true,
+"retrieved_off": null,
+"retrieved_on": null
+},
+{
+"id": "h-una-02",
+"set": "held-out set",
+"type": "unanswerable",
+"question": "Which cloud provider hosts the Kafka cluster?",
+"route": "documents",
+"nodes": [
+{
+"node": "router",
+"ms": 2004
+},
+{
+"node": "retrieve",
+"ms": 96
+},
+{
+"node": "grade",
+"ms": 16776
+},
+{
+"node": "rewrite",
+"ms": 3123
+},
+{
+"node": "retrieve",
+"ms": 97
+},
+{
+"node": "grade",
+"ms": 16382
+},
+{
+"node": "generate",
+"ms": 0
+}
+],
+"total_ms": 38483,
+"answer": "That information is not in the knowledge base.",
+"sql": null,
+"ok": true,
+"retrieved_off": null,
+"retrieved_on": null
+},
+{
+"id": "pid-1a",
+"set": "P&ID branch",
+"type": null,
+"question": "Which valve isolates the suction of pump P-101?",
+"route": "documents",
+"nodes": [],
+"total_ms": 36222,
+"answer": "The valve that isolates the suction of pump P-101 is HV-101.",
+"sql": null,
+"ok": true,
+"retrieved_off": null,
+"retrieved_on": null
+},
+{
+"id": "pid-1b",
+"set": "P&ID branch",
+"type": null,
+"question": "Which instrument controls the flow into tank T-102, and through which valve?",
+"route": "documents",
+"nodes": [],
+"total_ms": 35621,
+"answer": "According to passage [1] (PID-001), the instrument that controls the flow is FIC-101: FIC flow indicating controller, and it controls flow through FCV-101: FCV flow control valve.\n\nHowever, passage [2] (PID-003) provides more specific information. According to passage [2], the instrument that contro",
+"sql": null,
+"ok": true,
+"retrieved_off": null,
+"retrieved_on": null
+},
+{
+"id": "pid-1c",
+"set": "P&ID branch",
+"type": null,
+"question": "What does LT-101 measure, and on which equipment?",
+"route": "documents",
+"nodes": [],
+"total_ms": 33908,
+"answer": "The LT-101 measures level.",
+"sql": null,
+"ok": true,
+"retrieved_off": null,
+"retrieved_on": null
+},
+{
+"id": "pid-1d",
+"set": "P&ID branch",
+"type": null,
+"question": "Which drawing shows heat exchanger E-101, and what unit is it?",
+"route": "documents",
+"nodes": [],
+"total_ms": 30410,
+"answer": "It is not in the knowledge base.",
+"sql": null,
+"ok": false,
+"retrieved_off": null,
+"retrieved_on": null
+},
+{
+"id": "pid-2a",
+"set": "P&ID branch",
+"type": null,
+"question": "Which valve isolates the suction of pump P-201?",
+"route": "documents",
+"nodes": [],
+"total_ms": 24969,
+"answer": "Not in the knowledge base.",
+"sql": null,
+"ok": false,
+"retrieved_off": null,
+"retrieved_on": null
+},
+{
+"id": "pid-2b",
+"set": "P&ID branch",
+"type": null,
+"question": "Which instrument controls the flow into tank T-202, and through which valve?",
+"route": "documents",
+"nodes": [],
+"total_ms": 32898,
+"answer": "According to passage [1] (PID-001), the instrument that controls the flow is FIC-101: FIC flow indicating controller, and according to passage [2] (PID-003), it sits between E-301 and T-302, which is the FCV-301: Flow control valve.",
+"sql": null,
+"ok": false,
+"retrieved_off": null,
+"retrieved_on": null
+},
+{
+"id": "pid-2c",
+"set": "P&ID branch",
+"type": null,
+"question": "What does LT-201 measure, and on which equipment?",
+"route": "documents",
+"nodes": [],
+"total_ms": 37538,
+"answer": "According to passage [2] (PID-002), LT-201 measures level, and it is connected to T-201.",
+"sql": null,
+"ok": true,
+"retrieved_off": null,
+"retrieved_on": null
+},
+{
+"id": "pid-2d",
+"set": "P&ID branch",
+"type": null,
+"question": "Which drawing shows heat exchanger E-201, and what unit is it?",
+"route": "documents",
+"nodes": [],
+"total_ms": 40911,
+"answer": "The passage that shows heat exchanger E-201 is [1] (PID-002) and [3] (PID-001). \n\nThe unit of heat exchanger E-201 is not explicitly stated in the passages.",
+"sql": null,
+"ok": false,
+"retrieved_off": null,
+"retrieved_on": null
+},
+{
+"id": "pid-3a",
+"set": "P&ID branch",
+"type": null,
+"question": "Which valve isolates the suction of pump P-301?",
+"route": "documents",
+"nodes": [],
+"total_ms": 26139,
+"answer": "It is not in the knowledge base.",
+"sql": null,
+"ok": false,
+"retrieved_off": null,
+"retrieved_on": null
+},
+{
+"id": "pid-3b",
+"set": "P&ID branch",
+"type": null,
+"question": "Which instrument controls the flow into tank T-302, and through which valve?",
+"route": "documents",
+"nodes": [],
+"total_ms": 32701,
+"answer": "According to passage [2] (PID-003), the instrument that controls the flow into tank T-302 is the FIC-301: Flow indicating controller, and it sits between E-301 and T-302.",
+"sql": null,
+"ok": false,
+"retrieved_off": null,
+"retrieved_on": null
+},
+{
+"id": "pid-3c",
+"set": "P&ID branch",
+"type": null,
+"question": "What does LT-301 measure, and on which equipment?",
+"route": "documents",
+"nodes": [],
+"total_ms": 37776,
+"answer": "According to passage [2] (PID-003), LT-301 measures level, and it is connected to T-301.",
+"sql": null,
+"ok": true,
+"retrieved_off": null,
+"retrieved_on": null
+},
+{
+"id": "pid-3d",
+"set": "P&ID branch",
+"type": null,
+"question": "Which drawing shows heat exchanger E-301, and what unit is it?",
+"route": "documents",
+"nodes": [],
+"total_ms": 29554,
+"answer": "It is not in the knowledge base.",
+"sql": null,
+"ok": false,
+"retrieved_off": null,
+"retrieved_on": null
+}
+]
+}

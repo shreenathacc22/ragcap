@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ragcap</title>
+<style>
+  body { font-family: system-ui, sans-serif; max-width: 880px; margin: 2rem auto; padding: 0 1rem; color: #222; }
+  h1 { margin-bottom: .2rem; } p.sub { color: #666; margin-top: 0; }
+  form { display: flex; gap: .5rem; margin: 1rem 0; }
+  input { flex: 1; font-size: 1rem; padding: .5rem .7rem; border: 1px solid #bbb; border-radius: 6px; }
+  button { font-size: 1rem; padding: .5rem 1rem; border: 0; border-radius: 6px; background: #2457a8; color: #fff; cursor: pointer; }
+  #trace { display: flex; flex-wrap: wrap; gap: .4rem; min-height: 1.6rem; }
+  .node { background: #e8eef8; border-radius: 999px; padding: .15rem .6rem; font-size: .85rem; font-family: ui-monospace, monospace; }
+  #answer { white-space: pre-wrap; background: #fafafa; border: 1px solid #e5e5e5; border-radius: 8px; padding: 1rem; margin-top: .8rem; min-height: 3rem; }
+  #meta { color: #666; font-size: .85rem; font-family: ui-monospace, monospace; margin-top: .4rem; white-space: pre-wrap; }
+  .turn { border-top: 1px solid #eee; padding-top: .6rem; margin-top: .6rem; }
+  .you { color: #2457a8; font-weight: 600; }
+</style>
+</head>
+<body>
+<h1>ragcap</h1>
+<p class="sub">Documents, uploaded tables and general conversation. One pill per graph node as it finishes, then the answer.</p>
+<form id="f"><input id="q" placeholder="Ask a question, e.g. Which brokers are above 85% disk usage?" autocomplete="off"><button>Ask</button></form>
+<div id="trace"></div>
+<div id="answer"></div>
+<div id="meta"></div>
+<div id="log"></div>
+<script>
+const f = document.getElementById('f'), q = document.getElementById('q'), tr = document.getElementById('trace');
+const an = document.getElementById('answer'), meta = document.getElementById('meta'), log = document.getElementById('log');
+let history = [];
+f.onsubmit = async (e) => {
+  e.preventDefault();
+  const question = q.value.trim(); if (!question) return;
+  tr.innerHTML = ''; an.textContent = '…'; meta.textContent = '';
+  const r = await fetch('/chat', { method: 'POST', headers: { 'content-type': 'application/json' },
+                                   body: JSON.stringify({ question, history }) });
+  const rd = r.body.getReader(), dec = new TextDecoder(); let buf = '';
+  while (true) {
+    const { value, done } = await rd.read(); if (done) break;
+    buf += dec.decode(value, { stream: true });
+    let i;
+    while ((i = buf.indexOf('\n\n')) >= 0) {
+      const chunk = buf.slice(0, i); buf = buf.slice(i + 2);
+      const ev = (/^event: (\w+)/m.exec(chunk) || [])[1], data = (/^data: (.*)$/m.exec(chunk) || [])[1];
+      if (!ev || !data) continue;
+      const d = JSON.parse(data);
+      if (ev === 'node') { const s = document.createElement('span'); s.className = 'node'; s.textContent = `${d.node} ${d.ms} ms`; tr.appendChild(s); }
+      else if (ev === 'answer') {
+        an.textContent = d.answer;
+        meta.textContent = `route: ${d.route} · ${d.total_ms} ms` + (d.sql ? `\nsql: ${d.sql}` : '') +
+          (d.citations && d.citations.length ? `\ncited: ${d.citations.map(c => c.doc + ' v' + c.version).join(', ')}` : '');
+        const t = document.createElement('div'); t.className = 'turn';
+        t.innerHTML = `<span class="you">You:</span> ${question.replace(/</g, '&lt;')}<br><span class="you">ragcap:</span> ${d.answer.replace(/</g, '&lt;')}`;
+        log.prepend(t);
+        history.push({ role: 'user', content: question }, { role: 'assistant', content: d.answer });
+        history = history.slice(-6);
+      }
+    }
+  }
+  q.value = '';
+};
+</script>
+</body>
+</html>

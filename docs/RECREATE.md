@@ -148,6 +148,16 @@ Do: `.venv/bin/uvicorn api:app --port 8000 &` then `curl -s localhost:8000/healt
 
 Expect: `/health` returns `{"documents":16,"chunks":16,"tables":["broker_inventory"]}`. `POST /chat` streams one `node` event per graph node then an `answer` event (route, citations, SQL, total ms). `POST /upload` ingests a file. Both are unauthenticated: localhost only.
 
+### 2.9 Front end, LangSmith (optional)
+
+Do: `.venv/bin/uvicorn api:app --port 8000 &` then open http://127.0.0.1:8000/ in a browser, ask `Which brokers are above 85% disk usage?`. Expect: three pills appear one by one (`router`, `sql_agent`, `generate_sql`, each with its ms), then the answer, `route: database`, and the SQL. The page is `web/index.html`, served by FastAPI; it reads `POST /chat` as server-sent events. LangSmith: add `LANGSMITH_TRACING=true`, `LANGSMITH_API_KEY`, `LANGSMITH_PROJECT=ragcap` to `.env` and restart; without them nothing changes.
+
+### 2.10 P&ID branch (drawings)
+
+Do: `ollama pull qwen2.5vl:3b` (3.2 GB, once), then `.venv/bin/python pid/make_pid.py` (three synthetic drawings plus `pid/ground_truth.json` and `pid/golden_pid.jsonl`, deterministic), then `.venv/bin/python pid_eval.py --ingest` (about 5 minutes to describe the drawings on this CPU, then 12 questions through the graph).
+
+Expect: `results/pid_eval_summary.md` with a tag-extraction table per drawing and the QA scores (see SOP step 24 for the recorded numbers and what they mean). A described drawing is one more document in the index; `try.py "Which valve isolates the suction of pump P-101?"` retrieves `PID-001` and answers `HV-101`.
+
 ## 3. Scenario catalogue
 
 Run any scenario with `.venv/bin/python try.py "<question>"` (prefix `VERSION_AWARE=1` where stated). "Path" is the node sequence printed by `try.py`; "Shows" is what the scenario demonstrates. Expected answers are for llama3.2:3b; the facts must appear, the wording will vary.
@@ -168,6 +178,9 @@ Run any scenario with `.venv/bin/python try.py "<question>"` (prefix `VERSION_AW
 | V2 | `VERSION_AWARE=1` + `Which team owns escalation for a SEV-1 Kafka incident?` | documents | `Streaming Platform team` (never `Platform Reliability`) | a version conflict with no number in it: only metadata can separate the versions |
 | R1 | `What is the highest disk usage percentage and which broker has it?` | expected database; observed documents (known failure h-db-01) | wrong: `75%` from the runbook instead of 91.8% from the table | router ambiguity between a rule in a document and a measurement in a table; fails 3/3 runs |
 | R2 | `How many minutes must consumer lag stay high before the alert fires?` | documents; observed `not in the knowledge base` (known failure h-doc-05) | wrong: should be `5 minutes` | the 3B grader rejects a passage phrased differently from the question ("sustained for 5 minutes"); fails 3/3 runs; a stronger grader is the fix (SOP step 19 for why it was not possible here) |
+| W1 | (browser) `Which brokers are above 85% disk usage?` at http://127.0.0.1:8000/ | database; pills router > sql_agent > generate_sql | brokers 3 and 5 | the streaming contract: one server-sent event per node, then the answer; any front end consumes the same endpoint |
+| M1 | `Which valve isolates the suction of pump P-101?` (after 2.10) | documents; retrieves `PID-001` | `HV-101` (not HV-102) | a drawing answered through its vision description; the chunk's meta carries the image path |
+| M2 | `Which instrument controls the flow into tank T-102, and through which valve?` | documents | `FIC-101`, `FCV-101` | the hardest tag family for a 3B vision model (see SOP step 24: the control-valve tags were the ones misread) |
 | U1 | `Which cloud provider hosts the Kafka cluster?` | documents, with rewrite | `not in the knowledge base` | unanswerable: refused, not guessed (2/2 in every run) |
 
 Where to see the evidence for each: `traces.jsonl` (one line per question: route, per-node ms, tokens, answer), `results/version_filter_off.json` and `_on.json` (per case: which documents were retrieved, marked `OLD`), `results/eval_*.json` (per case: route, answer, pass/fail).
@@ -183,6 +196,7 @@ Where to see the evidence for each: `traces.jsonl` (one line per question: route
 | database after 2.3 | `16 docs, 16 chunks, 8 superseded, 1 tables` |
 | `b1_check.py` | `PASS`; pair similarity 0.962 to 0.990; old first 1/8 |
 | `b1_eval.py` headline | OFF `99/192 (51.6%)`, ON `0/192 (0.0%)`; trap 2/12 to 12/12; control 20/20 both |
+| `pid/make_pid.py` | regenerates byte for byte: `golden_pid.jsonl` sha1 `10fe1aa657131461df6d0b123de96fd2536c06ff`, `ground_truth.json` `1aaa5666aa0360fd237a175ad0188757e8e2c334`, the three drawings concatenated `d6dbc6b6174f...`; 36 tags, 12 questions |
 | versions used | Python 3.12.13, langgraph 1.2.16, openai 3.35.1, psycopg 3.3.6, pgvector (python) 0.5.1, PostgreSQL 16.15, pgvector 0.8.7, Ollama 0.40.6 |
 | git | first commit db9af51 is the golden freeze, before any pipeline code; `git log --oneline` in `build/` shows the full order |
 
@@ -208,6 +222,10 @@ Where to see the evidence for each: `traces.jsonl` (one line per question: route
 | A killed client leaves Ollama generating; `chat()` retries re-send it | runner busy 56 min after the client was killed (runbook section 5) | kill by PID, unload with `keep_alive: 0` through the API |
 | A 3B model varies run to run at temperature 0 | failing ids change between runs on the tuned set | report ranges; judge changes by failing ids over 3 runs |
 
-## 7. Related documents
+## 7. The showcase site
+
+Live on GitHub Pages: https://shreenathacc22.github.io/ragcap/ (static: results, flow, screenshots, and a replay of 64 recorded runs from `site/data/replay.json`). `./publish_site.sh` republishes it; `vercel.json` lets Vercel serve the same `site/` folder after a one-time import in the Vercel dashboard (SOP step 25 has the steps).
+
+## 8. Related documents
 
 `docs/SOP_ragcap_build.pdf` (every step with problem, change, verification and results), `docs/RUNBOOK_ragcap_operations.pdf` (start/stop, routine tasks, backup, troubleshooting, change control), `docs/build_pdfs.py` (regenerates all three PDFs from this folder; needs `pip install reportlab`). The analysis of the original design and the pre-build plan are working notes and are not published.

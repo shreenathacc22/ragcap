@@ -55,6 +55,12 @@ check_sha golden/golden_heldout.jsonl 02ddcfd613d4784f59bdf8ad20df971b8c9db899
 check_sha golden/amendments.jsonl     36a0e6e0d637a48ff43755fd579a1e7b9e80ecce
 [ "$(cat data/docs_versioned/*.md | shasum | cut -c1-12)" = "c2b025608d03" ] && echo "match  corpus" || fail "corpus files differ"
 
+step "2.10 P&ID fixtures (deterministic, no model)"
+.venv/bin/python pid/make_pid.py >/dev/null
+check_sha pid/golden_pid.jsonl 10fe1aa657131461df6d0b123de96fd2536c06ff
+check_sha pid/ground_truth.json 1aaa5666aa0360fd237a175ad0188757e8e2c334
+[ "$(cat pid/drawings/PID-001.png pid/drawings/PID-002.png pid/drawings/PID-003.png | shasum | cut -c1-12)" = "d6dbc6b6174f" ] && echo "match  drawings" || fail "drawings differ (font or Pillow version?)"
+
 step "2.6 retrieval ablation OFF/ON"
 .venv/bin/python b1_eval.py --latency 3 | tail -3
 grep -q "| 99/192 (51.6%) | 0/192 (0.0%) |" results/ablation_summary.md || fail "ablation headline differs from the fingerprint"

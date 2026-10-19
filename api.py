@@ -9,6 +9,7 @@ from pathlib import Path
 
 from fastapi import FastAPI, File, UploadFile
 from fastapi.responses import StreamingResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
 from ragcap import graph
@@ -66,3 +67,8 @@ def run_eval(limit: int | None = None):
     cmd = [sys.executable, "eval.py"] + ([str(limit)] if limit else [])
     p = subprocess.run(cmd, cwd=Path(__file__).parent, capture_output=True, text=True)
     return {"returncode": p.returncode, "tail": p.stdout[-1500:]}
+
+
+# Step 23: the browser front end. A static page that consumes POST /chat as a stream of server-sent events.
+# Mounted last so /health, /upload, /chat and /eval keep precedence.
+app.mount("/", StaticFiles(directory=str(Path(__file__).parent / "web"), html=True), name="web")

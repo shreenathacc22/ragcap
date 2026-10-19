@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ragcap: multi-agent RAG, measured</title>
+<style>
+  :root { --ink:#1f2933; --mute:#5f6b76; --line:#e3e8ee; --bg:#ffffff; --tint:#f3f6fa; --acc:#2457a8; --ok:#1e7f4f; --bad:#b54141; }
+  * { box-sizing: border-box; } body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; color:var(--ink); background:var(--bg); line-height:1.5; }
+  header, section, footer { max-width: 1040px; margin: 0 auto; padding: 1.6rem 1.2rem; }
+  header { padding-top: 2.6rem; } h1 { font-size: 2.3rem; margin: 0 0 .3rem; } h2 { font-size: 1.45rem; margin: 0 0 .8rem; } h3 { font-size: 1.05rem; margin: 1rem 0 .4rem; }
+  .lede { color: var(--mute); font-size: 1.08rem; max-width: 760px; }
+  .tiles { display:grid; grid-template-columns: repeat(auto-fit, minmax(190px,1fr)); gap:.8rem; margin: 1.2rem 0; }
+  .tile { background: var(--tint); border-radius: 10px; padding: .9rem 1rem; } .tile b { display:block; font-size: 1.9rem; line-height: 1.1; } .tile span { color: var(--mute); font-size: .88rem; }
+  .links a { display:inline-block; margin: .2rem .6rem .2rem 0; color: var(--acc); font-weight: 600; text-decoration: none; } .links a:hover { text-decoration: underline; }
+  table { border-collapse: collapse; width: 100%; font-size: .93rem; margin: .5rem 0 1rem; } th, td { border: 1px solid var(--line); padding: .45rem .6rem; text-align: left; vertical-align: top; } th { background: var(--tint); }
+  .wrap { overflow-x: auto; } code, .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .9em; } pre { background: var(--tint); border-radius: 8px; padding: .8rem 1rem; overflow-x: auto; font-size: .86rem; }
+  .steps { display:grid; grid-template-columns: repeat(auto-fit, minmax(300px,1fr)); gap: .8rem; } .step { border: 1px solid var(--line); border-radius: 10px; padding: .8rem 1rem; } .step b { color: var(--acc); }
+  .pill { display:inline-block; background:#e8eef8; border-radius:999px; padding:.1rem .55rem; font-family: ui-monospace, monospace; font-size:.82rem; margin:.15rem .25rem .15rem 0; }
+  .ok { color: var(--ok); font-weight: 600; } .bad { color: var(--bad); font-weight: 600; }
+  select { font-size: 1rem; padding: .45rem .6rem; max-width: 100%; } .answer { background: var(--tint); border-radius: 8px; padding: .8rem 1rem; white-space: pre-wrap; margin:.6rem 0; }
+  .two { display:grid; grid-template-columns: 1fr 1fr; gap: 1rem; } @media (max-width: 760px) { .two { grid-template-columns: 1fr; } }
+  img.shot { width: 100%; border: 1px solid var(--line); border-radius: 8px; }
+  svg text { font-family: system-ui, sans-serif; } footer { color: var(--mute); font-size: .9rem; border-top: 1px solid var(--line); margin-top: 1rem; }
+  .note { color: var(--mute); font-size: .9rem; }
+</style>
+</head>
+<body>
+<header>
+  <h1>ragcap</h1>
+  <p class="lede">A multi-agent RAG system (LangGraph router, document RAG with grade and rewrite, SQL agent, general agent) on Postgres + pgvector and local models, built to reproduce a colleague's capstone design and then <b>measured</b>: a frozen evaluation set, an unseen set, repeated runs, and a version-aware retrieval filter with an OFF/ON proof. Everything ran on a 2019 Intel MacBook Pro with no API key and no GPU.</p>
+  <div class="tiles">
+    <div class="tile"><b>100%</b><span>router accuracy, tuned set (96% on 25 unseen questions)</span></div>
+    <div class="tile"><b>85–93%</b><span>answers correct, tuned set (80–84% unseen; mean of repeated runs)</span></div>
+    <div class="tile"><b>51.6% → 0.0%</b><span>superseded chunks retrieved, version filter OFF → ON</span></div>
+    <div class="tile"><b>+1 ms</b><span>cost of the filter (56 vs 57 ms, interleaved, 96 calls each)</span></div>
+  </div>
+  <p class="links">
+    <a href="https://github.com/shreenathacc22/ragcap">GitHub repository</a>
+    <a href="docs/SOP_ragcap_build.pdf">SOP: how it was built (PDF)</a>
+    <a href="docs/RUNBOOK_ragcap_operations.pdf">Runbook (PDF)</a>
+    <a href="docs/RECREATE_ragcap.pdf">Recreate from zero (PDF)</a>
+    <a href="#try">Replay recorded runs ↓</a>
+  </p>
+</header>
+
+<section>
+  <h2>The flow</h2>
+  <svg viewBox="0 0 1000 300" width="100%" role="img" aria-label="Graph: router to retrieve, grade, rewrite, generate; or sql agent to generate sql; or general">
+    <defs><marker id="a" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#5f6b76"/></marker></defs>
+    <g font-size="15" fill="#1f2933">
+      <rect x="20" y="120" width="120" height="56" rx="10" fill="#e8eef8"/><text x="80" y="153" text-anchor="middle">question</text>
+      <rect x="190" y="120" width="120" height="56" rx="10" fill="#2457a8"/><text x="250" y="153" text-anchor="middle" fill="#fff">router</text>
+      <rect x="380" y="30" width="120" height="56" rx="10" fill="#e8eef8"/><text x="440" y="63" text-anchor="middle">retrieve</text>
+      <rect x="540" y="30" width="120" height="56" rx="10" fill="#e8eef8"/><text x="600" y="63" text-anchor="middle">grade</text>
+      <rect x="540" y="110" width="120" height="44" rx="10" fill="#fff" stroke="#5f6b76" stroke-dasharray="4 3"/><text x="600" y="138" text-anchor="middle">rewrite ×1</text>
+      <rect x="700" y="30" width="120" height="56" rx="10" fill="#e8eef8"/><text x="760" y="63" text-anchor="middle">generate</text>
+      <rect x="380" y="180" width="140" height="56" rx="10" fill="#e8eef8"/><text x="450" y="213" text-anchor="middle">sql_agent</text>
+      <rect x="560" y="180" width="140" height="56" rx="10" fill="#e8eef8"/><text x="630" y="213" text-anchor="middle">generate_sql</text>
+      <rect x="380" y="250" width="120" height="44" rx="10" fill="#e8eef8"/><text x="440" y="278" text-anchor="middle">general</text>
+      <rect x="860" y="120" width="120" height="56" rx="10" fill="#e8eef8"/><text x="920" y="153" text-anchor="middle">answer</text>
+      <g stroke="#5f6b76" stroke-width="2" fill="none" marker-end="url(#a)">
+        <path d="M140,148 L190,148"/><path d="M310,140 C340,140 350,58 380,58"/><path d="M500,58 L540,58"/><path d="M660,58 L700,58"/>
+        <path d="M600,86 L600,110"/><path d="M540,132 C470,132 440,100 440,86"/>
+        <path d="M310,150 C340,150 350,208 380,208"/><path d="M520,208 L560,208"/>
+        <path d="M310,156 C340,156 350,272 380,272"/>
+        <path d="M820,58 C845,58 850,148 860,148"/><path d="M700,208 C780,208 820,150 860,150"/><path d="M500,272 C700,272 820,155 860,152"/>
+      </g>
+      <g font-size="12" fill="#5f6b76"><text x="440" y="18">documents: top-6 chunks, WHERE superseded = false</text><text x="600" y="172">database: one read-only SELECT, 5 s timeout, one retry</text><text x="520" y="290">general: never states facts</text></g>
+    </g>
+  </svg>
+  <p class="note">Every node appends its milliseconds and tokens to the trace. The version filter is one <code>WHERE d.superseded = false</code> applied before the vector ranking, behind a switch, so an old document version can never compete for a slot.</p>
+</section>
+
+<section>
+  <h2>How it was built, in six phases</h2>
+  <div class="steps">
+    <div class="step"><b>1. Build (steps 1–8)</b><br>Postgres 16 + pgvector in Docker; ingestion (Markdown chunks, CSV → SQL tables); the LangGraph; a 27-case golden set frozen in git <i>before</i> any pipeline code; evaluation harness; FastAPI + Gradio.</div>
+    <div class="step"><b>2. Improve (9–14)</b><br>Router prompt and guard, SQL rules, per-passage grading. One change at a time, committed before measuring, judged by failing case ids. 77.8% → 88.9–92.6%.</div>
+    <div class="step"><b>3. Measure honestly (15–18)</b><br>25 unseen questions frozen before their first run; 3 + 4 repeated runs; mean and range reported; the 7.6-point gap between tuned and unseen sets stated as the over-fitting measure.</div>
+    <div class="step"><b>4. Negative result (19)</b><br>An 8B grader on this CPU: one passage in 33–52 s, six passages never returned. Recorded with evidence; the switch stays for a GPU.</div>
+    <div class="step"><b>5. Version-aware retrieval (20)</b><br>16 runbooks in old and current versions (0.96–0.99 cosine); data checks with negative tests; retrieval ablation OFF/ON; answer-level confirmation; default flipped ON.</div>
+    <div class="step"><b>6. Close out (21–25)</b><br>Browser checks, LangSmith opt-in, a static front end on the streaming API, a P&amp;ID branch on synthetic drawings with a 3B vision model, this site.</div>
+  </div>
+</section>
+
+<section id="try">
+  <h2>Replay a recorded run</h2>
+  <p class="note">These are real runs recorded on the Mac (llama3.2:3b; the site has no backend). Pick a question: route, node timings, the answer, and for version cases which documents were retrieved with the filter OFF and ON. To run it live, clone the repo and follow <a href="docs/RECREATE_ragcap.pdf">the recreate guide</a>.</p>
+  <select id="pick"></select>
+  <div id="out"></div>
+</section>
+
+<section>
+  <h2>Version-aware retrieval, OFF vs ON</h2>
+  <div class="wrap"><table>
+    <tr><th>Metric (retrieval only, 32 frozen cases)</th><th>Filter OFF</th><th>Filter ON</th></tr>
+    <tr><td>Superseded chunks retrieved</td><td>99/192 (51.6%)</td><td><b>0/192 (0.0%)</b></td></tr>
+    <tr><td>Version-trap cases passing (facts present, no stale value from an old chunk)</td><td>2/12</td><td><b>12/12</b></td></tr>
+    <tr><td>Control cases passing (must stay flat)</td><td>20/20</td><td>20/20</td></tr>
+    <tr><td>Median retrieve, interleaved ×3, 96 calls each</td><td>56 ms</td><td>57 ms</td></tr>
+  </table></div>
+  <p class="note">At answer level both settings scored 88.9% on this corpus because each current runbook names its former value in its own text; multi-hop improved 0/2 → 1/2 with the filter on. The retrieval-level numbers are the proof the design rests on.</p>
+</section>
+
+<section>
+  <h2>P&amp;ID branch: drawings into the same index</h2>
+  <div class="two">
+    <div><img class="shot" src="img/pid_001.png" alt="synthetic P&ID drawing"></div>
+    <div>
+      <p>Three synthetic P&amp;IDs drawn from one template with every tag and relation in a ground-truth file, 12 golden questions, and a 3B vision model (qwen2.5vl:3b, ~100 s per drawing on CPU) writing one fact per sentence into the index.</p>
+      <div class="wrap"><table>
+        <tr><th>Run 2</th><th>Result</th></tr><tr><td>Tags read correctly</td><td>36/39, none invented</td></tr>
+        <tr><td>Right drawing retrieved</td><td>12/12</td></tr><tr><td>Answers correct</td><td>5/12</td></tr>
+        <tr><td>What an instrument measures</td><td>3/3</td></tr><tr><td>Which drawing / unit</td><td>0/3 (title-block subtitle not read)</td></tr>
+      </table></div>
+      <p class="note">What fails is the same 3B grader that limits the text pipeline, plus small text near symbol edges — exactly what a real P&amp;ID set will exercise first.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Interfaces</h2>
+  <div class="two">
+    <div><img class="shot" src="img/web_chat.png" alt="static front end streaming node events"><p class="note">Static page on the streaming API: one pill per node as it finishes, then the answer, route and SQL.</p></div>
+    <div><img class="shot" src="img/gradio_chat.png" alt="Gradio chat"><p class="note">Gradio chat with the trace line under each answer; upload documents and tables.</p></div>
+  </div>
+</section>
+
+<section>
+  <h2>Run it yourself</h2>
+  <pre>git clone https://github.com/shreenathacc22/ragcap && cd ragcap
+open -a Docker; ollama pull llama3.2:3b; ollama pull nomic-embed-text
+./recreate.sh                      # database, ingest, checks, fingerprints, OFF/ON ablation, smoke questions
+.venv/bin/uvicorn api:app --port 8000   # then http://127.0.0.1:8000/
+VERSION_AWARE=0 .venv/bin/python try.py "At what disk utilisation should a broker page?"   # the trap: often 85%
+.venv/bin/python try.py "At what disk utilisation should a broker page?"                  # the fix: 75%</pre>
+  <p class="note">Needs Docker Desktop, Ollama and Python 3.12; about 45 minutes. <code>recreate.sh</code> exits 1 if any fingerprint differs from the recorded ones.</p>
+</section>
+
+<section>
+  <h2>Decisions and limits, stated plainly</h2>
+  <ul>
+    <li>Scores are ranges over repeated runs; the failing case ids are listed. A 3B model varies run to run at temperature 0.</li>
+    <li>Next.js was descoped: the streaming endpoint is the design; a static page proves it without a toolchain.</li>
+    <li>Docling does not run on Intel macOS; an 8B grader does not finish in usable time on this CPU; LangSmith is wired but needs a real key.</li>
+    <li>This site is static: the replay above is recorded, not live.</li>
+  </ul>
+</section>
+
+<footer>ragcap · built 2026-10-18/19 · <a href="https://github.com/shreenathacc22/ragcap">github.com/shreenathacc22/ragcap</a></footer>
+
+<script>
+fetch('data/replay.json').then(r => r.json()).then(d => {
+  const pick = document.getElementById('pick'), out = document.getElementById('out');
+  d.runs.forEach((r, i) => { const o = document.createElement('option'); o.value = i; o.textContent = `[${r.set} · ${r.type}] ${r.question}`; pick.appendChild(o); });
+  const show = () => {
+    const r = d.runs[pick.value]; if (!r) return;
+    let h = `<p><b>Route:</b> ${r.route} · <b>total:</b> ${r.total_ms} ms · <b>scored:</b> <span class="${r.ok ? 'ok' : 'bad'}">${r.ok ? 'pass' : 'fail'}</span></p>`;
+    h += '<p>' + r.nodes.map(n => `<span class="pill">${n.node} ${n.ms} ms</span>`).join('') + '</p>';
+    h += `<div class="answer">${(r.answer || '').replace(/</g, '&lt;')}</div>`;
+    if (r.sql) h += `<p class="mono">sql: ${r.sql.replace(/</g, '&lt;')}</p>`;
+    if (r.retrieved_off) h += `<div class="two"><div><b>Retrieved, filter OFF</b><br>${r.retrieved_off.map(x => `<span class="pill" style="${x.includes('OLD') ? 'background:#f8e3e3' : ''}">${x}</span>`).join('')}</div><div><b>Retrieved, filter ON</b><br>${r.retrieved_on.map(x => `<span class="pill">${x}</span>`).join('')}</div></div>`;
+    out.innerHTML = h;
+  };
+  pick.onchange = show; show();
+});
+</script>
+</body>
+</html>

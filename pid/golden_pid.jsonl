@@ -1,0 +1,12 @@
+{"id": "pid-1a", "drawing": "P&ID-001", "question": "Which valve isolates the suction of pump P-101?", "facts": ["HV-101"], "must_not_contain": ["HV-102"], "route": "documents", "type": "drawing"}
+{"id": "pid-1b", "drawing": "P&ID-001", "question": "Which instrument controls the flow into tank T-102, and through which valve?", "facts": ["FIC-101", "FCV-101"], "must_not_contain": [], "route": "documents", "type": "drawing"}
+{"id": "pid-1c", "drawing": "P&ID-001", "question": "What does LT-101 measure, and on which equipment?", "facts": ["level", "T-101"], "must_not_contain": ["T-102"], "route": "documents", "type": "drawing"}
+{"id": "pid-1d", "drawing": "P&ID-001", "question": "Which drawing shows heat exchanger E-101, and what unit is it?", "facts": ["P&ID-001|PID-001", "Cooling"], "must_not_contain": [], "route": "documents", "type": "drawing"}
+{"id": "pid-2a", "drawing": "P&ID-002", "question": "Which valve isolates the suction of pump P-201?", "facts": ["HV-201"], "must_not_contain": ["HV-202"], "route": "documents", "type": "drawing"}
+{"id": "pid-2b", "drawing": "P&ID-002", "question": "Which instrument controls the flow into tank T-202, and through which valve?", "facts": ["FIC-201", "FCV-201"], "must_not_contain": [], "route": "documents", "type": "drawing"}
+{"id": "pid-2c", "drawing": "P&ID-002", "question": "What does LT-201 measure, and on which equipment?", "facts": ["level", "T-201"], "must_not_contain": ["T-202"], "route": "documents", "type": "drawing"}
+{"id": "pid-2d", "drawing": "P&ID-002", "question": "Which drawing shows heat exchanger E-201, and what unit is it?", "facts": ["P&ID-002|PID-002", "Feed"], "must_not_contain": [], "route": "documents", "type": "drawing"}
+{"id": "pid-3a", "drawing": "P&ID-003", "question": "Which valve isolates the suction of pump P-301?", "facts": ["HV-301"], "must_not_contain": ["HV-302"], "route": "documents", "type": "drawing"}
+{"id": "pid-3b", "drawing": "P&ID-003", "question": "Which instrument controls the flow into tank T-302, and through which valve?", "facts": ["FIC-301", "FCV-301"], "must_not_contain": [], "route": "documents", "type": "drawing"}
+{"id": "pid-3c", "drawing": "P&ID-003", "question": "What does LT-301 measure, and on which equipment?", "facts": ["level", "T-301"], "must_not_contain": ["T-302"], "route": "documents", "type": "drawing"}
+{"id": "pid-3d", "drawing": "P&ID-003", "question": "Which drawing shows heat exchanger E-301, and what unit is it?", "facts": ["P&ID-003|PID-003", "Reflux"], "must_not_contain": [], "route": "documents", "type": "drawing"}

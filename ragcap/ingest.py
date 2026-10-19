@@ -19,6 +19,7 @@ from .llm import embed
 
 DOC_EXT = {".md", ".txt", ".pdf", ".docx", ".pptx", ".html"}
 TABLE_EXT = {".csv", ".xlsx", ".xls"}
+IMG_EXT = {".png", ".jpg", ".jpeg"}      # step 24: drawings, described by a vision model
 
 
 # ---------- parsing ----------
@@ -91,6 +92,25 @@ def ingest_document(conn, path: Path, version: int | None = None, superseded: bo
             "chunks": len(chunks), "seconds": round(time.perf_counter() - t0, 1)}
 
 
+# ---------- drawings (step 24) ----------
+def ingest_image(conn, path: Path) -> dict:
+    """A drawing becomes one document whose text is the vision model's description; meta keeps the image path."""
+    from .vision import VISION_MODEL, describe_image
+    text, secs = describe_image(str(path))
+    name = path.stem
+    chunks = chunk(text) or [text]
+    vecs = embed([f"{name}\n{c}" for c in chunks])
+    conn.execute("DELETE FROM documents WHERE name=%s AND version=%s", (name, 1))
+    doc_id = conn.execute("INSERT INTO documents(name,version,superseded,source_path) VALUES (%s,1,false,%s) RETURNING id",
+                          (name, str(path))).fetchone()[0]
+    for i, (c, v) in enumerate(zip(chunks, vecs)):
+        conn.execute("INSERT INTO chunks(doc_id,chunk_no,text,embedding,meta) VALUES (%s,%s,%s,%s,%s)",
+                     (doc_id, i, c, v, json.dumps({"doc": name, "version": 1, "superseded": False, "kind": "drawing",
+                                                    "image": str(path), "vision_model": VISION_MODEL})))
+    return {"file": path.name, "doc": name, "kind": "drawing", "chunks": len(chunks), "vision_seconds": round(secs, 1),
+            "description_chars": len(text)}
+
+
 # ---------- tables ----------
 def safe_name(s: str) -> str:
     s = re.sub(r"[^0-9a-zA-Z_]+", "_", s.strip().lower()).strip("_")
@@ -130,6 +150,8 @@ def ingest_path(target: Path, version: int | None = None, superseded: bool | Non
             results.append(ingest_document(conn, f, version, superseded))
         elif ext in TABLE_EXT:
             results += ingest_table(conn, f)
+        elif ext in IMG_EXT:
+            results.append(ingest_image(conn, f))
     return results
 
 
