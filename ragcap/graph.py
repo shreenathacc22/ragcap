@@ -8,7 +8,7 @@ from typing import TypedDict
 
 from langgraph.graph import END, START, StateGraph
 
-from .config import LLM_MODEL, TOP_K
+from .config import GRADE_MAX_TOKENS, GRADE_MODE, GRADE_MODEL, LLM_MODEL, TOP_K
 from .db import connect
 from .llm import client, embed
 from .tracing import log_run
@@ -32,13 +32,13 @@ class State(TypedDict, total=False):
 
 
 # ---------- helpers ----------
-def chat(messages, json_mode=False, max_tokens=400):
+def chat(messages, json_mode=False, max_tokens=400, model=None):
     """One LLM call. Retries 3 times with backoff on connection errors so a transient Ollama blip does not kill a long run."""
     from openai import APIConnectionError, APITimeoutError
     kw = {"response_format": {"type": "json_object"}} if json_mode else {}
     for attempt in range(3):
         try:
-            r = client().chat.completions.create(model=LLM_MODEL, messages=messages, temperature=0,
+            r = client().chat.completions.create(model=model or LLM_MODEL, messages=messages, temperature=0,
                                                  max_tokens=max_tokens, **kw)
             break
         except (APIConnectionError, APITimeoutError):
@@ -160,14 +160,27 @@ def retrieve(s: State):
 
 @timed("grade")
 def grade(s: State):
-    """Grade each retrieved passage with its own yes/no call (a 3B model cannot reliably pick indices out of six passages)."""
+    """Two modes. per_passage: one yes/no call per retrieved passage (what a 3B model can do reliably).
+    single: one call that picks indices out of all passages (cheaper; needs a stronger model, see step 19)."""
+    if GRADE_MODE == "single":
+        listing = "\n\n".join(f"[{i}] ({c['doc']})\n{c['text'][:900]}" for i, c in enumerate(s["chunks"]))
+        out, ti, to = chat([
+            {"role": "system", "content": "You filter search results. A passage is relevant if it covers the same topic as the question "
+             "and could contain the answer, even if phrased differently. Be inclusive: when unsure, keep it. "
+             "Reply JSON: {\"relevant\": [indices]}. Use [] only if every passage is about a clearly different subject."},
+            {"role": "user", "content": f"Question: {s['standalone']}\n\nPassages:\n{listing}"}],
+            json_mode=True, max_tokens=GRADE_MAX_TOKENS, model=GRADE_MODEL)
+        idx = [i for i in parse_json(out).get("relevant", []) if isinstance(i, int) and 0 <= i < len(s["chunks"])]
+        return {"relevant": [s["chunks"][i] for i in idx]}, 1, ti, to
+
     from concurrent.futures import ThreadPoolExecutor
 
     def one(c):
         out, ti, to = chat([
             {"role": "system", "content": "You filter search results. Does the passage cover the same topic as the question and could it contain the answer? "
              "Be inclusive: if it is about the same subject, say yes. Reply JSON: {\"relevant\": true or false}."},
-            {"role": "user", "content": f"Question: {s['standalone']}\n\nPassage ({c['doc']}):\n{c['text'][:900]}"}], json_mode=True, max_tokens=15)
+            {"role": "user", "content": f"Question: {s['standalone']}\n\nPassage ({c['doc']}):\n{c['text'][:900]}"}],
+            json_mode=True, max_tokens=GRADE_MAX_TOKENS, model=GRADE_MODEL)
         return parse_json(out).get("relevant") is True, ti, to
     with ThreadPoolExecutor(max_workers=3) as ex:
         res = list(ex.map(one, s["chunks"]))

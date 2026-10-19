@@ -14,5 +14,9 @@ LLM_BASE_URL = os.getenv("LLM_BASE_URL", "http://localhost:11434/v1")
 LLM_API_KEY = os.getenv("LLM_API_KEY", "ollama")
 LLM_MODEL = os.getenv("LLM_MODEL", "llama3.2:3b")
 EMBED_MODEL = os.getenv("EMBED_MODEL", "nomic-embed-text")
+# Grader experiment switch (step 19). Defaults reproduce the llama3b series exactly.
+GRADE_MODEL = os.getenv("GRADE_MODEL", LLM_MODEL)          # e.g. qwen3:8b
+GRADE_MODE = os.getenv("GRADE_MODE", "per_passage")         # per_passage | single
+GRADE_MAX_TOKENS = int(os.getenv("GRADE_MAX_TOKENS", "15"))  # qwen3 needs ~600 for its hidden reasoning
 EMBED_DIM = 768
 TOP_K = 6
