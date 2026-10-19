@@ -1,0 +1,639 @@
+{
+ "metrics": {
+  "version_aware": false,
+  "cases": 32,
+  "k": 6,
+  "embed_model": "nomic-embed-text",
+  "superseded_chunks": 99,
+  "chunks_total": 192,
+  "superseded_rate": 0.515625,
+  "trap_cases": 12,
+  "trap_pass": 2,
+  "trap_pass_strict": 2,
+  "trap_stale_from_old_chunk": 10,
+  "trap_stale_in_context": 10,
+  "control_cases": 20,
+  "control_pass": 20,
+  "median_ms_single_pass": 64.0
+ },
+ "rows": [
+  {
+   "id": "doc-001",
+   "trap": true,
+   "facts_in_context": true,
+   "stale_in_context": [
+    "10,000 messages"
+   ],
+   "stale_from_old_chunk": [
+    "10,000 messages"
+   ],
+   "pass": false,
+   "pass_strict": false,
+   "retrieved": [
+    "Kafka Consumer Lag Runbook v2",
+    "Kafka Consumer Lag Runbook v1 OLD",
+    "Kafka Disk Utilisation Alerting v1 OLD",
+    "Kafka Disk Utilisation Alerting v2",
+    "Kafka Incident Escalation Path v2",
+    "Kafka Incident Escalation Path v1 OLD"
+   ],
+   "ms": 183
+  },
+  {
+   "id": "doc-002",
+   "trap": true,
+   "facts_in_context": true,
+   "stale_in_context": [
+    "168 hours"
+   ],
+   "stale_from_old_chunk": [
+    "168 hours"
+   ],
+   "pass": false,
+   "pass_strict": false,
+   "retrieved": [
+    "Kafka Retention Policy v1 OLD",
+    "Kafka Retention Policy v2",
+    "Kafka Topic Naming Standard v2",
+    "Kafka Topic Naming Standard v1 OLD",
+    "Kafka Consumer Lag Runbook v2",
+    "Kafka Consumer Lag Runbook v1 OLD"
+   ],
+   "ms": 64
+  },
+  {
+   "id": "doc-003",
+   "trap": true,
+   "facts_in_context": true,
+   "stale_in_context": [],
+   "stale_from_old_chunk": [],
+   "pass": true,
+   "pass_strict": true,
+   "retrieved": [
+    "Kafka Broker Restart Procedure v2",
+    "Kafka Broker Restart Procedure v1 OLD",
+    "Kafka Disk Utilisation Alerting v1 OLD",
+    "Kafka Disk Utilisation Alerting v2",
+    "Kafka TLS Certificate Rotation v2",
+    "Kafka Consumer Lag Runbook v2"
+   ],
+   "ms": 65
+  },
+  {
+   "id": "doc-004",
+   "trap": true,
+   "facts_in_context": true,
+   "stale_in_context": [
+    "certs.internal.example.com"
+   ],
+   "stale_from_old_chunk": [
+    "certs.internal.example.com"
+   ],
+   "pass": false,
+   "pass_strict": false,
+   "retrieved": [
+    "Kafka TLS Certificate Rotation v2",
+    "Kafka TLS Certificate Rotation v1 OLD",
+    "Kafka Broker Restart Procedure v1 OLD",
+    "Kafka Broker Restart Procedure v2",
+    "Kafka Disk Utilisation Alerting v1 OLD",
+    "Kafka Replication Settings v2"
+   ],
+   "ms": 63
+  },
+  {
+   "id": "doc-005",
+   "trap": true,
+   "facts_in_context": true,
+   "stale_in_context": [
+    "Platform Reliability team"
+   ],
+   "stale_from_old_chunk": [
+    "Platform Reliability team"
+   ],
+   "pass": false,
+   "pass_strict": false,
+   "retrieved": [
+    "Kafka Incident Escalation Path v2",
+    "Kafka Incident Escalation Path v1 OLD",
+    "Kafka Topic Naming Standard v1 OLD",
+    "Kafka Retention Policy v1 OLD",
+    "Kafka Topic Naming Standard v2",
+    "Kafka Disk Utilisation Alerting v1 OLD"
+   ],
+   "ms": 62
+  },
+  {
+   "id": "doc-006",
+   "trap": true,
+   "facts_in_context": true,
+   "stale_in_context": [
+    "evt."
+   ],
+   "stale_from_old_chunk": [
+    "evt."
+   ],
+   "pass": false,
+   "pass_strict": false,
+   "retrieved": [
+    "Kafka Topic Naming Standard v2",
+    "Kafka Topic Naming Standard v1 OLD",
+    "Kafka Retention Policy v1 OLD",
+    "Kafka Retention Policy v2",
+    "Kafka Disk Utilisation Alerting v2",
+    "Kafka Incident Escalation Path v1 OLD"
+   ],
+   "ms": 64
+  },
+  {
+   "id": "doc-007",
+   "trap": true,
+   "facts_in_context": true,
+   "stale_in_context": [
+    "85%"
+   ],
+   "stale_from_old_chunk": [
+    "85%"
+   ],
+   "pass": false,
+   "pass_strict": false,
+   "retrieved": [
+    "Kafka Disk Utilisation Alerting v2",
+    "Kafka Disk Utilisation Alerting v1 OLD",
+    "Kafka Broker Restart Procedure v1 OLD",
+    "Kafka Broker Restart Procedure v2",
+    "Kafka Retention Policy v2",
+    "Kafka TLS Certificate Rotation v1 OLD"
+   ],
+   "ms": 64
+  },
+  {
+   "id": "doc-008",
+   "trap": true,
+   "facts_in_context": true,
+   "stale_in_context": [
+    "replication factor 2"
+   ],
+   "stale_from_old_chunk": [
+    "replication factor 2"
+   ],
+   "pass": false,
+   "pass_strict": false,
+   "retrieved": [
+    "Kafka Replication Settings v2",
+    "Kafka Replication Settings v1 OLD",
+    "Kafka Topic Naming Standard v1 OLD",
+    "Kafka Topic Naming Standard v2",
+    "Kafka Retention Policy v1 OLD",
+    "Kafka Retention Policy v2"
+   ],
+   "ms": 65
+  },
+  {
+   "id": "doc-009",
+   "trap": false,
+   "facts_in_context": true,
+   "stale_in_context": [],
+   "stale_from_old_chunk": [],
+   "pass": true,
+   "pass_strict": true,
+   "retrieved": [
+    "Kafka TLS Certificate Rotation v2",
+    "Kafka TLS Certificate Rotation v1 OLD",
+    "Kafka Broker Restart Procedure v1 OLD",
+    "Kafka Broker Restart Procedure v2",
+    "Kafka Replication Settings v2",
+    "Kafka Topic Naming Standard v1 OLD"
+   ],
+   "ms": 60
+  },
+  {
+   "id": "doc-010",
+   "trap": false,
+   "facts_in_context": true,
+   "stale_in_context": [],
+   "stale_from_old_chunk": [],
+   "pass": true,
+   "pass_strict": true,
+   "retrieved": [
+    "Kafka Replication Settings v1 OLD",
+    "Kafka Topic Naming Standard v1 OLD",
+    "Kafka Replication Settings v2",
+    "Kafka Disk Utilisation Alerting v1 OLD",
+    "Kafka Topic Naming Standard v2",
+    "Kafka Disk Utilisation Alerting v2"
+   ],
+   "ms": 61
+  },
+  {
+   "id": "doc-011",
+   "trap": false,
+   "facts_in_context": true,
+   "stale_in_context": [],
+   "stale_from_old_chunk": [],
+   "pass": true,
+   "pass_strict": true,
+   "retrieved": [
+    "Kafka Incident Escalation Path v1 OLD",
+    "Kafka Incident Escalation Path v2",
+    "Kafka Retention Policy v1 OLD",
+    "Kafka Topic Naming Standard v1 OLD",
+    "Kafka Replication Settings v1 OLD",
+    "Kafka Retention Policy v2"
+   ],
+   "ms": 66
+  },
+  {
+   "id": "doc-012",
+   "trap": false,
+   "facts_in_context": true,
+   "stale_in_context": [],
+   "stale_from_old_chunk": [],
+   "pass": true,
+   "pass_strict": true,
+   "retrieved": [
+    "Kafka TLS Certificate Rotation v2",
+    "Kafka Broker Restart Procedure v1 OLD",
+    "Kafka Broker Restart Procedure v2",
+    "Kafka TLS Certificate Rotation v1 OLD",
+    "Kafka Disk Utilisation Alerting v1 OLD",
+    "Kafka Disk Utilisation Alerting v2"
+   ],
+   "ms": 64
+  },
+  {
+   "id": "doc-013",
+   "trap": false,
+   "facts_in_context": true,
+   "stale_in_context": [],
+   "stale_from_old_chunk": [],
+   "pass": true,
+   "pass_strict": true,
+   "retrieved": [
+    "Kafka Topic Naming Standard v1 OLD",
+    "Kafka Replication Settings v1 OLD",
+    "Kafka Replication Settings v2",
+    "Kafka Topic Naming Standard v2",
+    "Kafka Disk Utilisation Alerting v1 OLD",
+    "Kafka Incident Escalation Path v1 OLD"
+   ],
+   "ms": 64
+  },
+  {
+   "id": "doc-014",
+   "trap": false,
+   "facts_in_context": true,
+   "stale_in_context": [],
+   "stale_from_old_chunk": [],
+   "pass": true,
+   "pass_strict": true,
+   "retrieved": [
+    "Kafka TLS Certificate Rotation v2",
+    "Kafka TLS Certificate Rotation v1 OLD",
+    "Kafka Broker Restart Procedure v1 OLD",
+    "Kafka Broker Restart Procedure v2",
+    "Kafka Disk Utilisation Alerting v2",
+    "Kafka Disk Utilisation Alerting v1 OLD"
+   ],
+   "ms": 66
+  },
+  {
+   "id": "doc-015",
+   "trap": true,
+   "facts_in_context": true,
+   "stale_in_context": [
+    "85%",
+    "168 hours"
+   ],
+   "stale_from_old_chunk": [
+    "85%",
+    "168 hours"
+   ],
+   "pass": false,
+   "pass_strict": false,
+   "retrieved": [
+    "Kafka Retention Policy v1 OLD",
+    "Kafka Retention Policy v2",
+    "Kafka Disk Utilisation Alerting v2",
+    "Kafka Disk Utilisation Alerting v1 OLD",
+    "Kafka Broker Restart Procedure v1 OLD",
+    "Kafka Broker Restart Procedure v2"
+   ],
+   "ms": 142
+  },
+  {
+   "id": "doc-016",
+   "trap": true,
+   "facts_in_context": true,
+   "stale_in_context": [
+    "Platform Reliability team"
+   ],
+   "stale_from_old_chunk": [
+    "Platform Reliability team"
+   ],
+   "pass": false,
+   "pass_strict": false,
+   "retrieved": [
+    "Kafka Incident Escalation Path v1 OLD",
+    "Kafka TLS Certificate Rotation v1 OLD",
+    "Kafka Incident Escalation Path v2",
+    "Kafka TLS Certificate Rotation v2",
+    "Kafka Broker Restart Procedure v1 OLD",
+    "Kafka Broker Restart Procedure v2"
+   ],
+   "ms": 210
+  },
+  {
+   "id": "h-doc-01",
+   "trap": false,
+   "facts_in_context": true,
+   "stale_in_context": [],
+   "stale_from_old_chunk": [],
+   "pass": true,
+   "pass_strict": true,
+   "retrieved": [
+    "Kafka TLS Certificate Rotation v1 OLD",
+    "Kafka TLS Certificate Rotation v2",
+    "Kafka Broker Restart Procedure v1 OLD",
+    "Kafka Broker Restart Procedure v2",
+    "Kafka Retention Policy v2",
+    "Kafka Retention Policy v1 OLD"
+   ],
+   "ms": 70
+  },
+  {
+   "id": "h-doc-02",
+   "trap": false,
+   "facts_in_context": true,
+   "stale_in_context": [],
+   "stale_from_old_chunk": [],
+   "pass": true,
+   "pass_strict": true,
+   "retrieved": [
+    "Kafka Replication Settings v1 OLD",
+    "Kafka Replication Settings v2",
+    "Kafka Topic Naming Standard v1 OLD",
+    "Kafka Topic Naming Standard v2",
+    "Kafka Retention Policy v1 OLD",
+    "Kafka Retention Policy v2"
+   ],
+   "ms": 83
+  },
+  {
+   "id": "h-doc-03",
+   "trap": false,
+   "facts_in_context": true,
+   "stale_in_context": [],
+   "stale_from_old_chunk": [],
+   "pass": true,
+   "pass_strict": true,
+   "retrieved": [
+    "Kafka Topic Naming Standard v2",
+    "Kafka Topic Naming Standard v1 OLD",
+    "Kafka Retention Policy v1 OLD",
+    "Kafka Retention Policy v2",
+    "Kafka Disk Utilisation Alerting v2",
+    "Kafka Disk Utilisation Alerting v1 OLD"
+   ],
+   "ms": 60
+  },
+  {
+   "id": "h-doc-04",
+   "trap": false,
+   "facts_in_context": true,
+   "stale_in_context": [],
+   "stale_from_old_chunk": [],
+   "pass": true,
+   "pass_strict": true,
+   "retrieved": [
+    "Kafka Retention Policy v1 OLD",
+    "Kafka Retention Policy v2",
+    "Kafka Consumer Lag Runbook v2",
+    "Kafka Consumer Lag Runbook v1 OLD",
+    "Kafka Disk Utilisation Alerting v1 OLD",
+    "Kafka Disk Utilisation Alerting v2"
+   ],
+   "ms": 61
+  },
+  {
+   "id": "h-doc-05",
+   "trap": false,
+   "facts_in_context": true,
+   "stale_in_context": [],
+   "stale_from_old_chunk": [],
+   "pass": true,
+   "pass_strict": true,
+   "retrieved": [
+    "Kafka Consumer Lag Runbook v2",
+    "Kafka Consumer Lag Runbook v1 OLD",
+    "Kafka Disk Utilisation Alerting v1 OLD",
+    "Kafka Disk Utilisation Alerting v2",
+    "Kafka Retention Policy v2",
+    "Kafka Retention Policy v1 OLD"
+   ],
+   "ms": 59
+  },
+  {
+   "id": "h-doc-06",
+   "trap": false,
+   "facts_in_context": true,
+   "stale_in_context": [],
+   "stale_from_old_chunk": [],
+   "pass": true,
+   "pass_strict": true,
+   "retrieved": [
+    "Kafka Broker Restart Procedure v1 OLD",
+    "Kafka Broker Restart Procedure v2",
+    "Kafka TLS Certificate Rotation v1 OLD",
+    "Kafka TLS Certificate Rotation v2",
+    "Kafka Retention Policy v2",
+    "Kafka Retention Policy v1 OLD"
+   ],
+   "ms": 64
+  },
+  {
+   "id": "h-doc-07",
+   "trap": false,
+   "facts_in_context": true,
+   "stale_in_context": [],
+   "stale_from_old_chunk": [],
+   "pass": true,
+   "pass_strict": true,
+   "retrieved": [
+    "Kafka Incident Escalation Path v1 OLD",
+    "Kafka Incident Escalation Path v2",
+    "Kafka Topic Naming Standard v1 OLD",
+    "Kafka Topic Naming Standard v2",
+    "Kafka Disk Utilisation Alerting v1 OLD",
+    "Kafka Disk Utilisation Alerting v2"
+   ],
+   "ms": 63
+  },
+  {
+   "id": "h-doc-08",
+   "trap": false,
+   "facts_in_context": true,
+   "stale_in_context": [],
+   "stale_from_old_chunk": [],
+   "pass": true,
+   "pass_strict": true,
+   "retrieved": [
+    "Kafka Incident Escalation Path v1 OLD",
+    "Kafka Incident Escalation Path v2",
+    "Kafka Retention Policy v1 OLD",
+    "Kafka Consumer Lag Runbook v2",
+    "Kafka Retention Policy v2",
+    "Kafka Consumer Lag Runbook v1 OLD"
+   ],
+   "ms": 65
+  },
+  {
+   "id": "h-doc-09",
+   "trap": false,
+   "facts_in_context": true,
+   "stale_in_context": [],
+   "stale_from_old_chunk": [],
+   "pass": true,
+   "pass_strict": true,
+   "retrieved": [
+    "Kafka TLS Certificate Rotation v2",
+    "Kafka TLS Certificate Rotation v1 OLD",
+    "Kafka Broker Restart Procedure v1 OLD",
+    "Kafka Broker Restart Procedure v2",
+    "Kafka Replication Settings v2",
+    "Kafka Disk Utilisation Alerting v1 OLD"
+   ],
+   "ms": 63
+  },
+  {
+   "id": "h-doc-10",
+   "trap": false,
+   "facts_in_context": true,
+   "stale_in_context": [],
+   "stale_from_old_chunk": [],
+   "pass": true,
+   "pass_strict": true,
+   "retrieved": [
+    "Kafka TLS Certificate Rotation v1 OLD",
+    "Kafka TLS Certificate Rotation v2",
+    "Kafka Broker Restart Procedure v1 OLD",
+    "Kafka Broker Restart Procedure v2",
+    "Kafka Disk Utilisation Alerting v1 OLD",
+    "Kafka Incident Escalation Path v1 OLD"
+   ],
+   "ms": 66
+  },
+  {
+   "id": "h-doc-11",
+   "trap": false,
+   "facts_in_context": true,
+   "stale_in_context": [],
+   "stale_from_old_chunk": [],
+   "pass": true,
+   "pass_strict": true,
+   "retrieved": [
+    "Kafka Disk Utilisation Alerting v2",
+    "Kafka Disk Utilisation Alerting v1 OLD",
+    "Kafka Consumer Lag Runbook v1 OLD",
+    "Kafka Consumer Lag Runbook v2",
+    "Kafka Retention Policy v2",
+    "Kafka Incident Escalation Path v1 OLD"
+   ],
+   "ms": 61
+  },
+  {
+   "id": "h-doc-12",
+   "trap": false,
+   "facts_in_context": true,
+   "stale_in_context": [],
+   "stale_from_old_chunk": [],
+   "pass": true,
+   "pass_strict": true,
+   "retrieved": [
+    "Kafka TLS Certificate Rotation v2",
+    "Kafka Broker Restart Procedure v2",
+    "Kafka TLS Certificate Rotation v1 OLD",
+    "Kafka Broker Restart Procedure v1 OLD",
+    "Kafka Disk Utilisation Alerting v2",
+    "Kafka Disk Utilisation Alerting v1 OLD"
+   ],
+   "ms": 63
+  },
+  {
+   "id": "h-doc-13",
+   "trap": false,
+   "facts_in_context": true,
+   "stale_in_context": [],
+   "stale_from_old_chunk": [],
+   "pass": true,
+   "pass_strict": true,
+   "retrieved": [
+    "Kafka Topic Naming Standard v2",
+    "Kafka Topic Naming Standard v1 OLD",
+    "Kafka Retention Policy v1 OLD",
+    "Kafka Retention Policy v2",
+    "Kafka Disk Utilisation Alerting v2",
+    "Kafka Disk Utilisation Alerting v1 OLD"
+   ],
+   "ms": 63
+  },
+  {
+   "id": "h-doc-14",
+   "trap": false,
+   "facts_in_context": true,
+   "stale_in_context": [],
+   "stale_from_old_chunk": [],
+   "pass": true,
+   "pass_strict": true,
+   "retrieved": [
+    "Kafka Consumer Lag Runbook v2",
+    "Kafka Consumer Lag Runbook v1 OLD",
+    "Kafka Incident Escalation Path v2",
+    "Kafka Disk Utilisation Alerting v1 OLD",
+    "Kafka Incident Escalation Path v1 OLD",
+    "Kafka Disk Utilisation Alerting v2"
+   ],
+   "ms": 70
+  },
+  {
+   "id": "h-doc-15",
+   "trap": true,
+   "facts_in_context": true,
+   "stale_in_context": [
+    "168"
+   ],
+   "stale_from_old_chunk": [
+    "168"
+   ],
+   "pass": false,
+   "pass_strict": false,
+   "retrieved": [
+    "Kafka Retention Policy v2",
+    "Kafka Replication Settings v2",
+    "Kafka Retention Policy v1 OLD",
+    "Kafka Replication Settings v1 OLD",
+    "Kafka Topic Naming Standard v1 OLD",
+    "Kafka Topic Naming Standard v2"
+   ],
+   "ms": 62
+  },
+  {
+   "id": "h-doc-16",
+   "trap": true,
+   "facts_in_context": true,
+   "stale_in_context": [],
+   "stale_from_old_chunk": [],
+   "pass": true,
+   "pass_strict": true,
+   "retrieved": [
+    "Kafka TLS Certificate Rotation v2",
+    "Kafka TLS Certificate Rotation v1 OLD",
+    "Kafka Broker Restart Procedure v1 OLD",
+    "Kafka Broker Restart Procedure v2",
+    "Kafka Replication Settings v2",
+    "Kafka Disk Utilisation Alerting v1 OLD"
+   ],
+   "ms": 68
+  }
+ ]
+}

@@ -1,0 +1,177 @@
+{
+ "metrics": {
+  "vision_model": "qwen2.5vl:3b",
+  "vision_seconds_per_drawing": [
+   110.0,
+   88.7,
+   83.8
+  ],
+  "tags": [
+   {
+    "drawing": "P&ID-001",
+    "expected": 13,
+    "correct": 11,
+    "invented": [],
+    "missed": [
+     "T-101",
+     "T-102"
+    ],
+    "description_chars": 1281
+   },
+   {
+    "drawing": "P&ID-002",
+    "expected": 13,
+    "correct": 12,
+    "invented": [],
+    "missed": [
+     "FCV-201"
+    ],
+    "description_chars": 1076
+   },
+   {
+    "drawing": "P&ID-003",
+    "expected": 13,
+    "correct": 13,
+    "invented": [],
+    "missed": [],
+    "description_chars": 968
+   }
+  ],
+  "tag_correct_total": 36,
+  "tag_expected_total": 39,
+  "tag_invented_total": 0,
+  "qa_cases": 12,
+  "qa_route_documents": 1.0,
+  "qa_right_drawing_retrieved": 1.0,
+  "qa_answer_correct": 0.4166666666666667,
+  "qa_by_kind": {
+   "valve isolating a pump": "1/3",
+   "controller + control valve": "1/3",
+   "what an instrument measures, on what": "3/3",
+   "which drawing / unit": "0/3"
+  },
+  "qa_mean_ms": 33220.583333333336
+ },
+ "rows": [
+  {
+   "id": "pid-1a",
+   "kind": "a",
+   "question": "Which valve isolates the suction of pump P-101?",
+   "route": "documents",
+   "right_drawing_retrieved": true,
+   "pass": true,
+   "answer": "The valve that isolates the suction of pump P-101 is HV-101.",
+   "total_ms": 36222
+  },
+  {
+   "id": "pid-1b",
+   "kind": "b",
+   "question": "Which instrument controls the flow into tank T-102, and through which valve?",
+   "route": "documents",
+   "right_drawing_retrieved": true,
+   "pass": true,
+   "answer": "According to passage [1] (PID-001), the instrument that controls the flow is FIC-101: FIC flow indicating controller, and it controls flow through FCV-101: FCV flow control valve.\n\nHowever, passage [2] (PID-003) provides more specific information. According to passage [2], the instrument that contro",
+   "total_ms": 35621
+  },
+  {
+   "id": "pid-1c",
+   "kind": "c",
+   "question": "What does LT-101 measure, and on which equipment?",
+   "route": "documents",
+   "right_drawing_retrieved": true,
+   "pass": true,
+   "answer": "The LT-101 measures level.",
+   "total_ms": 33908
+  },
+  {
+   "id": "pid-1d",
+   "kind": "d",
+   "question": "Which drawing shows heat exchanger E-101, and what unit is it?",
+   "route": "documents",
+   "right_drawing_retrieved": true,
+   "pass": false,
+   "answer": "It is not in the knowledge base.",
+   "total_ms": 30410
+  },
+  {
+   "id": "pid-2a",
+   "kind": "a",
+   "question": "Which valve isolates the suction of pump P-201?",
+   "route": "documents",
+   "right_drawing_retrieved": true,
+   "pass": false,
+   "answer": "Not in the knowledge base.",
+   "total_ms": 24969
+  },
+  {
+   "id": "pid-2b",
+   "kind": "b",
+   "question": "Which instrument controls the flow into tank T-202, and through which valve?",
+   "route": "documents",
+   "right_drawing_retrieved": true,
+   "pass": false,
+   "answer": "According to passage [1] (PID-001), the instrument that controls the flow is FIC-101: FIC flow indicating controller, and according to passage [2] (PID-003), it sits between E-301 and T-302, which is the FCV-301: Flow control valve.",
+   "total_ms": 32898
+  },
+  {
+   "id": "pid-2c",
+   "kind": "c",
+   "question": "What does LT-201 measure, and on which equipment?",
+   "route": "documents",
+   "right_drawing_retrieved": true,
+   "pass": true,
+   "answer": "According to passage [2] (PID-002), LT-201 measures level, and it is connected to T-201.",
+   "total_ms": 37538
+  },
+  {
+   "id": "pid-2d",
+   "kind": "d",
+   "question": "Which drawing shows heat exchanger E-201, and what unit is it?",
+   "route": "documents",
+   "right_drawing_retrieved": true,
+   "pass": false,
+   "answer": "The passage that shows heat exchanger E-201 is [1] (PID-002) and [3] (PID-001). \n\nThe unit of heat exchanger E-201 is not explicitly stated in the passages.",
+   "total_ms": 40911
+  },
+  {
+   "id": "pid-3a",
+   "kind": "a",
+   "question": "Which valve isolates the suction of pump P-301?",
+   "route": "documents",
+   "right_drawing_retrieved": true,
+   "pass": false,
+   "answer": "It is not in the knowledge base.",
+   "total_ms": 26139
+  },
+  {
+   "id": "pid-3b",
+   "kind": "b",
+   "question": "Which instrument controls the flow into tank T-302, and through which valve?",
+   "route": "documents",
+   "right_drawing_retrieved": true,
+   "pass": false,
+   "answer": "According to passage [2] (PID-003), the instrument that controls the flow into tank T-302 is the FIC-301: Flow indicating controller, and it sits between E-301 and T-302.",
+   "total_ms": 32701
+  },
+  {
+   "id": "pid-3c",
+   "kind": "c",
+   "question": "What does LT-301 measure, and on which equipment?",
+   "route": "documents",
+   "right_drawing_retrieved": true,
+   "pass": true,
+   "answer": "According to passage [2] (PID-003), LT-301 measures level, and it is connected to T-301.",
+   "total_ms": 37776
+  },
+  {
+   "id": "pid-3d",
+   "kind": "d",
+   "question": "Which drawing shows heat exchanger E-301, and what unit is it?",
+   "route": "documents",
+   "right_drawing_retrieved": true,
+   "pass": false,
+   "answer": "It is not in the knowledge base.",
+   "total_ms": 29554
+  }
+ ]
+}

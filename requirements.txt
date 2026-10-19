@@ -1,0 +1,14 @@
+psycopg[binary]>=3.2
+pgvector>=0.3
+openai>=1.40
+langgraph>=0.2
+python-dotenv>=1.0
+pandas>=2.2
+openpyxl>=3.1
+pypdf>=4.0
+fastapi>=0.115
+uvicorn>=0.30
+python-multipart>=0.0.9
+gradio>=4.44
+# optional tracing to LangSmith (step 22): active only with LANGSMITH_TRACING=true
+langsmith>=0.3

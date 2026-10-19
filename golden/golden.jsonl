@@ -1,0 +1,27 @@
+{"id": "doc-001", "route": "documents", "type": "version_current", "question": "At what consumer lag should operations raise an alert?", "facts": ["5,000 messages"], "must_not_contain": ["10,000 messages"]}
+{"id": "doc-002", "route": "documents", "type": "version_current", "question": "How long do standard topics retain messages by default?", "facts": ["72 hours"], "must_not_contain": ["168 hours"]}
+{"id": "doc-003", "route": "documents", "type": "version_current", "question": "In what order should a broker be drained and stopped during a patch?", "facts": ["drain"], "must_not_contain": ["stop the broker first"]}
+{"id": "doc-004", "route": "documents", "type": "version_current", "question": "Which host issues broker TLS certificates?", "facts": ["pki.internal.example.com"], "must_not_contain": ["certs.internal.example.com"]}
+{"id": "doc-005", "route": "documents", "type": "version_current", "question": "Which team owns escalation for a SEV-1 Kafka incident?", "facts": ["Streaming Platform team"], "must_not_contain": ["Platform Reliability team"]}
+{"id": "doc-006", "route": "documents", "type": "version_current", "question": "What prefix should a new event topic use?", "facts": ["event."], "must_not_contain": ["evt."]}
+{"id": "doc-007", "route": "documents", "type": "version_current", "question": "At what disk utilisation should a broker page?", "facts": ["75%"], "must_not_contain": ["85%"]}
+{"id": "doc-008", "route": "documents", "type": "version_current", "question": "What replication factor should a new production topic use?", "facts": ["replication factor 3"], "must_not_contain": ["replication factor 2"]}
+{"id": "doc-009", "route": "documents", "type": "exact_string", "question": "What port does BROKER-EAST-02 use for TLS traffic?", "facts": ["9093"], "must_not_contain": []}
+{"id": "doc-010", "route": "documents", "type": "exact_string", "question": "What is the cluster ID of the production Kafka cluster?", "facts": ["kfk-east-7731"], "must_not_contain": []}
+{"id": "doc-011", "route": "documents", "type": "exact_string", "question": "Which PagerDuty service covers the Kafka on-call rota?", "facts": ["PD-KAFKA-OPS"], "must_not_contain": []}
+{"id": "doc-012", "route": "documents", "type": "exact_string", "question": "What is the metrics endpoint for BROKER-EAST-02?", "facts": ["http://BROKER-EAST-02:7071/metrics"], "must_not_contain": []}
+{"id": "doc-013", "route": "documents", "type": "exact_string", "question": "What is the name of the production Kafka cluster?", "facts": ["kafka-prod-east"], "must_not_contain": []}
+{"id": "doc-014", "route": "documents", "type": "exact_string", "question": "What port does BROKER-EAST-02 use for PLAINTEXT traffic?", "facts": ["9092"], "must_not_contain": []}
+{"id": "doc-015", "route": "documents", "type": "multi_hop", "question": "A broker is paging on disk utilisation. At what percentage does it page, and how long are standard topics retained if I need to reduce retention to recover space?", "facts": ["75%", "72 hours"], "must_not_contain": ["85%", "168 hours"]}
+{"id": "doc-016", "route": "documents", "type": "multi_hop", "question": "I am escalating a SEV-1 on BROKER-EAST-02. Which team do I page, and what port do I check for TLS health?", "facts": ["Streaming Platform team", "9093"], "must_not_contain": ["Platform Reliability team"]}
+{"id": "db-001", "route": "database", "type": "sql", "question": "Which brokers are above 85% disk usage?", "facts": ["3", "5"], "must_not_contain": []}
+{"id": "db-002", "route": "database", "type": "sql", "question": "How many brokers are in rack-b?", "facts": ["2|two"], "must_not_contain": []}
+{"id": "db-003", "route": "database", "type": "sql", "question": "What is the total disk capacity across all brokers in GB?", "facts": ["16000|16,000"], "must_not_contain": []}
+{"id": "db-004", "route": "database", "type": "sql", "question": "Which broker hosts the most topics, and how many?", "facts": ["5", "210"], "must_not_contain": []}
+{"id": "db-005", "route": "database", "type": "sql", "question": "What is the average disk used percentage across brokers?", "facts": ["69.3|69.4"], "must_not_contain": []}
+{"id": "db-006", "route": "database", "type": "sql", "question": "How many brokers have status healthy?", "facts": ["4|four"], "must_not_contain": []}
+{"id": "gen-001", "route": "general", "type": "general", "question": "Hello!", "facts": [], "must_not_contain": []}
+{"id": "gen-002", "route": "general", "type": "general", "question": "Thanks, that was helpful.", "facts": [], "must_not_contain": []}
+{"id": "gen-003", "route": "general", "type": "general", "question": "What can you help me with?", "facts": [], "must_not_contain": []}
+{"id": "una-001", "route": "documents", "type": "unanswerable", "question": "What is the largest message size our brokers accept?", "facts": [], "must_not_contain": []}
+{"id": "una-002", "route": "documents", "type": "unanswerable", "question": "What is our company's stock ticker symbol?", "facts": [], "must_not_contain": []}

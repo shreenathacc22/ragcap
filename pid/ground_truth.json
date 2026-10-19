@@ -1,0 +1,284 @@
+[
+ {
+  "drawing": "P&ID-001",
+  "file": "PID-001.png",
+  "unit": "Cooling Water Circuit",
+  "equipment": [
+   {
+    "tag": "T-101",
+    "type": "tank"
+   },
+   {
+    "tag": "P-101",
+    "type": "pump"
+   },
+   {
+    "tag": "E-101",
+    "type": "heat exchanger"
+   },
+   {
+    "tag": "T-102",
+    "type": "tank"
+   }
+  ],
+  "lines": [
+   [
+    "T-101",
+    "P-101"
+   ],
+   [
+    "P-101",
+    "E-101"
+   ],
+   [
+    "E-101",
+    "T-102"
+   ]
+  ],
+  "valves": [
+   {
+    "tag": "HV-101",
+    "type": "hand isolation valve",
+    "between": [
+     "T-101",
+     "P-101"
+    ],
+    "role": "suction isolation of P-101"
+   },
+   {
+    "tag": "HV-102",
+    "type": "hand isolation valve",
+    "between": [
+     "P-101",
+     "E-101"
+    ],
+    "role": "discharge isolation of P-101"
+   },
+   {
+    "tag": "FCV-101",
+    "type": "flow control valve",
+    "between": [
+     "E-101",
+     "T-102"
+    ],
+    "controlled_by": "FIC-101"
+   }
+  ],
+  "instruments": [
+   {
+    "tag": "LT-101",
+    "measures": "level",
+    "on": "T-101"
+   },
+   {
+    "tag": "PI-101",
+    "measures": "pressure",
+    "on": "discharge of P-101"
+   },
+   {
+    "tag": "TT-101",
+    "measures": "temperature",
+    "on": "outlet of E-101"
+   },
+   {
+    "tag": "FIC-101",
+    "measures": "flow",
+    "controls": "FCV-101",
+    "on": "line into T-102"
+   },
+   {
+    "tag": "LIC-102",
+    "measures": "level",
+    "on": "T-102"
+   }
+  ]
+ },
+ {
+  "drawing": "P&ID-002",
+  "file": "PID-002.png",
+  "unit": "Feed Transfer",
+  "equipment": [
+   {
+    "tag": "T-201",
+    "type": "tank"
+   },
+   {
+    "tag": "P-201",
+    "type": "pump"
+   },
+   {
+    "tag": "E-201",
+    "type": "heat exchanger"
+   },
+   {
+    "tag": "T-202",
+    "type": "tank"
+   }
+  ],
+  "lines": [
+   [
+    "T-201",
+    "P-201"
+   ],
+   [
+    "P-201",
+    "E-201"
+   ],
+   [
+    "E-201",
+    "T-202"
+   ]
+  ],
+  "valves": [
+   {
+    "tag": "HV-201",
+    "type": "hand isolation valve",
+    "between": [
+     "T-201",
+     "P-201"
+    ],
+    "role": "suction isolation of P-201"
+   },
+   {
+    "tag": "HV-202",
+    "type": "hand isolation valve",
+    "between": [
+     "P-201",
+     "E-201"
+    ],
+    "role": "discharge isolation of P-201"
+   },
+   {
+    "tag": "FCV-201",
+    "type": "flow control valve",
+    "between": [
+     "E-201",
+     "T-202"
+    ],
+    "controlled_by": "FIC-201"
+   }
+  ],
+  "instruments": [
+   {
+    "tag": "LT-201",
+    "measures": "level",
+    "on": "T-201"
+   },
+   {
+    "tag": "PI-201",
+    "measures": "pressure",
+    "on": "discharge of P-201"
+   },
+   {
+    "tag": "TT-201",
+    "measures": "temperature",
+    "on": "outlet of E-201"
+   },
+   {
+    "tag": "FIC-201",
+    "measures": "flow",
+    "controls": "FCV-201",
+    "on": "line into T-202"
+   },
+   {
+    "tag": "LIC-202",
+    "measures": "level",
+    "on": "T-202"
+   }
+  ]
+ },
+ {
+  "drawing": "P&ID-003",
+  "file": "PID-003.png",
+  "unit": "Reflux Return",
+  "equipment": [
+   {
+    "tag": "T-301",
+    "type": "tank"
+   },
+   {
+    "tag": "P-301",
+    "type": "pump"
+   },
+   {
+    "tag": "E-301",
+    "type": "heat exchanger"
+   },
+   {
+    "tag": "T-302",
+    "type": "tank"
+   }
+  ],
+  "lines": [
+   [
+    "T-301",
+    "P-301"
+   ],
+   [
+    "P-301",
+    "E-301"
+   ],
+   [
+    "E-301",
+    "T-302"
+   ]
+  ],
+  "valves": [
+   {
+    "tag": "HV-301",
+    "type": "hand isolation valve",
+    "between": [
+     "T-301",
+     "P-301"
+    ],
+    "role": "suction isolation of P-301"
+   },
+   {
+    "tag": "HV-302",
+    "type": "hand isolation valve",
+    "between": [
+     "P-301",
+     "E-301"
+    ],
+    "role": "discharge isolation of P-301"
+   },
+   {
+    "tag": "FCV-301",
+    "type": "flow control valve",
+    "between": [
+     "E-301",
+     "T-302"
+    ],
+    "controlled_by": "FIC-301"
+   }
+  ],
+  "instruments": [
+   {
+    "tag": "LT-301",
+    "measures": "level",
+    "on": "T-301"
+   },
+   {
+    "tag": "PI-301",
+    "measures": "pressure",
+    "on": "discharge of P-301"
+   },
+   {
+    "tag": "TT-301",
+    "measures": "temperature",
+    "on": "outlet of E-301"
+   },
+   {
+    "tag": "FIC-301",
+    "measures": "flow",
+    "controls": "FCV-301",
+    "on": "line into T-302"
+   },
+   {
+    "tag": "LIC-302",
+    "measures": "level",
+    "on": "T-302"
+   }
+  ]
+ }
+]

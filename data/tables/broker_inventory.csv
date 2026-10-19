@@ -1,0 +1,7 @@
+broker_id,rack,disk_total_gb,disk_used_pct,topics,status
+1,rack-a,2000,62.5,140,healthy
+2,rack-a,2000,71.0,152,healthy
+3,rack-b,2000,87.2,160,warning
+4,rack-b,4000,45.3,98,healthy
+5,rack-c,4000,91.8,210,critical
+6,rack-c,2000,58.4,120,healthy
