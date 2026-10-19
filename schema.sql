@@ -9,6 +9,8 @@ CREATE TABLE IF NOT EXISTS documents (
     uploaded_at timestamptz NOT NULL DEFAULT now(),
     UNIQUE (name, version)
 );
+-- step 20: when this version took effect (from the document's front-matter); current must be later than old
+ALTER TABLE documents ADD COLUMN IF NOT EXISTS effective_date date;
 
 -- 768 = nomic-embed-text. Change the number AND re-ingest if the embedding model changes.
 CREATE TABLE IF NOT EXISTS chunks (

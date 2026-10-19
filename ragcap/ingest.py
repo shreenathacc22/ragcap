@@ -1,6 +1,9 @@
 """Ingestion: documents -> Markdown -> chunks -> embeddings -> pgvector; CSV/Excel -> SQL tables.
 
-Usage: python -m ragcap.ingest <file-or-folder> [--version N]
+Usage: python -m ragcap.ingest <file-or-folder> [--version N] [--superseded]
+
+Step 20: a Markdown front-matter block (doc, version, effective_date, superseded) is read as metadata and
+stripped BEFORE embedding, so version status never leaks into the vector. CLI flags override it.
 """
 import argparse
 import json
@@ -33,6 +36,22 @@ def to_markdown(path: Path) -> str:
         raise RuntimeError(f"{ext} needs Docling (not installed in this venv)")
 
 
+FRONT = re.compile(r"\A---\s*\n(.*?)\n---\s*\n", re.S)
+
+
+def split_front_matter(raw: str) -> tuple[str, dict]:
+    """Returns (body without front-matter, {key: value}). No front-matter -> (raw, {})."""
+    m = FRONT.match(raw)
+    if not m:
+        return raw, {}
+    meta = {}
+    for line in m.group(1).splitlines():
+        if ":" in line:
+            k, v = line.split(":", 1)
+            meta[k.strip()] = v.strip()
+    return raw[m.end():], meta
+
+
 # ---------- chunking ----------
 def chunk(text: str, target_words: int = 180) -> list[str]:
     """Pack whole paragraphs up to ~target_words; split an oversized paragraph on sentences."""
@@ -49,22 +68,27 @@ def chunk(text: str, target_words: int = 180) -> list[str]:
 
 
 # ---------- documents ----------
-def ingest_document(conn, path: Path, version: int = 1, superseded: bool = False) -> dict:
+def ingest_document(conn, path: Path, version: int | None = None, superseded: bool | None = None) -> dict:
     t0 = time.perf_counter()
-    name = path.stem
-    chunks = chunk(to_markdown(path))
+    body, fm = split_front_matter(to_markdown(path))
+    name = fm.get("doc") or path.stem                      # the title shared by every version of a document
+    version = version if version is not None else int(fm.get("version", 1))
+    superseded = superseded if superseded is not None else fm.get("superseded", "false").lower() == "true"
+    effective_date = fm.get("effective_date") or None
+    chunks = chunk(body)
     # prepend the doc name so an orphan paragraph still says what it is about
     vecs = []
     for i in range(0, len(chunks), 16):
         vecs += embed([f"{name}\n{c}" for c in chunks[i:i + 16]])
     conn.execute("DELETE FROM documents WHERE name=%s AND version=%s", (name, version))
     doc_id = conn.execute(
-        "INSERT INTO documents(name,version,superseded,source_path) VALUES (%s,%s,%s,%s) RETURNING id",
-        (name, version, superseded, str(path))).fetchone()[0]
+        "INSERT INTO documents(name,version,superseded,effective_date,source_path) VALUES (%s,%s,%s,%s,%s) RETURNING id",
+        (name, version, superseded, effective_date, str(path))).fetchone()[0]
     for i, (c, v) in enumerate(zip(chunks, vecs)):
         conn.execute("INSERT INTO chunks(doc_id,chunk_no,text,embedding,meta) VALUES (%s,%s,%s,%s,%s)",
-                     (doc_id, i, c, v, json.dumps({"doc": name, "version": version})))
-    return {"file": path.name, "chunks": len(chunks), "seconds": round(time.perf_counter() - t0, 1)}
+                     (doc_id, i, c, v, json.dumps({"doc": name, "version": version, "superseded": superseded})))
+    return {"file": path.name, "doc": name, "version": version, "superseded": superseded,
+            "chunks": len(chunks), "seconds": round(time.perf_counter() - t0, 1)}
 
 
 # ---------- tables ----------
@@ -96,14 +120,14 @@ def ingest_table(conn, path: Path) -> list[dict]:
     return out
 
 
-def ingest_path(target: Path, version: int = 1) -> list[dict]:
+def ingest_path(target: Path, version: int | None = None, superseded: bool | None = None) -> list[dict]:
     conn = connect()
     files = sorted(p for p in ([target] if target.is_file() else target.rglob("*")) if p.is_file())
     results = []
     for f in files:
         ext = f.suffix.lower()
         if ext in DOC_EXT:
-            results.append(ingest_document(conn, f, version))
+            results.append(ingest_document(conn, f, version, superseded))
         elif ext in TABLE_EXT:
             results += ingest_table(conn, f)
     return results
@@ -112,7 +136,8 @@ def ingest_path(target: Path, version: int = 1) -> list[dict]:
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("path")
-    ap.add_argument("--version", type=int, default=1)
+    ap.add_argument("--version", type=int, default=None, help="override the front-matter version")
+    ap.add_argument("--superseded", action="store_const", const=True, default=None, help="mark as an old version")
     a = ap.parse_args()
-    for r in ingest_path(Path(a.path), a.version):
+    for r in ingest_path(Path(a.path), a.version, a.superseded):
         print(r)

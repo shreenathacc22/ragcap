@@ -8,6 +8,7 @@ import time
 from collections import defaultdict
 from pathlib import Path
 
+from ragcap.config import LLM_MODEL, VERSION_AWARE
 from ragcap.graph import ask
 
 P_IN, P_OUT = 0.40 / 1e6, 1.60 / 1e6
@@ -59,7 +60,7 @@ def main(limit=None, golden="golden/golden.jsonl", tag="eval"):
         print(f"{c['id']:8} route={'ok ' if r['route_ok'] else 'BAD'} answer={'ok ' if r['answer_ok'] else 'BAD'} {r['total_ms']}ms", flush=True)
 
     n = len(rows)
-    m = {"cases": n, "errors": sum(r["route"] == "error" for r in rows),
+    m = {"cases": n, "model": LLM_MODEL, "version_aware": VERSION_AWARE, "errors": sum(r["route"] == "error" for r in rows),
          "router_accuracy": sum(r["route_ok"] for r in rows) / n,
          "answer_correct": sum(r["answer_ok"] for r in rows) / n}
     doc = [r for r in rows if "retrieval_hit" in r]

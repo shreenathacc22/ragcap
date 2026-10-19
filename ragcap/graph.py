@@ -8,7 +8,7 @@ from typing import TypedDict
 
 from langgraph.graph import END, START, StateGraph
 
-from .config import GRADE_MAX_TOKENS, GRADE_MODE, GRADE_MODEL, GRADE_PASSAGE_CHARS, LLM_MODEL, TOP_K
+from .config import GRADE_MAX_TOKENS, GRADE_MODE, GRADE_MODEL, GRADE_PASSAGE_CHARS, LLM_MODEL, TOP_K, VERSION_AWARE
 from .db import connect
 from .llm import client, embed
 from .tracing import log_run
@@ -28,6 +28,7 @@ class State(TypedDict, total=False):
     rows: list
     columns: list
     answer: str
+    version_aware: bool
     trace: list[dict]
 
 
@@ -148,14 +149,24 @@ def router(s: State):
 
 @timed("retrieve")
 def retrieve(s: State):
+    """Vector search over chunks. Step 20: with version_aware ON, superseded document versions are excluded in the
+    WHERE clause, i.e. before the ORDER BY/LIMIT ranking, so an old version can never compete for a slot."""
     q = s["standalone"]
     qv = embed([q])[0]
-    rows = connect().execute(
-        """SELECT c.id, d.name, d.version, c.chunk_no, c.text, c.embedding <=> %s::vector AS dist
-           FROM chunks c JOIN documents d ON d.id=c.doc_id
-           ORDER BY dist LIMIT %s""", (qv, TOP_K)).fetchall()
-    chunks = [dict(id=r[0], doc=r[1], version=r[2], chunk_no=r[3], text=r[4], dist=round(float(r[5]), 3)) for r in rows]
-    return {"chunks": chunks}, 0, 0, 0
+    on = s.get("version_aware", VERSION_AWARE)
+    conn = connect()
+    try:   # pgvector >= 0.8: a filtered HNSW scan keeps scanning until k rows pass the filter instead of returning fewer
+        conn.execute("SET hnsw.iterative_scan = relaxed_order")
+    except Exception:  # noqa: BLE001 — older pgvector: plain scan, still correct on a small table
+        pass
+    where = "WHERE d.superseded = false" if on else ""
+    rows = conn.execute(
+        f"""SELECT c.id, d.name, d.version, c.chunk_no, c.text, c.embedding <=> %s::vector AS dist, d.superseded
+            FROM chunks c JOIN documents d ON d.id=c.doc_id {where}
+            ORDER BY dist LIMIT %s""", (qv, TOP_K)).fetchall()
+    chunks = [dict(id=r[0], doc=r[1], version=r[2], chunk_no=r[3], text=r[4], dist=round(float(r[5]), 3), superseded=r[6])
+              for r in rows]
+    return {"chunks": chunks, "version_aware": on}, 0, 0, 0
 
 
 def grade_single(s: State, model: str, max_tokens: int):
@@ -323,11 +334,14 @@ def build():
 _app = None
 
 
-def ask(question: str, history: list[dict] | None = None) -> dict:
+def ask(question: str, history: list[dict] | None = None, version_aware: bool | None = None) -> dict:
     global _app
     _app = _app or build()
     t0 = time.perf_counter()
-    out = _app.invoke({"question": question, "history": history or [], "trace": []})
+    state = {"question": question, "history": history or [], "trace": []}
+    if version_aware is not None:
+        state["version_aware"] = version_aware
+    out = _app.invoke(state)
     out["total_ms"] = round((time.perf_counter() - t0) * 1000)
     log_run(out)
     return out
