@@ -117,7 +117,8 @@ def router(s: State):
            "Examples: 'How long must audit logs be kept?' -> documents. 'Who approves a schema change?' -> documents. "
            + ("'List the brokers in rack-a.' -> database. 'How many racks are there?' -> database. " if tables else "")
            + "'Thanks!' -> general.\n"
-           "standalone: the user's message rewritten as a self-contained question using the chat history.")
+           "standalone: copy the user's message word for word. Change it ONLY to replace a pronoun or reference ('it', 'that', 'the same') using the chat history. "
+           "Never add words about runbooks, procedures, tables or the route.")
     out, ti, to = chat([{"role": "system", "content": sys},
                         {"role": "user", "content": f"Chat history:\n{hist or '(none)'}\n\nMessage: {s['question']}"}],
                        json_mode=True, max_tokens=120)
@@ -144,14 +145,19 @@ def retrieve(s: State):
 
 @timed("grade")
 def grade(s: State):
-    listing = "\n\n".join(f"[{i}] ({c['doc']})\n{c['text'][:900]}" for i, c in enumerate(s["chunks"]))
-    out, ti, to = chat([
-        {"role": "system", "content": "You filter search results. A passage is relevant if it covers the same topic as the question "
-         "and could contain the answer, even if the answer is not stated in the first lines. Be inclusive: when unsure, keep it. "
-         "Reply JSON: {\"relevant\": [indices]}. Use [] only if every passage is about a clearly different subject."},
-        {"role": "user", "content": f"Question: {s['standalone']}\n\nPassages:\n{listing}"}], json_mode=True, max_tokens=60)
-    idx = [i for i in parse_json(out).get("relevant", []) if isinstance(i, int) and 0 <= i < len(s["chunks"])]
-    return {"relevant": [s["chunks"][i] for i in idx]}, 1, ti, to
+    """Grade each retrieved passage with its own yes/no call (a 3B model cannot reliably pick indices out of six passages)."""
+    from concurrent.futures import ThreadPoolExecutor
+
+    def one(c):
+        out, ti, to = chat([
+            {"role": "system", "content": "You filter search results. Does the passage cover the same topic as the question and could it contain the answer? "
+             "Be inclusive: if it is about the same subject, say yes. Reply JSON: {\"relevant\": true or false}."},
+            {"role": "user", "content": f"Question: {s['standalone']}\n\nPassage ({c['doc']}):\n{c['text'][:900]}"}], json_mode=True, max_tokens=15)
+        return parse_json(out).get("relevant") is True, ti, to
+    with ThreadPoolExecutor(max_workers=3) as ex:
+        res = list(ex.map(one, s["chunks"]))
+    keep = [c for c, (ok, _, _) in zip(s["chunks"], res) if ok]
+    return {"relevant": keep}, len(res), sum(r[1] for r in res), sum(r[2] for r in res)
 
 
 @timed("rewrite")
