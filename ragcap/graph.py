@@ -8,7 +8,7 @@ from typing import TypedDict
 
 from langgraph.graph import END, START, StateGraph
 
-from .config import GRADE_MAX_TOKENS, GRADE_MODE, GRADE_MODEL, LLM_MODEL, TOP_K
+from .config import GRADE_MAX_TOKENS, GRADE_MODE, GRADE_MODEL, GRADE_PASSAGE_CHARS, LLM_MODEL, TOP_K
 from .db import connect
 from .llm import client, embed
 from .tracing import log_run
@@ -158,34 +158,48 @@ def retrieve(s: State):
     return {"chunks": chunks}, 0, 0, 0
 
 
-@timed("grade")
-def grade(s: State):
-    """Two modes. per_passage: one yes/no call per retrieved passage (what a 3B model can do reliably).
-    single: one call that picks indices out of all passages (cheaper; needs a stronger model, see step 19)."""
-    if GRADE_MODE == "single":
-        listing = "\n\n".join(f"[{i}] ({c['doc']})\n{c['text'][:900]}" for i, c in enumerate(s["chunks"]))
-        out, ti, to = chat([
-            {"role": "system", "content": "You filter search results. A passage is relevant if it covers the same topic as the question "
-             "and could contain the answer, even if phrased differently. Be inclusive: when unsure, keep it. "
-             "Reply JSON: {\"relevant\": [indices]}. Use [] only if every passage is about a clearly different subject."},
-            {"role": "user", "content": f"Question: {s['standalone']}\n\nPassages:\n{listing}"}],
-            json_mode=True, max_tokens=GRADE_MAX_TOKENS, model=GRADE_MODEL)
-        idx = [i for i in parse_json(out).get("relevant", []) if isinstance(i, int) and 0 <= i < len(s["chunks"])]
-        return {"relevant": [s["chunks"][i] for i in idx]}, 1, ti, to
+def grade_single(s: State, model: str, max_tokens: int):
+    """One call that picks indices out of all passages. Cheap, but needs a model strong enough to do it."""
+    listing = "\n\n".join(f"[{i}] ({c['doc']})\n{c['text'][:GRADE_PASSAGE_CHARS]}" for i, c in enumerate(s["chunks"]))
+    out, ti, to = chat([
+        {"role": "system", "content": "You filter search results. A passage is relevant if it covers the same topic as the question "
+         "and could contain the answer, even if phrased differently. Be inclusive: when unsure, keep it. "
+         "Reply JSON: {\"relevant\": [indices]}. Use [] only if every passage is about a clearly different subject."},
+        {"role": "user", "content": f"Question: {s['standalone']}\n\nPassages:\n{listing}"}],
+        json_mode=True, max_tokens=max_tokens, model=model)
+    idx = [i for i in parse_json(out).get("relevant", []) if isinstance(i, int) and 0 <= i < len(s["chunks"])]
+    return [s["chunks"][i] for i in idx], 1, ti, to
 
+
+def grade_per_passage(s: State, model: str, max_tokens: int):
+    """One yes/no call per passage, 3 at a time. What a 3B model can do reliably."""
     from concurrent.futures import ThreadPoolExecutor
 
     def one(c):
         out, ti, to = chat([
             {"role": "system", "content": "You filter search results. Does the passage cover the same topic as the question and could it contain the answer? "
              "Be inclusive: if it is about the same subject, say yes. Reply JSON: {\"relevant\": true or false}."},
-            {"role": "user", "content": f"Question: {s['standalone']}\n\nPassage ({c['doc']}):\n{c['text'][:900]}"}],
-            json_mode=True, max_tokens=GRADE_MAX_TOKENS, model=GRADE_MODEL)
+            {"role": "user", "content": f"Question: {s['standalone']}\n\nPassage ({c['doc']}):\n{c['text'][:GRADE_PASSAGE_CHARS]}"}],
+            json_mode=True, max_tokens=max_tokens, model=model)
         return parse_json(out).get("relevant") is True, ti, to
     with ThreadPoolExecutor(max_workers=3) as ex:
         res = list(ex.map(one, s["chunks"]))
     keep = [c for c, (ok, _, _) in zip(s["chunks"], res) if ok]
-    return {"relevant": keep}, len(res), sum(r[1] for r in res), sum(r[2] for r in res)
+    return keep, len(res), sum(r[1] for r in res), sum(r[2] for r in res)
+
+
+@timed("grade")
+def grade(s: State):
+    """GRADE_MODE: per_passage (default, LLM_MODEL) | single (GRADE_MODEL) | escalate (per_passage first; if nothing is
+    kept, one single-call second opinion from GRADE_MODEL before giving up). See SOP step 19."""
+    if GRADE_MODE == "single":
+        keep, calls, ti, to = grade_single(s, GRADE_MODEL, GRADE_MAX_TOKENS)
+        return {"relevant": keep}, calls, ti, to
+    keep, calls, ti, to = grade_per_passage(s, LLM_MODEL, 15)
+    if not keep and GRADE_MODE == "escalate":
+        keep, c2, ti2, to2 = grade_single(s, GRADE_MODEL, GRADE_MAX_TOKENS)
+        calls, ti, to = calls + c2, ti + ti2, to + to2
+    return {"relevant": keep}, calls, ti, to
 
 
 @timed("rewrite")

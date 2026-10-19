@@ -16,7 +16,9 @@ LLM_MODEL = os.getenv("LLM_MODEL", "llama3.2:3b")
 EMBED_MODEL = os.getenv("EMBED_MODEL", "nomic-embed-text")
 # Grader experiment switch (step 19). Defaults reproduce the llama3b series exactly.
 GRADE_MODEL = os.getenv("GRADE_MODEL", LLM_MODEL)          # e.g. qwen3:8b
-GRADE_MODE = os.getenv("GRADE_MODE", "per_passage")         # per_passage | single
+GRADE_MODE = os.getenv("GRADE_MODE", "per_passage")         # per_passage | single | escalate
+# escalate: per_passage with LLM_MODEL first; if it keeps nothing, one single-call grade with GRADE_MODEL as a second opinion
+GRADE_PASSAGE_CHARS = int(os.getenv("GRADE_PASSAGE_CHARS", "900"))
 GRADE_MAX_TOKENS = int(os.getenv("GRADE_MAX_TOKENS", "15"))  # qwen3 needs ~600 for its hidden reasoning
 EMBED_DIM = 768
 TOP_K = 6
