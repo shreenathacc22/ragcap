@@ -1,0 +1,25 @@
+{"id": "h-doc-01", "route": "documents", "type": "version_current", "question": "How long is a broker TLS certificate valid?", "facts": ["90 days"], "must_not_contain": []}
+{"id": "h-doc-02", "route": "documents", "type": "version_current", "question": "Which min.insync.replicas value goes with production topics?", "facts": ["2"], "must_not_contain": []}
+{"id": "h-doc-03", "route": "documents", "type": "version_current", "question": "What casing must topic names use, and are hyphens allowed?", "facts": ["lowercase"], "must_not_contain": []}
+{"id": "h-doc-04", "route": "documents", "type": "version_current", "question": "How long do audit topics keep their messages?", "facts": ["90 days"], "must_not_contain": []}
+{"id": "h-doc-05", "route": "documents", "type": "version_current", "question": "How many minutes must consumer lag stay high before the alert fires?", "facts": ["5 minutes"], "must_not_contain": []}
+{"id": "h-doc-06", "route": "documents", "type": "version_current", "question": "How much downtime should I expect when restarting one broker?", "facts": ["4 minutes"], "must_not_contain": []}
+{"id": "h-doc-07", "route": "documents", "type": "version_current", "question": "Who is the secondary contact for a SEV-1 Kafka incident?", "facts": ["Infrastructure duty manager"], "must_not_contain": []}
+{"id": "h-doc-08", "route": "documents", "type": "version_current", "question": "After how long without mitigation must a SEV-1 be escalated?", "facts": ["15 minutes"], "must_not_contain": []}
+{"id": "h-doc-09", "route": "documents", "type": "version_current", "question": "Which template do I request for broker certificates?", "facts": ["kafka-broker-v2"], "must_not_contain": []}
+{"id": "h-doc-10", "route": "documents", "type": "version_current", "question": "Do I need a full-cluster window to rotate certificates?", "facts": ["one at a time|one by one|individually"], "must_not_contain": []}
+{"id": "h-doc-11", "route": "documents", "type": "version_current", "question": "At what disk percentage do we only warn instead of paging?", "facts": ["60%"], "must_not_contain": []}
+{"id": "h-doc-12", "route": "documents", "type": "version_current", "question": "Which port does BROKER-EAST-02 use for plaintext traffic?", "facts": ["9092"], "must_not_contain": []}
+{"id": "h-doc-13", "route": "documents", "type": "version_current", "question": "What rejects topics that still use the retired evt. prefix?", "facts": ["topic-admission|admission"], "must_not_contain": []}
+{"id": "h-doc-14", "route": "documents", "type": "version_current", "question": "Consumer lag is still climbing after I scaled the group. What now?", "facts": ["escalate"], "must_not_contain": []}
+{"id": "h-doc-15", "route": "documents", "type": "version_current", "question": "What replication factor and what default retention apply to a new standard production topic?", "facts": ["3", "72"], "must_not_contain": ["168"]}
+{"id": "h-doc-16", "route": "documents", "type": "version_current", "question": "Which host issues TLS certificates, and which port does BROKER-EAST-02 use for TLS?", "facts": ["pki.internal.example.com", "9093"], "must_not_contain": ["certs.internal.example.com is the"]}
+{"id": "h-db-01", "route": "database", "type": "sql", "question": "What is the highest disk usage percentage and which broker has it?", "facts": ["91.8", "5"], "must_not_contain": []}
+{"id": "h-db-02", "route": "database", "type": "sql", "question": "How many brokers host more than 150 topics?", "facts": ["3|three"], "must_not_contain": []}
+{"id": "h-db-03", "route": "database", "type": "sql", "question": "List the brokers in rack-c.", "facts": ["5", "6"], "must_not_contain": []}
+{"id": "h-db-04", "route": "database", "type": "sql", "question": "What is the combined number of topics across all brokers?", "facts": ["880"], "must_not_contain": []}
+{"id": "h-db-05", "route": "database", "type": "sql", "question": "How many brokers have at least 4000 GB of disk?", "facts": ["2|two"], "must_not_contain": []}
+{"id": "h-gen-01", "route": "general", "type": "general", "question": "Good morning!", "facts": [], "must_not_contain": []}
+{"id": "h-gen-02", "route": "general", "type": "general", "question": "Who are you?", "facts": [], "must_not_contain": []}
+{"id": "h-una-01", "route": "documents", "type": "unanswerable", "question": "How many partitions should a new topic have?", "facts": [], "must_not_contain": []}
+{"id": "h-una-02", "route": "documents", "type": "unanswerable", "question": "Which cloud provider hosts the Kafka cluster?", "facts": [], "must_not_contain": []}
