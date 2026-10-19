@@ -23,4 +23,4 @@ GRADE_MAX_TOKENS = int(os.getenv("GRADE_MAX_TOKENS", "15"))  # qwen3 needs ~600 
 EMBED_DIM = 768
 TOP_K = 6
 # step 20: exclude superseded document versions in the vector query, before ranking. OFF/ON ablation switch.
-VERSION_AWARE = os.getenv("VERSION_AWARE", "0") == "1"
+VERSION_AWARE = os.getenv("VERSION_AWARE", "1") == "1"   # default ON since step 20g (ablation recorded); 0 = ablation OFF setting
