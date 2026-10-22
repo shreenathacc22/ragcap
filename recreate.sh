@@ -33,7 +33,7 @@ if [ ! -x .venv/bin/python ]; then
   PY=${PY:-$(command -v python3.12 || echo ../../mai-practitioner-labs/.venv/bin/python)}
   "$PY" -m venv .venv
 fi
-.venv/bin/python --version | grep -q "3.12" || fail "venv is not Python 3.12 (set PY=<path to 3.12>)"
+.venv/bin/python --version | grep -q "3.12" || fail "venv is not Python 3.12: install it (brew install python@3.12) and run PY=$(command -v python3.12) ./recreate.sh; see docs/APPLE_SILICON.md"
 .venv/bin/pip install -q -r requirements.txt
 .venv/bin/python step1_check.py | tail -1 | grep -q "STEP 1 OK" || fail "step1_check"
 

@@ -8,6 +8,8 @@ A reproduction of Kumar's RAG Capstone design (LangGraph router, document RAG wi
 - How it was built, every step with evidence: `docs/SOP_ragcap_build.pdf`
 - Operating and troubleshooting: `docs/RUNBOOK_ragcap_operations.pdf`
 - Slide deck (15 slides: flow, steps, results, how to test, how to deploy to Vercel): `docs/ragcap_deck.pptx` (PDF: `docs/ragcap_deck.pdf`; source `docs/build_deck.js`)
+- Project status (done and pending): [STATUS.md](STATUS.md)
+- Running on an Apple Silicon Mac: [docs/APPLE_SILICON.md](docs/APPLE_SILICON.md)
 - Needs: Docker Desktop, Ollama (`llama3.2:3b`, `nomic-embed-text`), Python 3.12. No API key, no GPU.
 - Headline results (llama3.2:3b, this Mac): router 100% / answers 85-93% on the tuned set; router 96% / answers 80-84% on the unseen set; version filter: superseded chunks 51.6% to 0.0%, control cases flat, +1 ms.
 
